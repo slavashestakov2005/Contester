@@ -1,5 +1,4 @@
 function getCookie(document, name) {
-    alert("Вызвана")
     var r = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
     if (r) return r[2].trim();
     else return "";
