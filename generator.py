@@ -66,7 +66,18 @@ def get_pages_header(contest_name, tasks_list, type = False):
 		<title>''' + contest_name + r'''</title>
 	</head>
 	<body>
-		<div id="header"><h1><a href="contest.jsp">''' + contest_name + r'''</a></h1></div>
+		<div id="header">
+			<div id="nav1"><h1><a href="contest.jsp">''' + contest_name + '''</a></h1></div>
+			<div id="nav2">
+				<p align="right">
+				<script> document.write(getCookie(document, "name")); </script>
+				<br/>
+				<script> document.write(getCookie(document, "surname")); </script>
+				<br/>
+				<a href="index.jsp">Выйти</a>
+				</p>
+			</div>
+		</div>
 		<div id="page">
 			<div id="sidebar">'''
 	for i in range(len(tasks_list)):
@@ -150,10 +161,10 @@ def generate_task_file(contest_directory, contest_name, tasks_list, task_name, t
 				</table>
 				<div id="code">
 					<p>Решение:</p>
-					<form action="ctx.html" enctype="multipart/form-data" method="post">
-						<textarea id="code_text" placeholder="Введите код" oninput="textInput(document)"></textarea>
+					<form action="run" method="post">
+						<textarea id="code_text" name="code" placeholder="Введите код" oninput="textInput(document)"></textarea>
 						<br/>
-						<input id="code_file" type="file" name="fcode" oninput="codeInput(document, 'file');" />
+						<input id="code_file" type="file" oninput="codeInput(document, 'file');" onchange="readFile(document);"/>
 						<input type="submit" value="Отправить" onclick="return Start(this);" />
 					</form>
 				</div>
