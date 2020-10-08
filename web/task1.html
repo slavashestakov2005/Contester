@@ -12,11 +12,11 @@
 			<div id="nav1"><h1><a href="contest.jsp">Контест №1</a></h1></div>
 			<div id="nav2">
 				<p align="right">
-					<script> document.write(getCookie(document, "name")); </script>
-					<br/>
-					<script> document.write(getCookie(document, "surname")); </script>
-					<br/>
-					<a href="index.jsp">Выйти</a>
+				<script> document.write(getCookie(document, "name")); </script>
+				<br/>
+				<script> document.write(getCookie(document, "surname")); </script>
+				<br/>
+				<a href="index.jsp">Выйти</a>
 				</p>
 			</div>
 		</div>
@@ -58,10 +58,10 @@
 				</table>
 				<div id="code">
 					<p>Решение:</p>
-					<form action="run" method="post">
-						<textarea id="code_text" name="code" placeholder="Введите код" oninput="textInput(document)"></textarea>
+					<form action="ctx.html" enctype="multipart/form-data" method="post">
+						<textarea id="code_text" placeholder="Введите код" oninput="textInput(document)"></textarea>
 						<br/>
-						<input id="code_file" type="file" oninput="codeInput(document, 'file');" onchange="readFile(document);"/>
+						<input id="code_file" type="file" name="fcode" oninput="codeInput(document, 'file');" />
 						<input type="submit" value="Отправить" onclick="return Start(this);" />
 					</form>
 				</div>

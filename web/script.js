@@ -21,15 +21,3 @@ function codeInput(document, type) {
 function sendCode(code) {
     alert(code);
 }
-
-function readFile(document) {
-    var codeFile = document.getElementById("code_file");
-    var codeText = document.getElementById("code_text");
-    let file = codeFile.files[0];
-    let reader = new FileReader();
-    reader.readAsText(file);
-    reader.onload = function(){
-        codeText.value = reader.result;
-        textInput(document);
-    }
-}
