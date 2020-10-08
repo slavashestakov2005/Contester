@@ -7,19 +7,6 @@ files = ['image.ico', 'style.css', 'script.js']
 head1 = r'''<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="Windows-1251"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
-<%
-    try{
-        Cookie name = new Cookie("name", request.getParameter("name").trim());
-        Cookie surname = new Cookie("surname", request.getParameter("surname").trim());
-        name.setMaxAge(60*60*10);
-        surname.setMaxAge(60*60*10);
-        // Add both the cookies in the response header.
-        response.addCookie(name);
-        response.addCookie(surname);
-    }catch(Exception e){}
-%>
-
 '''
 head2 = r'''<!DOCTYPE html>
 '''
@@ -79,18 +66,7 @@ def get_pages_header(contest_name, tasks_list, type = False):
 		<title>''' + contest_name + r'''</title>
 	</head>
 	<body>
-		<div id="header">
-			<div id="nav1"><h1><a href="contest.jsp">''' + contest_name + r'''</a></h1></div>
-			<div id="nav2">
-				<p align="right">
-				<script> document.write(getCookie(document, "name")); </script>
-				<br/>
-				<script> document.write(getCookie(document, "surname")); </script>
-				<br/>
-				<a href="index.jsp">Выйти</a>
-				</p>
-			</div>
-		</div>
+		<div id="header"><h1><a href="contest.jsp">''' + contest_name + r'''</a></h1></div>
 		<div id="page">
 			<div id="sidebar">'''
 	for i in range(len(tasks_list)):
