@@ -34,6 +34,12 @@
                 <textarea id="code_text" placeholder="Введите код" oninput="textInput(document)"></textarea>
                 <br/>
                 <input type="file" name="fcode">
+                <select name="lang">
+                    <option value="cpp">C++</option>
+                    <option value="py">Python</option>
+                    <option value="ss">SlavaScript</option>
+                    <option value="java">Java</option>
+                </select>
                 <input type="submit" value="Отправить" onclick="return Start(this);" />
             </form>
         </div>

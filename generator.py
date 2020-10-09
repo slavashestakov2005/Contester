@@ -31,6 +31,10 @@ head2 = r'''<%@ page language="java" contentType="text/html; charset=UTF-8"
 # result_directory =	'...<имя папки>/<имя контеста>/<gen>'
 
 
+def correct(string):
+	return string.replace("+", "%2B")
+
+
 def get_root_directory():
 	with open('root.txt', 'r') as fd:	# in ANSII encode
 		root_directory = fd.read()
@@ -177,10 +181,14 @@ def generate_task_file(contest_directory, contest_name, tasks_list, task_name, t
 				</table>
 				<div id="code">
 					<p>Решение:</p>
-					<% out.print("<form action=\"run?lang=cpp&name="); %>${cookie['name'].getValue()}<% out.print("&surname="); %>${cookie['surname'].getValue()}<% out.print("\" method=\"post\">"); %>
+					<% out.print("<form action=\"run?contest=''' + correct(contest_name) + r'''&task=''' + correct(task_name) + r'''&name="); %>${cookie['name'].getValue()}<% out.print("&surname="); %>${cookie['surname'].getValue()}<% out.print(" method=\"post\">"); %>
 						<textarea id="code_text" name="code" placeholder="Введите код" oninput="textInput(document)"></textarea>
 						<br/>
 						<input id="code_file" type="file" oninput="codeInput(document, 'file');" onchange="readFile(document);"/>
+						<select name="lang">
+                            <option value="cpp">C++</option>
+                            <option value="py">Python</option>
+                        </select>
 						<input type="submit" value="Отправить" onclick="return Start(this);" />
 					</form>
 				</div>
