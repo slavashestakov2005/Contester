@@ -50,10 +50,10 @@
 				</table>
 				<div id="code">
 					<p>Решение:</p>
-					<form action="ctx.html" enctype="multipart/form-data" method="post">
-						<textarea id="code_text" placeholder="Введите код" oninput="textInput(document)"></textarea>
+					<form action="run" method="post">
+						<textarea id="code_text" name="code" placeholder="Введите код" oninput="textInput(document)"></textarea>
 						<br/>
-						<input id="code_file" type="file" name="fcode" oninput="codeInput(document, 'file');" />
+						<input id="code_file" type="file" oninput="codeInput(document, 'file');" onchange="readFile(document);"/>
 						<input type="submit" value="Отправить" onclick="return Start(this);" />
 					</form>
 				</div>
