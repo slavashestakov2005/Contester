@@ -21,7 +21,10 @@ head1 = r'''<%@ page language="java" contentType="text/html; charset=UTF-8"
 %>
 
 '''
-head2 = r'''<!DOCTYPE html>
+head2 = r'''<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 '''
 # root_directory = 		'...<имя папки>'
 # contest_directory = 	'...<имя папки>/<имя контеста>'
@@ -95,7 +98,7 @@ def get_pages_header(contest_name, tasks_list, type = False):
 			<div id="sidebar">'''
 	for i in range(len(tasks_list)):
 		text += r'''
-				<h2><a href="task''' + str(i + 1) + r'''.html">''' + tasks_list[i] + '''</a></h2>'''
+				<h2><a href="task''' + str(i + 1) + r'''.jsp">''' + tasks_list[i] + '''</a></h2>'''
 	text += r'''
 				<div id="down"></div>
 			</div>'''
@@ -174,7 +177,7 @@ def generate_task_file(contest_directory, contest_name, tasks_list, task_name, t
 				</table>
 				<div id="code">
 					<p>Решение:</p>
-					<form action="run" method="post">
+					<% out.print("<form action=\"run?lang=cpp&name="); %>${cookie['name'].getValue()}<% out.print("&surname="); %>${cookie['surname'].getValue()}<% out.print("\" method=\"post\">"); %>
 						<textarea id="code_text" name="code" placeholder="Введите код" oninput="textInput(document)"></textarea>
 						<br/>
 						<input id="code_file" type="file" oninput="codeInput(document, 'file');" onchange="readFile(document);"/>
@@ -186,7 +189,7 @@ def generate_task_file(contest_directory, contest_name, tasks_list, task_name, t
 		</div>
 	</body>
 </html>'''
-	with open(result_directory + '\\task' + str(task_count) + '.html', 'w') as fd:
+	with open(result_directory + '\\task' + str(task_count) + '.jsp', 'w') as fd:
 		fd.write(text)
 
 

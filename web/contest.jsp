@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="Windows-1251"%>
+		 pageEncoding="Windows-1251"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%
@@ -27,18 +27,18 @@
 			<div id="nav1"><h1><a href="contest.jsp">Контест №1</a></h1></div>
 			<div id="nav2">
 				<p align="right">
-				<script> document.write(getCookie(document, "name")); </script>
-				<br/>
-				<script> document.write(getCookie(document, "surname")); </script>
-				<br/>
-				<a href="index.jsp">Выйти</a>
+					<script> document.write(getCookie(document, "name")); </script>
+					<br/>
+					<script> document.write(getCookie(document, "surname")); </script>
+					<br/>
+					<a href="index.jsp">Выйти</a>
 				</p>
 			</div>
 		</div>
 		<div id="page">
 			<div id="sidebar">
-				<h2><a href="task1.html">A+B</a></h2>
-				<h2><a href="task2.html">Задача №1</a></h2>
+				<h2><a href="task1.jsp">A+B</a></h2>
+				<h2><a href="task2.jsp">Задача №1</a></h2>
 				<div id="down"></div>
 			</div>
 			<div id="content">
