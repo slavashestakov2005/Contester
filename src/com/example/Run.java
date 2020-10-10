@@ -19,6 +19,22 @@ public class Run extends HttpServlet {
             commandPy1 = "python -c \"import py_compile; py_compile.compile(r'", commandPy2 = "',r'", commandPy3 = "')\"";
     private static final String executeCpp = fileNameCpp + " > ",
                                 executePy = "python " + fileNamePy + " > ";
+    private String result;
+    private int cnt;
+
+    protected void addLineToTable(boolean ok){
+        result += "\t<tr>\n" +
+                "\t\t<td>\n" +
+                "\t\t\t<p>" + cnt + "</p>\n" +
+                "\t\t</td>\n" +
+                "\t\t<td>\n" +
+                "\t\t\t<p><font color=" + (ok ? "\"green\">Ok" : "\"red\">Fail") + "</font></p>\n" +
+                "\t\t</td>\n" +
+                "\t\t<td />\n" +
+                "\t\t<td />\n" +
+                "\t</tr>\n";
+        ++cnt;
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         /** get Parameters **/
@@ -35,11 +51,25 @@ public class Run extends HttpServlet {
         String command = getCompileCommand(fileName, lang);
         System.out.println(command);
         compileFile(command);
+        result = "<table border=\"1\" width=\"95%\">\n" +
+                "\t<tr>\n" +
+                "\t\t<td width=\"25%\"><center>Тест</center></td>\n" +
+                "\t\t<td width=\"25%\"><center>Статус</center></td>\n" +
+                "\t\t<td width=\"25%\"><center>Время</center></td>\n" +
+                "\t\t<td width=\"25%\"><center>Память</center></td>\n" +
+                "\t</tr>\n";
+        cnt = 1;
         try {
             runProgram(path, lang);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        result += "</table>\n" +
+                "<br>\n" +
+                "<center><a href=\"contest.jsp\">Назад</a></center>";
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter pw = response.getWriter();
+        pw.print(result);
     }
 
     protected String getFilePath(String path){
@@ -100,7 +130,11 @@ public class Run extends HttpServlet {
 
     protected boolean isCorrect(String output, String correctOutput){
         System.out.println("'" + output + "' === '" + correctOutput + "'");
-        if (output.equals(correctOutput)) return true;
+        if (output.equals(correctOutput)){
+            addLineToTable(true);
+            return true;
+        }
+        addLineToTable(false);
         return false;
     }
 
