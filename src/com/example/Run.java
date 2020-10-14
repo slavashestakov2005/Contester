@@ -38,6 +38,7 @@ public class Run extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         /** get Parameters **/
+        request.setCharacterEncoding("utf-8");
         String name = request.getParameterValues("name")[0];
         String surname = request.getParameterValues("surname")[0];
         String code = request.getParameterValues("code")[0];
@@ -66,7 +67,13 @@ public class Run extends HttpServlet {
         }
         result += "</table>\n" +
                 "<br>\n" +
-                "<center><a href=\"contest.jsp\">Назад</a></center>";
+                "<center><button onclick=\"move()\">Назад</button></center>\n" +
+                "<script>\n" +
+                "\tfunction move(){\n" +
+                "\t\tdocument.location.replace(\"contest.jsp\");\n" +
+                "\t\treturn false;\n" +
+                "\t}\n" +
+                "</script>";
         response.setContentType("text/html;charset=utf-8");
         PrintWriter pw = response.getWriter();
         pw.print(result);
@@ -84,8 +91,9 @@ public class Run extends HttpServlet {
     }
 
     protected void saveFile(String text, String fileName) throws IOException {
-        FileOutputStream out = new FileOutputStream(fileName);
-        out.write(text.getBytes());
+        Writer out = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(fileName), "UTF-8"));
+        out.write(text);
         out.close();
     }
 
@@ -97,7 +105,7 @@ public class Run extends HttpServlet {
         }
     }
 
-    protected void compileFile(String command) throws IOException {
+    protected void compileFile(String command) {
         try {
             Runtime.getRuntime().exec(commandStart + command);
         } catch (IOException ex){
@@ -118,19 +126,14 @@ public class Run extends HttpServlet {
         for(int i = 0; i < files.length; i += 2){
             String output = fileNameOutput + "\\" + (i / 2 + 1) + "_out.txt";
             String correctOutput = files[i + 1].getPath();
-            FileInputStream in1 = new FileInputStream(output), in2 = new FileInputStream(correctOutput);
-            output = new String(in1.readAllBytes());
-            correctOutput = new String(in2.readAllBytes());
-            in1.close(); in2.close();
             System.out.println((i / 2 + 1) + " " + isCorrect(output, correctOutput));
             Files.delete(Paths.get(fileNameOutput + "\\" + (i / 2 + 1) + "_out.txt"));
         }
         Thread.sleep(10000);    /** for files delete **/
     }
 
-    protected boolean isCorrect(String output, String correctOutput){
-        System.out.println("'" + output + "' === '" + correctOutput + "'");
-        if (output.equals(correctOutput)){
+    protected boolean isCorrect(String fileName1, String fileName2){
+        if (Checker.equals(fileName1, fileName2)){
             addLineToTable(true);
             return true;
         }
