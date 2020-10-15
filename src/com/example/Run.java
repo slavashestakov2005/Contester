@@ -11,30 +11,9 @@ import java.nio.file.Paths;
 @WebServlet("/run")
 public class Run extends HttpServlet {
     private static final String root = "C:\\Users\\Public\\Documents\\Contester";
-    private static final String fileNameCpp = root + "\\Programs\\task.exe",
-                                fileNamePy = root + "\\Programs\\task.pyc",
-                                fileNameOutput = root + "\\Programs";
-    private static final String commandStart = "cmd /c ",
-            commandCpp = "g++ -static -fno-strict-aliasing -DACMP -lm -s -x c++ -std=c++17 -Wl,--stack=67108864 -O2 -o ",
-            commandPy1 = "python -c \"import py_compile; py_compile.compile(r'", commandPy2 = "',r'", commandPy3 = "')\"";
-    private static final String executeCpp = fileNameCpp + " > ",
-                                executePy = "python " + fileNamePy + " > ";
-    private String result;
-    private int cnt;
-
-    protected void addLineToTable(boolean ok){
-        result += "\t<tr>\n" +
-                "\t\t<td>\n" +
-                "\t\t\t<p>" + cnt + "</p>\n" +
-                "\t\t</td>\n" +
-                "\t\t<td>\n" +
-                "\t\t\t<p><font color=" + (ok ? "\"green\">Ok" : "\"red\">Fail") + "</font></p>\n" +
-                "\t\t</td>\n" +
-                "\t\t<td />\n" +
-                "\t\t<td />\n" +
-                "\t</tr>\n";
-        ++cnt;
-    }
+    private static final String fileNameOutput = root + "\\Programs";
+    private static final String commandStart = "cmd /c ";
+    private static AnswerWriter answer = new AnswerWriter();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         /** get Parameters **/
@@ -42,52 +21,22 @@ public class Run extends HttpServlet {
         String name = request.getParameterValues("name")[0];
         String surname = request.getParameterValues("surname")[0];
         String code = request.getParameterValues("code")[0];
-        String lang = request.getParameterValues("lang")[0];
+        Lang lang = Lang.fromString(request.getParameterValues("lang")[0]);
         String path = request.getParameterValues("contest")[0] + "\\" + request.getParameterValues("task")[0];
         /** save file **/
         System.out.println("POST запрос от " + name + " " + surname + " : " + lang);
-        String fileName = getFilePath(path) + "\\" + generateFileName(name, surname, lang);
+        String fileName = root + "\\Contests\\" + path + "\\sendings\\" + Languages.generateFileName(lang, name, surname);
         saveFile(code, fileName);
-        /** compile program **/
-        String command = getCompileCommand(fileName, lang);
-        System.out.println(command);
-        compileFile(command);
-        result = "<table border=\"1\" width=\"95%\">\n" +
-                "\t<tr>\n" +
-                "\t\t<td width=\"25%\"><center>Тест</center></td>\n" +
-                "\t\t<td width=\"25%\"><center>Статус</center></td>\n" +
-                "\t\t<td width=\"25%\"><center>Время</center></td>\n" +
-                "\t\t<td width=\"25%\"><center>Память</center></td>\n" +
-                "\t</tr>\n";
-        cnt = 1;
-        try {
-            runProgram(path, lang);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        result += "</table>\n" +
-                "<br>\n" +
-                "<center><button onclick=\"move()\">Назад</button></center>\n" +
-                "<script>\n" +
-                "\tfunction move(){\n" +
-                "\t\tdocument.location.replace(\"contest.jsp\");\n" +
-                "\t\treturn false;\n" +
-                "\t}\n" +
-                "</script>";
+        /** compile and run program **/
+        compileFile(Languages.getCompileCommand(lang, fileName));
+        answer.start();
+        runProgram(path, lang);
+        answer.finish();
+        /** write answer **/
         response.setContentType("text/html;charset=utf-8");
         PrintWriter pw = response.getWriter();
-        pw.print(result);
-    }
-
-    protected String getFilePath(String path){
-        return root + "\\Contests\\" + path + "\\sendings";
-    }
-
-    protected String generateFileName(String name, String surname, String lang){
-        String fileName = name + "_" + surname;
-        Sendings.addSending(fileName);
-        fileName += "_" + Sendings.getCountSendings(fileName) + "." + lang;
-        return fileName;
+        pw.print(answer.getAnswer());
+        answer.clear();
     }
 
     protected void saveFile(String text, String fileName) throws IOException {
@@ -97,64 +46,62 @@ public class Run extends HttpServlet {
         out.close();
     }
 
-    protected String getCompileCommand(String fileName, String lang){
-        switch (lang){
-            case "cpp": return commandCpp + fileNameCpp + " \"" + fileName + "\"";
-            case "py": return commandPy1 + fileName + commandPy2 + fileNamePy + commandPy3;
-            default: return "";
-        }
-    }
-
     protected void compileFile(String command) {
         try {
             Runtime.getRuntime().exec(commandStart + command);
         } catch (IOException ex){
-            System.out.println(ex);
-            ex.printStackTrace();
+            answer.fail();
         }
     }
 
-    protected void runProgram(String path, String lang) throws IOException, InterruptedException {
+    protected void runProgram(String path, Lang lang) {
         File[] files = new File(root + "\\Contests\\" + path + "\\tests").listFiles();
-        Thread.sleep(10000);    /** for program compile **/
-        for(int i = 0; i < files.length; i += 2){
-            String input = files[i].getPath();
-            String output = fileNameOutput + "\\" + (i / 2 + 1) + "_out.txt";
-            executeFile(input, output, lang);
+        try {
+            Thread.sleep(10000);    /** for program compile **/
+            for (int i = 0; i < files.length; i += 2) {
+                String input = files[i].getPath();
+                String output = fileNameOutput + "\\" + (i / 2 + 1) + "_out.txt";
+                executeFile(Languages.getExecuteCommand(lang, input, output));
+            }
+            Thread.sleep(10000);    /** for program running **/
+            for (int i = 0; i < files.length; i += 2) {
+                String output = fileNameOutput + "\\" + (i / 2 + 1) + "_out.txt";
+                String correctOutput = files[i + 1].getPath();
+                System.out.println((i / 2 + 1) + " " + isCorrect(output, correctOutput));
+                Files.delete(Paths.get(fileNameOutput + "\\" + (i / 2 + 1) + "_out.txt"));
+            }
+            deleteFile(lang);
+            Thread.sleep(10000);    /** for files delete **/
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        Thread.sleep(10000);    /** for program running **/
-        for(int i = 0; i < files.length; i += 2){
-            String output = fileNameOutput + "\\" + (i / 2 + 1) + "_out.txt";
-            String correctOutput = files[i + 1].getPath();
-            System.out.println((i / 2 + 1) + " " + isCorrect(output, correctOutput));
-            Files.delete(Paths.get(fileNameOutput + "\\" + (i / 2 + 1) + "_out.txt"));
-        }
-        Thread.sleep(10000);    /** for files delete **/
     }
 
     protected boolean isCorrect(String fileName1, String fileName2){
         if (Checker.equals(fileName1, fileName2)){
-            addLineToTable(true);
+            answer.addTask(true);
             return true;
         }
-        addLineToTable(false);
+        answer.addTask(false);
         return false;
     }
 
-    protected void executeFile(String input, String output, String lang){
-        String command;
-        switch (lang){
-            case "cpp": command = executeCpp; break;
-            case "py": command = executePy; break;
-            default: command = "";
-        }
-        command += output + " < \"" + input + "\"";
+    protected void executeFile(String command){
         System.out.println(command);
         try {
             Runtime.getRuntime().exec(commandStart + command);
         } catch (IOException ex){
-            System.out.println(ex);
-            ex.printStackTrace();
+            answer.fail();
+        }
+    }
+
+    protected void deleteFile(Lang lang) {
+        try{
+            Files.delete(Paths.get(lang.programName()));
+        } catch(IOException e) {
+            answer.fail();
         }
     }
 }

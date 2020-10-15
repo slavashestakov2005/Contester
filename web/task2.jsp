@@ -8,6 +8,8 @@
         <link rel="shortcut icon" href="image.ico" type="image/x-icon">
         <link rel="stylesheet" href="style.css">
         <script src="script.js" type="text/javascript"> </script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <title>Контест №1</title>
     </head>
     <body>

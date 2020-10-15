@@ -8,6 +8,8 @@
         <link rel="stylesheet" href="style.css">
         <script src="script.js" type="text/javascript" />
         <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js" />
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <title>Контестер 1</title>
     </head>
     <body>
@@ -27,6 +29,8 @@
         <script> document.write(getCookie(document, "surname")); </script>
         <br/>
         <a href="index.jsp"> Вернуться </a>
+        <br/>
+        Ограничение на n: \( |n| \leq 10^9 \).
         <br/>
         <div id="code">
             <p>Решение:</p>

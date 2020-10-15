@@ -42,8 +42,8 @@ def get_root_directory():
 
 
 def copy_files(result_directory):
-	for file in files:
-		copyfile(file, result_directory + '\\' + file)
+	'''for file in files:
+		copyfile(file, result_directory + '\\' + file)'''
 
 
 def get_tasks_list(contest_directory, result_directory):
@@ -83,6 +83,8 @@ def get_pages_header(contest_name, tasks_list, type = False):
 		<link rel="shortcut icon" href="image.ico" type="image/x-icon">
 		<link rel="stylesheet" href="style.css">
 		<script src="script.js" type="text/javascript"> </script>
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 		<title>''' + contest_name + r'''</title>
 	</head>
 	<body>
@@ -160,7 +162,7 @@ def get_task_tests(contest_directory, task_name):
 						</td>
 					</tr>'''
 	return text
-	
+
 
 def generate_task_file(contest_directory, contest_name, tasks_list, task_name, task_count, result_directory):
 	text = get_pages_header(contest_name, tasks_list)
@@ -203,8 +205,8 @@ def generate_task_file(contest_directory, contest_name, tasks_list, task_name, t
 
 def main():
 	contest_name = input('Введите имя директории с контестом: ')
-	contest_directory = get_root_directory() + '\\' + contest_name
-	result_directory = contest_directory + '\\generated'
+	contest_directory = get_root_directory() + '\\Contests\\' + contest_name
+	result_directory = get_root_directory() + '\\apache-tomcat-9.0.27\\webapps\\Contester'
 	copy_files(result_directory)
 	tasks_list = get_tasks_list(contest_directory, result_directory)
 	generate_main_file(contest_directory, contest_name, tasks_list, result_directory)

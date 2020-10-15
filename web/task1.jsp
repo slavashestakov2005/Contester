@@ -8,6 +8,8 @@
         <link rel="shortcut icon" href="image.ico" type="image/x-icon">
         <link rel="stylesheet" href="style.css">
         <script src="script.js" type="text/javascript"> </script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <title>Контест №1</title>
     </head>
     <body>
@@ -35,6 +37,7 @@
                 <p>Вводятся числа A и B. Выведите их сумму.</p>
                 <h3>Входные данные:</h3>
                 <p>Два целых числа, по модулю не провосходящих 10^9.</p>
+                <p>Для умных: \( |a| \leq 10^9 \) и \( |b| \leq 10^9 \).</p>
                 <h3>Выходные данные:</h3>
                 <p>Выведите одно число, сумму входных чисел.</p>
                 <table border="1" width="95%">
