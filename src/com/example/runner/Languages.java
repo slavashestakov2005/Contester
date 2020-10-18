@@ -1,4 +1,4 @@
-package com.example;
+package com.example.runner;
 
 public class Languages {
     public static String getCompileCommand(Lang lang, String fileName){

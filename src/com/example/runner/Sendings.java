@@ -1,4 +1,4 @@
-package com.example;
+package com.example.runner;
 
 import java.util.HashMap;
 

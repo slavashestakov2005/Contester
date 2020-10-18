@@ -3,7 +3,7 @@ import os
 from shutil import copyfile
 
 
-files = ['image.ico', 'style.css', 'script.js']
+files = ['image.ico', 'users.css', 'users.js']
 head1 = r'''<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="Windows-1251"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -81,15 +81,18 @@ def get_pages_header(contest_name, tasks_list, type = False):
 	<head>
 		<meta charset="Windows-1251">
 		<link rel="shortcut icon" href="image.ico" type="image/x-icon">
-		<link rel="stylesheet" href="style.css">
-		<script src="script.js" type="text/javascript"> </script>
+		link rel="stylesheet" href="CSS/users.css">
+        <link rel="stylesheet" href="CSS/admin.css">
+        <script src="JS/users.js" type="text/javascript"> </script>
+        <script src="JS/admin.js" type="text/javascript"> </script>
+        <script> var cnt=2; </script>
 		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 		<title>''' + contest_name + r'''</title>
 	</head>
 	<body>
 		<div id="header">
-			<div id="nav1"><h1><a href="contest.jsp">''' + contest_name + '''</a></h1></div>
+			<div id="nav1"><center><button id="image" onclick="Edit(document, '123456789'); "><img src="edit.png"></button></center></div>
 			<div id="nav2">
 				<p align="right">
 				<script> document.write(getCookie(document, "name")); </script>
@@ -99,6 +102,7 @@ def get_pages_header(contest_name, tasks_list, type = False):
 				<a href="index.jsp">Выйти</a>
 				</p>
 			</div>
+			<div id="nav3"><center><h1><a href="contest.jsp">''' + contest_name + r'''</a></h1></center></div>
 		</div>
 		<div id="page">
 			<div id="sidebar">'''
@@ -112,7 +116,7 @@ def get_pages_header(contest_name, tasks_list, type = False):
 
 
 def generate_main_file(contest_directory, contest_name, tasks_list, result_directory):
-	text = get_pages_header(contest_name, tasks_list, True)
+	text = get_pages_header(contest_name, tasks_list, True).replace('123456789', 'contest')
 	text += r'''
 			<div id="content">
 				<center><h2>''' + contest_name + r'''</h2></center>
@@ -165,7 +169,7 @@ def get_task_tests(contest_directory, task_name):
 
 
 def generate_task_file(contest_directory, contest_name, tasks_list, task_name, task_count, result_directory):
-	text = get_pages_header(contest_name, tasks_list)
+	text = get_pages_header(contest_name, tasks_list).replace('123456789', task_count)
 	text += r'''
 			<div id="content">
 				<center><h2>''' + task_name + r'''</h2></center>

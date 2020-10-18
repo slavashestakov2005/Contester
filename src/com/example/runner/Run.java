@@ -1,4 +1,4 @@
-package com.example;
+package com.example.runner;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

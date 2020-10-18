@@ -5,8 +5,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-        <link rel="stylesheet" href="style.css">
-        <script src="script.js" type="text/javascript" />
+        <link rel="stylesheet" href="CSS/users.css">
+        <script src="JS/users.js" type="text/javascript" />
         <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js" />
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -47,5 +47,6 @@
                 <input type="submit" value="Отправить" onclick="return Start(this);" />
             </form>
         </div>
+        <button onclick="alert('Like to edit'); "><img src="edit.png"></button>
     </body>
 </html>

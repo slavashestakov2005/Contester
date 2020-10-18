@@ -1,4 +1,4 @@
-package com.example;
+package com.example.runner;
 
 public enum Lang {
     CPP("cpp", "exe"),

@@ -1,4 +1,4 @@
-package com.example;
+package com.example.runner;
 
 public class AnswerWriter {
     private StringBuilder builder;

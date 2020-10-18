@@ -1,4 +1,4 @@
-package com.example;
+package com.example.runner;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
