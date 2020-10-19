@@ -1,6 +1,6 @@
 package com.example.database.rows;
 
-import com.example.database.tables.TestsTable;
+import com.example.database.tables.ContestsTasksTable;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,8 +22,8 @@ public class ContestTask {
     }
 
     public static ContestTask parseSQL(ResultSet resultSet) throws SQLException {
-        int contest = resultSet.getInt(TestsTable.columns.getIndex("CONTEST"));
-        int task = resultSet.getInt(TestsTable.columns.getIndex("TASK"));
+        int contest = resultSet.getInt(ContestsTasksTable.columns.getIndex("CONTEST"));
+        int task = resultSet.getInt(ContestsTasksTable.columns.getIndex("TASK"));
         return new ContestTask(contest, task);
     }
 

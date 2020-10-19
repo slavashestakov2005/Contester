@@ -8,14 +8,14 @@ import java.sql.SQLException;
 public class Test {
     private int task;
     private String input, output;
-    private boolean isExample, isPrivate;
+    private boolean isExample, isPublic;
 
-    public Test(int task, String input, String output, boolean isExample, boolean isPrivate) {
+    public Test(int task, String input, String output, boolean isExample, boolean isPublic) {
         this.task = task;
         this.input = input;
         this.output = output;
         this.isExample = isExample;
-        this.isPrivate = isPrivate;
+        this.isPublic = isPublic;
     }
 
     public int getTask() {
@@ -34,8 +34,8 @@ public class Test {
         return isExample;
     }
 
-    public boolean isPrivate() {
-        return isPrivate;
+    public boolean isPublic() {
+        return isPublic;
     }
 
     public static Test parseSQL(ResultSet resultSet) throws SQLException {
@@ -43,8 +43,8 @@ public class Test {
         String input = resultSet.getString(TestsTable.columns.getIndex("INPUT"));
         String output = resultSet.getString(TestsTable.columns.getIndex("OUTPUT"));
         boolean isExample = resultSet.getInt(TestsTable.columns.getIndex("EXAMPLE")) == 1;
-        boolean isPrivate = resultSet.getInt(TestsTable.columns.getIndex("PUBLIC")) == 1;
-        return new Test(id, input, output, isExample, isPrivate);
+        boolean isPublic = resultSet.getInt(TestsTable.columns.getIndex("PUBLIC")) == 1;
+        return new Test(id, input, output, isExample, isPublic);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class Test {
                 ", input='" + input + '\'' +
                 ", output='" + output + '\'' +
                 ", isExample=" + isExample +
-                ", isPrivate=" + isPrivate +
+                ", isPublic=" + isPublic +
                 '}';
     }
 }

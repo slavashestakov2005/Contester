@@ -63,4 +63,11 @@ public class Task {
                 ", output='" + output + '\'' +
                 '}';
     }
+
+    public String updateString(){
+        return TasksTable.columns.getName("NAME") + " = \'" + name + "\', " +
+                TasksTable.columns.getName("ABOUT") + " = \'" + about + "\', " +
+                TasksTable.columns.getName("INPUT") + " = \'" + input + "\', " +
+                TasksTable.columns.getName("OUTPUT") + " = \'" + output + "\'";
+    }
 }

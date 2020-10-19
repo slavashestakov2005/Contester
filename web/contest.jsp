@@ -22,14 +22,18 @@
 		<link rel="stylesheet" href="CSS/admin.css">
 		<script src="JS/users.js" type="text/javascript"> </script>
 		<script src="JS/admin.js" type="text/javascript"> </script>
-		<script> var cnt=2; </script>
+		<script>
+			var cnt = -1;
+			var page_type = "contest";
+			var page_number = 1;
+		</script>
 		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 		<title>Контест №1</title>
 	</head>
 	<body>
 		<div id="header">
-			<div id="nav1"><center><button id="image" onclick="Edit(document, 'contest'); "><img src="edit.png"></button></center></div>
+			<div id="nav1"><center><button id="image" onclick="Edit(document, page_type, page_number); "><img src="edit.png"></button></center></div>
 			<div id="nav2">
 				<p align="right">
 					<script> document.write(getCookie(document, "name")); </script>

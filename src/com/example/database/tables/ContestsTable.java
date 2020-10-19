@@ -31,4 +31,21 @@ public class ContestsTable {
         }
         return contests;
     }
+
+    public static Contest selectContestByID(int contestId){
+        Contest contest = null;
+        try {
+            ResultSet resultSet = DataBaseHelper.executeQuery("SELECT * FROM " + table + " WHERE " + columns.getName("ID") + " = " + contestId);
+            if (resultSet.next()) {
+                contest = Contest.parseSQL(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contest;
+    }
+
+    public static void updateContestByID(Contest contest){
+        DataBaseHelper.execute("UPDATE " + table + " SET " + contest.updateString() + " WHERE " + columns.getName("ID") + " = " + contest.getId());
+    }
 }

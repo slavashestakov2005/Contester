@@ -7,7 +7,7 @@ function getCookie(document, name) {
 function query(parameters){
     var result = "?";
     parameters.forEach((value, key) => {
-        result += key + '=' + value + "&";
+        result += encodeURIComponent(key) + '=' + encodeURIComponent(value) + "&";
     });
     return result;
 }
@@ -42,35 +42,73 @@ function Change(document, cnt){
     document.getElementById("btn" + cnt).disabled = false;
 }
 
-function Save(document, cnt){
-    const Url = "tests";
-    for(var i = 1; i <= cnt; ++i){
-        if (document.getElementById("btn" + i).disabled === false){
-            var data = new Map();
-            data.set("input", document.getElementById("input" + i).value);
-            data.set("output", document.getElementById("output" + i).value);
-            data.set("example", document.getElementById("example" + i).checked);
-            data.set("public", document.getElementById("public" + i).checked);
-            data.set("id", i);
-            data.set("name", getCookie(document, "name"));
-            data.set("surname", getCookie(document, "surname"));
-            var request = new XMLHttpRequest();
-            request.open("POST", Url + query(data));
-            request.send();
-            var ok = false;
-            request.onreadystatechange = function() {
-                if (ok === false && this.readyState === 4 && this.status === 200) {
-                    var answer = this.responseText;
-                    if (answer === "Ok"){
-                        alert("Изменения сохранены");
-                        ok = true;
-                    }
-                    else{
-                        alert("Ошибка доступа");
-                    }
+function Save(document, cnt, type, number){
+    if (type === 'task') {
+        var Url = "tasks";
+        var data = new Map();
+        data.set("name", getCookie(document, "name"));
+        data.set("surname", getCookie(document, "surname"));
+        data.set("id", number);
+        data.set("t_name", document.getElementById("task_name").value);
+        data.set("t_about", document.getElementById("task_description").value);
+        data.set("t_input", document.getElementById("task_input").value);
+        data.set("t_output", document.getElementById("task_output").value);
+        var request = new XMLHttpRequest();
+        request.open("POST", Url + query(data));
+        request.send();
+
+        request.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                var answer = this.responseText;
+                if (answer === "Ok") {
+                    alert("Изменения сохранены");
+                } else {
+                    alert("Ошибка доступа");
+                    return;
                 }
-            };
-            document.getElementById("btn" + i).disabled = true;
+            }
+        };
+
+        Url = "tests";
+        for (var i = 1; i <= cnt; ++i) {
+            if (document.getElementById("btn" + i).disabled === false) {
+                var data = new Map();
+                data.set("input", document.getElementById("input" + i).value);
+                data.set("output", document.getElementById("output" + i).value);
+                data.set("example", document.getElementById("example" + i).checked);
+                data.set("public", document.getElementById("public" + i).checked);
+                data.set("id", i);
+                data.set("name", getCookie(document, "name"));
+                data.set("surname", getCookie(document, "surname"));
+                var request = new XMLHttpRequest();
+                request.open("POST", Url + query(data));
+                request.send();
+                document.getElementById("btn" + i).disabled = true;
+            }
         }
+    }
+    if (type === 'contest'){
+        var Url = "contests";
+        var data = new Map();
+        data.set("name", getCookie(document, "name"));
+        data.set("surname", getCookie(document, "surname"));
+        data.set("id", number);
+        data.set("t_name", document.getElementById("task_name").value);
+        data.set("t_about", document.getElementById("task_description").value);
+        var request = new XMLHttpRequest();
+        request.open("POST", Url + query(data));
+        request.send();
+
+        request.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                var answer = this.responseText;
+                if (answer === "Ok") {
+                    alert("Изменения сохранены");
+                } else {
+                    alert("Ошибка доступа");
+                    return;
+                }
+            }
+        };
     }
 }

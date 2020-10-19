@@ -1,6 +1,7 @@
 package com.example.database.rows;
 
 import com.example.database.tables.ContestsTable;
+import com.example.database.tables.TasksTable;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -46,5 +47,10 @@ public class Contest {
                 ", name='" + name + '\'' +
                 ", about='" + about + '\'' +
                 '}';
+    }
+
+    public String updateString(){
+        return TasksTable.columns.getName("NAME") + " = \'" + name + "\', " +
+                TasksTable.columns.getName("ABOUT") + " = \'" + about + "\'";
     }
 }

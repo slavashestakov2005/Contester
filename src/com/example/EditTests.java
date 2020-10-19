@@ -1,51 +1,50 @@
 package com.example;
 
+import com.example.database.rows.Task;
+import com.example.database.rows.Test;
+import com.example.database.tables.TasksTable;
+import com.example.database.tables.TestsTable;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 @WebServlet("/edit_tests")
 public class EditTests extends HttpServlet {
-    private static String adminNameFile = "C:\\Users\\Public\\Documents\\Contester\\admin_name.txt";
-    private static String adminName, adminSurname;
-
-    static {
-        try {
-            FileInputStream in = new FileInputStream(adminNameFile);
-            String lines[] = new String(in.readAllBytes()).split("[\r\n]+");
-            adminName = lines[0];
-            adminSurname = lines[1];
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         /** get Parameters **/
         request.setCharacterEncoding("utf-8");
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
-        Integer taskId = Integer.parseInt(request.getParameter("task"));
+        int taskId = Integer.parseInt(request.getParameter("task"));
         /** work with they **/
         response.setContentType("text/html;charset=utf-8");
         PrintWriter pw = response.getWriter();
         final String status;
-        if (adminName.equals(name) && adminSurname.equals(surname)) status = "Ok";
+        if (Admin.checkUser(name, surname)) status = "Ok";
         else status = "Fail";
         System.out.println(name + " - " + surname + " - " + taskId + " -> " + status);
         if (status.equals("Fail")) pw.print(status);
-        else generatePage(pw);
+        else generatePage(pw, taskId);
         System.out.println(pw.toString());
     }
 
-    private void generatePage(PrintWriter pw) {
+    private void generatePage(PrintWriter pw, int taskId) {
+        Task task = TasksTable.selectTaskByID(taskId);
+        System.out.println(task);
+        pw.print("<center><h3>Название:</h3></center>\n");
+        pw.print("<textarea class=\"tasks_data_small\" id=\"task_name\">" + task.getName() + "</textarea>\n");
+        pw.print("<center><h3>Условие:</h3></center>\n");
+        pw.print("<textarea class=\"tasks_data_large\" id=\"task_description\">" + task.getAbout() + "</textarea>\n");
+        pw.print("<center><h3>Входные данные:</h3></center>\n");
+        pw.print("<textarea class=\"tasks_data_middle\" id=\"task_input\">" + task.getInput() + "</textarea>\n");
+        pw.print("<center><h3>Выходные данные:</h3></center>\n");
+        pw.print("<textarea class=\"tasks_data_middle\" id=\"task_output\">" + task.getOutput() + "</textarea>\n");
+        pw.print("<center><h3>Тесты:</h3></center>\n");
         pw.print("<table border=\"1\" width=\"100%\" id=\"task\">\n" +
                 "            <tr>\n" +
                 "                <td width=\"5%\">№</td>\n" +
@@ -54,28 +53,23 @@ public class EditTests extends HttpServlet {
                 "                <td width=\"5%\">Пример</td>\n" +
                 "                <td width=\"5%\">Открытый</td>\n" +
                 "                <td width=\"5%\">Изменено</td>\n" +
-                "            </tr>\n" +
-                "            <tr id=\"1\">\n" +
-                "                <td>1</td>\n" +
-                "                <td>2 3</td>\n" +
-                "                <td>5</td>\n" +
-                "                <td>Пример</td>\n" +
-                "                <td>Открытый</td>\n" +
-                "                <td><button id=\"btn1\" disabled>Изменено</button></td>\n" +
-                "            </tr>\n" +
-                "            <tr id=\"2\">\n" +
-                "                <td>2</td>\n" +
-                "                <td><textarea id=\"input2\" class=\"input_output\" oninput=\"Change(document, 2);\"></textarea></td>\n" +
-                "                <td><textarea id=\"output2\" class=\"input_output\" oninput=\"Change(document, 2);\"></textarea></td>\n" +
-                "                <td><input id=\"example2\" type=\"checkbox\" onchange=\"Change(document, 2);\"></td>\n" +
-                "                <td><input id=\"public2\" type=\"checkbox\" onchange=\"Change(document, 2);\"></td>\n" +
-                "                <td><button id=\"btn2\" disabled>Изменено</button></td>\n" +
-                "            </tr>\n" +
-                "        </table>\n" +
-                "        <script>var cnt = 2;</script>\n" +
-                "        <center>\n" +
-                "            <button onclick=\"Save(document, cnt);\">Сохранить всё</button>\n" +
-                "            <button onclick=\"++cnt; NewRow(document, cnt);\">Новый тест</button>\n" +
-                "        </center>");
+                "            </tr>\n");
+        ArrayList<Test> tests = TestsTable.getTestsForTask(taskId);
+        for(int i = 0; i < tests.size(); ++i){
+            pw.print("<tr id=\"" + (i + 1) + "\">\n" +
+                     "   <td>" + (i + 1) + "</td>\n" +
+                     "   <td><textarea id=\"input" + (i + 1) + "\" class=\"input_output\" oninput=\"Change(document, " + (i + 1) + ");\">" + tests.get(i).getInput() + "</textarea></td>\n" +
+                     "   <td><textarea id=\"output" + (i + 1) + "\" class=\"input_output\" oninput=\"Change(document, " + (i + 1) + ");\">" + tests.get(i).getOutput() + "</textarea></td>\n" +
+                     "   <td><input id=\"example" + (i + 1) + "\" type=\"checkbox\" onchange=\"Change(document, " + (i + 1) + ");\"" + (tests.get(i).isExample() ? " checked" : "") + "></td>\n" +
+                     "   <td><input id=\"public"  + (i + 1) + "\" type=\"checkbox\" onchange=\"Change(document, " + (i + 1) + ");\"" + (tests.get(i).isPublic() ? " checked" : "") + "></td>\n" +
+                     "   <td><button id=\"btn" + (i + 1) + "\" disabled>Изменено</button></td>\n" +
+                     "</tr>\n");
+        }
+        pw.print("</table>\n" +
+                 "<center>\n" +
+                 "   <button onclick=\"Save(document, cnt, page_type, page_number);\">Сохранить всё</button>\n" +
+                 "   <button onclick=\"if(cnt === -1) cnt = " + tests.size() + "; ++cnt; NewRow(document, cnt);\">Новый тест</button>\n" +
+                 "</center>\n" +
+                "<div id=\"down2\"></div>");
     }
 }

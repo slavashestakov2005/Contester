@@ -7,7 +7,7 @@ function getCookie(document, name) {
 function query(parameters){
     var result = "?";
     parameters.forEach((value, key) => {
-        result += key + '=' + value + "&";
+        result += encodeURIComponent(key) + '=' + encodeURIComponent(value) + "&";
     });
     return result;
 }
@@ -43,13 +43,34 @@ function readFile(document) {
     }
 }
 
-function Edit(document, name) {
-    const Url = "edit_tests";
-    if (name !== 'contest'){
+function Edit(document, type, number) {
+    if (type === 'task'){
+        const Url = "edit_tests";
         var data = new Map();
         data.set("name", getCookie(document, "name"));
         data.set("surname", getCookie(document, "surname"));
-        data.set("task", name);
+        data.set("task", number);
+        var request = new XMLHttpRequest();
+        request.open("POST", Url + query(data));
+        request.send();
+        request.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                var answer = this.responseText;
+                if (answer !== "Fail"){
+                    document.getElementById("content").innerHTML = answer;
+                }
+                else{
+                    alert("Ошибка доступа");
+                }
+            }
+        };
+    }
+    if (type === 'contest'){
+        const Url = "edit_contest";
+        var data = new Map();
+        data.set("name", getCookie(document, "name"));
+        data.set("surname", getCookie(document, "surname"));
+        data.set("contest", number);
         var request = new XMLHttpRequest();
         request.open("POST", Url + query(data));
         request.send();

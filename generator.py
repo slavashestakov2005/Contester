@@ -85,7 +85,7 @@ def get_pages_header(contest_name, tasks_list, type = False):
         <link rel="stylesheet" href="CSS/admin.css">
         <script src="JS/users.js" type="text/javascript"> </script>
         <script src="JS/admin.js" type="text/javascript"> </script>
-        <script> var cnt=2; </script>
+        <script> var cnt=-1; </script>
 		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 		<title>''' + contest_name + r'''</title>
