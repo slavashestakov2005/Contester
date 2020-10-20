@@ -30,7 +30,6 @@ public class AddTask extends HttpServlet {
         final String status;
         if (Admin.checkUser(name, surname)) status = "Ok";
         else status = "Fail";
-        System.out.println(name + " - " + surname + " - " + contestId + " -> " + status);
         pw.print(status);
         if (status.equals("Ok")){
             int id = TasksTable.add(new Task(tName, tAbout, tInput, tOutput));

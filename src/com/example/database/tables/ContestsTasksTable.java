@@ -25,7 +25,6 @@ public class ContestsTasksTable {
             ResultSet resultSet = DataBaseHelper.executeQuery("SELECT " + columns.getName("TASK")+ " FROM " + table + " WHERE " + columns.getName("CONTEST") + " = " + contestId);
             while (resultSet.next()) {
                 int taskId = resultSet.getInt(1);
-                System.out.println("TASK_ID : " + taskId);
                 DataBaseHelper.push();
                 tasks.add(TasksTable.selectTaskByID(taskId));
                 DataBaseHelper.pop();

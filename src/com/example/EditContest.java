@@ -27,15 +27,12 @@ public class EditContest extends HttpServlet {
         final String status;
         if (Admin.checkUser(name, surname)) status = "Ok";
         else status = "Fail";
-        System.out.println(name + " - " + surname + " - " + contestId + " -> " + status);
         if (status.equals("Fail")) pw.print(status);
         else generatePage(pw, contestId);
-        System.out.println(pw.toString());
     }
 
     private void generatePage(PrintWriter pw, int contestId) {
         Contest contest = ContestsTable.selectContestByID(contestId);
-        System.out.println(contest);
         pw.print("<center><h3>Название:</h3></center>\n");
         pw.print("<textarea class=\"tasks_data_small\" id=\"task_name\">" + contest.getName() + "</textarea>\n");
         pw.print("<center><h3>Условие:</h3></center>\n");
@@ -44,15 +41,15 @@ public class EditContest extends HttpServlet {
         pw.print("<table border=\"1\" width=\"100%\" id=\"task\">\n" +
                 "            <tr>\n" +
                 "                <td width=\"40%\"><center>Задача</center></td>\n" +
-                "                <td width=\"30%\"><center>Удалить</center></td>\n" +
                 "                <td width=\"30%\"><center>Редактировать</center></td>\n" +
+                "                <td width=\"30%\"><center>Удалить</center></td>\n" +
                 "            </tr>\n");
         ArrayList<Task> tasks = ContestsTasksTable.getTasksForContest(contestId);
         for(int i = 0; i < tasks.size(); ++i){
             pw.print("<tr>\n" +
                     "   <td>" + tasks.get(i).getName() + "</td>\n" +
-                    "   <td><center><button onclick=\"Delete(document, " + tasks.get(i).getId() + ", page_number)\">Удалить</button></center></td>\n" +
                     "   <td><center><button onclick=\"Edit(document, 'task', " + tasks.get(i).getId() + ")\">Редактировать</button></center></td>\n" +
+                    "   <td><center><button onclick=\"Delete(document, " + tasks.get(i).getId() + ", page_number)\">Удалить</button></center></td>\n" +
                     "</tr>\n");
         }
         pw.print("</table>\n" +

@@ -45,7 +45,7 @@ function readFile(document) {
 
 function Edit(document, type, number) {
     if (type === 'task'){
-        const Url = "edit_tests";
+        const Url = "../edit_task";
         var data = new Map();
         data.set("name", getCookie(document, "name"));
         data.set("surname", getCookie(document, "surname"));
@@ -66,7 +66,7 @@ function Edit(document, type, number) {
         };
     }
     if (type === 'contest'){
-        const Url = "edit_contest";
+        const Url = "../edit_contest";
         var data = new Map();
         data.set("name", getCookie(document, "name"));
         data.set("surname", getCookie(document, "surname"));

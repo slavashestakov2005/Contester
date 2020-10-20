@@ -1,7 +1,6 @@
 package com.example;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Admin {
@@ -14,19 +13,9 @@ public class Admin {
             String lines[] = new String(in.readAllBytes()).split("[\r\n]+");
             adminName = lines[0];
             adminSurname = lines[1];
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static String getAdminName() {
-        return adminName;
-    }
-
-    public static String getAdminSurname() {
-        return adminSurname;
     }
 
     public static boolean checkUser(String name, String surname){

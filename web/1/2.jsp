@@ -5,11 +5,11 @@
 <html lang="ru">
     <head>
         <meta charset="Windows-1251">
-        <link rel="shortcut icon" href="image.ico" type="image/x-icon">
-        <link rel="stylesheet" href="CSS/users.css">
-        <link rel="stylesheet" href="CSS/admin.css">
-        <script src="JS/users.js" type="text/javascript"> </script>
-        <script src="JS/admin.js" type="text/javascript"> </script>
+        <link rel="shortcut icon" href="../Images/image.ico" type="image/x-icon">
+        <link rel="stylesheet" href="../CSS/users.css">
+        <link rel="stylesheet" href="../CSS/admin.css">
+        <script src="../JS/users.js" type="text/javascript"> </script>
+        <script src="../JS/admin.js" type="text/javascript"> </script>
         <script>
             var cnt = -1;
             var page_type = "task";
@@ -21,22 +21,22 @@
     </head>
     <body>
         <div id="header">
-            <div id="nav1"><center><button id="image" onclick="Edit(document, page_type, page_number); "><img src="edit.png"></button></center></div>
+            <div id="nav1"><center><button id="image" onclick="Edit(document, page_type, page_number); "><img src="../Images/edit.png"></button></center></div>
             <div id="nav2">
                 <p align="right">
                     <script> document.write(getCookie(document, "name")); </script>
                     <br/>
                     <script> document.write(getCookie(document, "surname")); </script>
                     <br/>
-                    <a href="index.jsp">Выйти</a>
+                    <a href="../index.jsp">Выйти</a>
                 </p>
             </div>
             <div id="nav3"><center><h1><a href="contest.jsp">Контест №1</a></h1></center></div>
         </div>
         <div id="page">
             <div id="sidebar">
-                <h2><a href="task1.jsp">A+B</a></h2>
-                <h2><a href="task2.jsp">Задача №1</a></h2>
+                <h2><a href="1.jsp">A+B</a></h2>
+                <h2><a href="2.jsp">Задача №1</a></h2>
                 <div id="down"></div>
             </div>
             <div id="content">

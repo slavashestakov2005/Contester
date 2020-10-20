@@ -13,8 +13,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-@WebServlet("/edit_tests")
-public class EditTests extends HttpServlet {
+@WebServlet("/edit_task")
+public class EditTask extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         /** get Parameters **/
         request.setCharacterEncoding("utf-8");
@@ -27,15 +27,12 @@ public class EditTests extends HttpServlet {
         final String status;
         if (Admin.checkUser(name, surname)) status = "Ok";
         else status = "Fail";
-        System.out.println(name + " - " + surname + " - " + taskId + " -> " + status);
         if (status.equals("Fail")) pw.print(status);
         else generatePage(pw, taskId);
-        System.out.println(pw.toString());
     }
 
     private void generatePage(PrintWriter pw, int taskId) {
         Task task = TasksTable.selectTaskByID(taskId);
-        System.out.println(task);
         pw.print("<center><h3>Название:</h3></center>\n");
         pw.print("<textarea class=\"tasks_data_small\" id=\"task_name\">" + task.getName() + "</textarea>\n");
         pw.print("<center><h3>Условие:</h3></center>\n");
@@ -48,26 +45,30 @@ public class EditTests extends HttpServlet {
         pw.print("<table border=\"1\" width=\"100%\" id=\"task\">\n" +
                 "            <tr>\n" +
                 "                <td width=\"5%\">№</td>\n" +
-                "                <td width=\"40%\">Ввод</td>\n" +
-                "                <td width=\"40%\">Вывод</td>\n" +
+                "                <td width=\"5%\">Истиный №</td>\n" +
+                "                <td width=\"35%\">Ввод</td>\n" +
+                "                <td width=\"35%\">Вывод</td>\n" +
                 "                <td width=\"5%\">Пример</td>\n" +
                 "                <td width=\"5%\">Открытый</td>\n" +
                 "                <td width=\"5%\">Изменено</td>\n" +
+                "                <td width=\"5%\">Удалить</td>\n" +
                 "            </tr>\n");
         ArrayList<Test> tests = TestsTable.getTestsForTask(taskId);
         for(int i = 0; i < tests.size(); ++i){
             pw.print("<tr id=\"" + (i + 1) + "\">\n" +
                      "   <td>" + (i + 1) + "</td>\n" +
+                     "   <td><p id=\"index" + (i + 1) + "\">" + tests.get(i).getId() + "</p></td>\n" +
                      "   <td><textarea id=\"input" + (i + 1) + "\" class=\"input_output\" oninput=\"Change(document, " + (i + 1) + ");\">" + tests.get(i).getInput() + "</textarea></td>\n" +
                      "   <td><textarea id=\"output" + (i + 1) + "\" class=\"input_output\" oninput=\"Change(document, " + (i + 1) + ");\">" + tests.get(i).getOutput() + "</textarea></td>\n" +
                      "   <td><input id=\"example" + (i + 1) + "\" type=\"checkbox\" onchange=\"Change(document, " + (i + 1) + ");\"" + (tests.get(i).isExample() ? " checked" : "") + "></td>\n" +
                      "   <td><input id=\"public"  + (i + 1) + "\" type=\"checkbox\" onchange=\"Change(document, " + (i + 1) + ");\"" + (tests.get(i).isPublic() ? " checked" : "") + "></td>\n" +
                      "   <td><button id=\"btn" + (i + 1) + "\" disabled>Изменено</button></td>\n" +
+                     "   <td><button                                   >Удалить</button></td>\n" +
                      "</tr>\n");
         }
         pw.print("</table>\n" +
                  "<center>\n" +
-                 "   <button onclick=\"Save(document, cnt, page_type, page_number);\">Сохранить всё</button>\n" +
+                 "   <button onclick=\"if(cnt === -1) cnt = " + tests.size() + "; Save(document, cnt, page_type, page_number);\">Сохранить всё</button>\n" +
                  "   <button onclick=\"if(cnt === -1) cnt = " + tests.size() + "; ++cnt; NewRow(document, cnt);\">Новый тест</button>\n" +
                  "</center>\n" +
                 "<div id=\"down2\"></div>");

@@ -14,11 +14,12 @@ public class TestsTable {
 
     static {
         columns = new Columns();
-        columns.add("TASK", 1, "id_task");      // int      NOT NULL    PK
-        columns.add("INPUT", 2, "input");       // text                 PK
-        columns.add("OUTPUT", 3, "output");     // text
-        columns.add("EXAMPLE", 4, "example");   // text     NOT NULL
-        columns.add("PUBLIC", 5, "public");     // text     NOT NULL
+        columns.add("ID", 1, "id");             // int      NOT NULL    PK      AI      UNIQUE
+        columns.add("TASK", 2, "id_task");      // int      NOT NULL
+        columns.add("INPUT", 3, "input");       // text
+        columns.add("OUTPUT", 4, "output");     // text
+        columns.add("EXAMPLE", 5, "example");   // text     NOT NULL
+        columns.add("PUBLIC", 6, "public");     // text     NOT NULL
     }
 
     public static ArrayList<Test> getTestsForTask(int taskId){
@@ -32,5 +33,13 @@ public class TestsTable {
             e.printStackTrace();
         }
         return tests;
+    }
+
+    public static void add(Test test) {
+        DataBaseHelper.execute("INSERT INTO " + table + test.insertString());
+    }
+
+    public static void update(Test test){
+        DataBaseHelper.execute("UPDATE " + table + " SET " + test.updateString() + " WHERE " + columns.getName("ID") + " = " + test.getId());
     }
 }

@@ -20,7 +20,7 @@
     <body>
         <center>
             <h2>Введите данные, чтобы войти на сайт</h2>
-            <form action="contest.jsp" method="GET">
+            <form action="main.jsp" method="GET">
                 Имя: <input type="text" name="name">
                 <br/>
                 Фамилия: <input type="text" name="surname" />

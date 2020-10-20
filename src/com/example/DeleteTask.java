@@ -25,9 +25,7 @@ public class DeleteTask extends HttpServlet {
         final String status;
         if (Admin.checkUser(name, surname)) status = "Ok";
         else status = "Fail";
-        System.out.println(name + " - " + surname + " - " + taskId + " -> " + status);
         pw.print(status);
         if (status.equals("Ok")) ContestsTasksTable.delete(new ContestTask(contestId, taskId));
-        System.out.println(pw.toString());
     }
 }

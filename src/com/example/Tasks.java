@@ -23,14 +23,11 @@ public class Tasks extends HttpServlet {
         String tInput = request.getParameter("t_input");
         String tOutput = request.getParameter("t_output");
         /** work with they **/
-        System.out.println("From : " + name + " - " + surname + " to " + id);
-        System.out.println(tName + " : " + tAbout + " : " + tInput + " : " + tOutput);
         response.setContentType("text/html;charset=utf-8");
         PrintWriter pw = response.getWriter();
         final String status;
         if (Admin.checkUser(name, surname)) status = "Ok";
         else status = "Fail";
-        System.out.println(status);
         pw.write(status);
         if (status.equals("Ok")){
             TasksTable.updateTaskByID(new Task(id, tName, tAbout, tInput, tOutput));
