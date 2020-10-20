@@ -36,4 +36,17 @@ public class TasksTable {
     public static void updateTaskByID(Task task){
         DataBaseHelper.execute("UPDATE " + table + " SET " + task.updateString() + " WHERE " + columns.getName("ID") + " = " + task.getId());
     }
+
+    public static int add(Task task) {
+        try {
+            DataBaseHelper.execute("INSERT INTO " + table + task.insertString());
+            ResultSet resultSet = DataBaseHelper.executeQuery("SELECT last_insert_rowid()");
+            if (resultSet.next()) {
+                return Integer.parseInt(resultSet.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 }

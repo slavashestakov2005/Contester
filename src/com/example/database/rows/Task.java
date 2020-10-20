@@ -65,9 +65,17 @@ public class Task {
     }
 
     public String updateString(){
-        return TasksTable.columns.getName("NAME") + " = \'" + name + "\', " +
-                TasksTable.columns.getName("ABOUT") + " = \'" + about + "\', " +
-                TasksTable.columns.getName("INPUT") + " = \'" + input + "\', " +
-                TasksTable.columns.getName("OUTPUT") + " = \'" + output + "\'";
+        return TasksTable.columns.getName("NAME") + " = '" + name + "', " +
+                TasksTable.columns.getName("ABOUT") + " = '" + about + "', " +
+                TasksTable.columns.getName("INPUT") + " = '" + input + "', " +
+                TasksTable.columns.getName("OUTPUT") + " = '" + output + "'";
+    }
+
+    public String insertString() {
+        return "(" + TasksTable.columns.getName("NAME") + ", " +
+                TasksTable.columns.getName("ABOUT") + ", " +
+                TasksTable.columns.getName("INPUT") + ", " +
+                TasksTable.columns.getName("OUTPUT") + ") VALUES ('" +
+                name + "', '" +  about + "', '" + input + "', '" + output + "')";
     }
 }

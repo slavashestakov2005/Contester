@@ -43,19 +43,22 @@ public class EditContest extends HttpServlet {
         pw.print("<center><h3>Задания:</h3></center>\n");
         pw.print("<table border=\"1\" width=\"100%\" id=\"task\">\n" +
                 "            <tr>\n" +
-                "                <td width=\"50%\">Задача</td>\n" +
-                "                <td width=\"50%\">Удалить</td>\n" +
+                "                <td width=\"40%\"><center>Задача</center></td>\n" +
+                "                <td width=\"30%\"><center>Удалить</center></td>\n" +
+                "                <td width=\"30%\"><center>Редактировать</center></td>\n" +
                 "            </tr>\n");
         ArrayList<Task> tasks = ContestsTasksTable.getTasksForContest(contestId);
         for(int i = 0; i < tasks.size(); ++i){
             pw.print("<tr>\n" +
                     "   <td>" + tasks.get(i).getName() + "</td>\n" +
-                    "   <td><button>Удалить</button></td>\n" +
+                    "   <td><center><button onclick=\"Delete(document, " + tasks.get(i).getId() + ", page_number)\">Удалить</button></center></td>\n" +
+                    "   <td><center><button onclick=\"Edit(document, 'task', " + tasks.get(i).getId() + ")\">Редактировать</button></center></td>\n" +
                     "</tr>\n");
         }
         pw.print("</table>\n" +
                 "<center>\n" +
                 "   <button onclick=\"Save(document, cnt, page_type, page_number);\">Сохранить всё</button>\n" +
+                "   <button onclick=\"Create(document, page_number)\">Новое задание</button>\n" +
                 "</center>\n" +
                 "<div id=\"down2\"></div>");
     }

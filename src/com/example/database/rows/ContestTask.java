@@ -1,6 +1,6 @@
 package com.example.database.rows;
 
-import com.example.database.tables.ContestsTasksTable;
+import com.example.database.tables.ContestsTasksTable;;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,5 +33,14 @@ public class ContestTask {
                 "contest=" + contest +
                 ", task=" + task +
                 '}';
+    }
+
+    public String deleteString(){
+        return ContestsTasksTable.columns.getName("CONTEST") + " = " + contest + " AND " +
+                ContestsTasksTable.columns.getName("TASK") + " = " + task;
+    }
+
+    public String insertString() {
+        return "(" + contest + ", " + task + ")";
     }
 }

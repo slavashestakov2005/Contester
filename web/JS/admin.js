@@ -112,3 +112,76 @@ function Save(document, cnt, type, number){
         };
     }
 }
+
+function Delete(document, test, number){
+    var Url = "delete_task";
+    var data = new Map();
+    data.set("name", getCookie(document, "name"));
+    data.set("surname", getCookie(document, "surname"));
+    data.set("test", test);
+    data.set("contest", number);
+    var request = new XMLHttpRequest();
+    request.open("POST", Url + query(data));
+    request.send();
+
+    request.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            var answer = this.responseText;
+            if (answer === "Ok") {
+                alert("Изменения сохранены");
+            } else {
+                alert("Ошибка доступа");
+            }
+        }
+    };
+}
+
+function Create(document, number){
+    var Url = "create_task";
+    var data = new Map();
+    data.set("name", getCookie(document, "name"));
+    data.set("surname", getCookie(document, "surname"));
+    data.set("contest", number);
+    var request = new XMLHttpRequest();
+    request.open("POST", Url + query(data));
+    request.send();
+
+    request.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            var answer = this.responseText;
+            if (answer !== "Fail") {
+                document.getElementById("content").innerHTML = answer;
+            } else {
+                alert("Ошибка доступа");
+            }
+        }
+    };
+}
+
+function AddTask(document, contestId) {
+    var Url = "add_task";
+    var data = new Map();
+    data.set("name", getCookie(document, "name"));
+    data.set("surname", getCookie(document, "surname"));
+    data.set("contest", contestId);
+    data.set("t_name", document.getElementById("task_name").value);
+    data.set("t_about", document.getElementById("task_description").value);
+    data.set("t_input", document.getElementById("task_input").value);
+    data.set("t_output", document.getElementById("task_output").value);
+    var request = new XMLHttpRequest();
+    request.open("POST", Url + query(data));
+    request.send();
+
+    request.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            var answer = this.responseText;
+            if (answer === "Ok") {
+                alert("Изменения сохранены");
+                document.location.replace("contest.jsp");
+            } else {
+                alert("Ошибка доступа");
+                document.location.replace("contest.jsp");
+            }
+        }
+    };
+}

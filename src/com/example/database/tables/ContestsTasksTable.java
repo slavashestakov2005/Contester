@@ -2,6 +2,7 @@ package com.example.database.tables;
 
 import com.example.database.Columns;
 import com.example.database.DataBaseHelper;
+import com.example.database.rows.ContestTask;
 import com.example.database.rows.Task;
 
 import java.sql.ResultSet;
@@ -33,5 +34,13 @@ public class ContestsTasksTable {
             e.printStackTrace();
         }
         return tasks;
+    }
+
+    public static void delete(ContestTask contestTask){
+        DataBaseHelper.execute("DELETE FROM " + table + " WHERE " + contestTask.deleteString());
+    }
+
+    public static void add(ContestTask contestTask) {
+        DataBaseHelper.execute("INSERT INTO " + table + " VALUES " + contestTask.insertString());
     }
 }
