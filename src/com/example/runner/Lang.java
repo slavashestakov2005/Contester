@@ -11,8 +11,8 @@ public enum Lang {
         this.end2 = end2;
     }
 
-    public String programName(){
-        return "C:\\Users\\Public\\Documents\\Contester\\Programs\\task." + end2;
+    public String programName(long time){
+        return "C:\\Users\\Public\\Documents\\Contester\\Programs\\" + time + "." + end2;
     }
 
     public static Lang fromString(String end1){
