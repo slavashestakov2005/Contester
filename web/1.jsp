@@ -2,18 +2,6 @@
          pageEncoding="Windows-1251"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<%
-    try{
-        Cookie name = new Cookie("name", request.getParameter("name").trim());
-        Cookie surname = new Cookie("surname", request.getParameter("surname").trim());
-        name.setMaxAge(60*60*10);
-        surname.setMaxAge(60*60*10);
-        // Add both the cookies in the response header.
-        response.addCookie(name);
-        response.addCookie(surname);
-    }catch(Exception e){}
-%>
-
 <html lang="ru">
     <head>
         <meta charset="Windows-1251">
@@ -45,12 +33,20 @@
                 <div id="down"></div>
             </div>
             <div id="content">
-                <center><h2>Контестер</h2></center>
-                <p>Контестер — web приложение для создания контестов по информатике.</p>
-                <p>Контестер — web приложение для создания контестов по информатике.</p>
-                <p>Автор: Шестаков Вячеслав, ученик Инженерной Школы гимназии "Униврс №1".</p>
-                <p>Руководитель: Вахитова Екатерина Юрьевна, учитель гимназии "Униврс №1".</p>
-                <p>Идея: возникла благодаря ОЦ Сириусу и Канухину Александру в частности.</p>
+                <center><h2>Контест №1</h2></center>
+                <h3>Описание:</h3>
+                <p>Здесь расположено описание контеста.</p>
+                <p>Оно может отсутствовать, тогда по умолчанию.</p>
+                <h3>Время старта:</h3>
+                <p>Нет в базе данных</p>
+                <h3>Время окончания:</h3>
+                <p>Нет в базе данных</p>
+                <center>
+                    <form action="1/contest.jsp" method="GET">
+                        <input type="password" id="password" name="password" placeholder="Введите пароль для входа">
+                        <input type="submit" value="Решать" onclick="return Start(this);" />
+                    </form>
+                </center>
                 <div id="down2"></div>
             </div>
         </div>

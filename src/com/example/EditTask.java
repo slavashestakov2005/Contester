@@ -68,7 +68,7 @@ public class EditTask extends HttpServlet {
         }
         pw.print("</table>\n" +
                  "<center>\n" +
-                 "   <button onclick=\"if(cnt === -1) cnt = " + tests.size() + "; Save(document, cnt, page_type, page_number);\">Сохранить всё</button>\n" +
+                 "   <button onclick=\"if(cnt === -1) cnt = " + tests.size() + "; Save(document, cnt, 'task', " + task.getId() + ");\">Сохранить всё</button>\n" +
                  "   <button onclick=\"if(cnt === -1) cnt = " + tests.size() + "; ++cnt; NewRow(document, cnt);\">Новый тест</button>\n" +
                  "</center>\n" +
                 "<div id=\"down2\"></div>");

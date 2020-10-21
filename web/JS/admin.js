@@ -23,6 +23,20 @@ function onServerAnswer(){
     }
 }
 
+function splitDateTime(datetime){
+    return new Date(datetime).getTime();
+}
+
+var minTime = "2020-10-21T19:50", maxTime = "9999-12-31T23:59";
+var minTimeSplit = splitDateTime(minTime);
+var maxTimeSplit = splitDateTime(maxTime);
+minTime = "21.10.2020 19:50"; maxTime = "31.12.9999 23:59";
+
+function checkTime(time) {
+    time = splitDateTime(time);
+    return minTimeSplit <= time && time <= maxTimeSplit;
+}
+
 
 function NewRow(document, cnt){
     var row = document.createElement("tr");
@@ -96,12 +110,21 @@ function Save(document, cnt, type, number){
     }
     if (type === 'contest'){
         var Url = "../contests";
+        var start = document.getElementById("start_datetime").value;
+        var finish = document.getElementById("finish_datetime").value;
+        if (!checkTime(start) || !checkTime(finish)){
+            alert("Ошибка заполнения полей времени. Значения должны располагаться в диапазоне от " + minTime + " до " + maxTime + ".");
+            return;
+        }
         var data = new Map();
         data.set("name", getCookie(document, "name"));
         data.set("surname", getCookie(document, "surname"));
         data.set("id", number);
         data.set("t_name", document.getElementById("task_name").value);
         data.set("t_about", document.getElementById("task_description").value);
+        data.set("start", splitDateTime(start));
+        data.set("finish", splitDateTime(finish));
+        data.set("password", document.getElementById("password").value);
         var request = new XMLHttpRequest();
         request.open("POST", Url + query(data));
         request.send();

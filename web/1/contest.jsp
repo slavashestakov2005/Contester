@@ -4,13 +4,13 @@
 
 <%
 	try{
-		Cookie name = new Cookie("name", request.getParameter("name").trim());
-		Cookie surname = new Cookie("surname", request.getParameter("surname").trim());
-		name.setMaxAge(60*60*10);
-		surname.setMaxAge(60*60*10);
-		// Add both the cookies in the response header.
-		response.addCookie(name);
-		response.addCookie(surname);
+		String pwd = request.getParameter("password");
+		if (pwd != null) {
+			Cookie password = new Cookie("password", pwd);
+			password.setMaxAge(60 * 60 * 10);
+			// Add both the cookies in the response header.
+			response.addCookie(password);
+		}
 	}catch(Exception e){}
 %>
 
@@ -26,6 +26,8 @@
 			var cnt = -1;
 			var page_type = "contest";
 			var page_number = 1;
+			var page_contest = 1;
+			Check(document, page_contest);
 		</script>
 		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

@@ -98,3 +98,7 @@ html, body {
     height: 120px;
     width: 100%;
 }
+
+#password {
+    width: 15%;
+}

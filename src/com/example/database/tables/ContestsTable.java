@@ -17,6 +17,9 @@ public class ContestsTable {
         columns.add("ID", 1, "id");             // int      NOT NULL    PK      AI      UNIQUE
         columns.add("NAME", 2, "name");         // text     NOT NULL
         columns.add("ABOUT", 3, "description"); // text
+        columns.add("START", 4, "start");       // int      NOT NULL
+        columns.add("FINISH", 5, "finish");     // int      NOT NULL
+        columns.add("PASSWORD", 6, "password"); // text     NOT NULL
     }
 
     public static ArrayList<Contest> getAll() {

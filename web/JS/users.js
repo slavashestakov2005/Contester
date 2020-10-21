@@ -87,3 +87,22 @@ function Edit(document, type, number) {
         };
     }
 }
+
+function Check(document, number) {
+    const Url = "../check";
+    var data = new Map();
+    data.set("name", getCookie(document, "name"));
+    data.set("surname", getCookie(document, "surname"));
+    data.set("password", getCookie(document, "password"));
+    data.set("contest", number);
+    var request = new XMLHttpRequest();
+    request.open("POST", Url + query(data), false);
+    request.send();
+    if (request.readyState === 4 && request.status === 200) {
+        var answer = request.responseText;
+        if (answer === "Fail"){
+            document.location.replace("../main.jsp");
+            alert("Неверный пароль или контест не идёт.");
+        }
+    }
+}
