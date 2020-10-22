@@ -42,4 +42,8 @@ public class TestsTable {
     public static void update(Test test){
         DataBaseHelper.execute("UPDATE " + table + " SET " + test.updateString() + " WHERE " + columns.getName("ID") + " = " + test.getId());
     }
+
+    public static void delete(int testId) {
+        DataBaseHelper.execute("DELETE FROM " + table + " WHERE " + columns.getName("ID") + " = " + testId);
+    }
 }

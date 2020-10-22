@@ -39,6 +39,8 @@
             <div id="sidebar">
                 <h2><a href="1.jsp">A+B</a></h2>
                 <h2><a href="2.jsp">Задача №1</a></h2>
+                <br/>
+                <h2><a href="../main.jsp">Вернуться</a></h2>
                 <div id="down"></div>
             </div>
             <div id="content">

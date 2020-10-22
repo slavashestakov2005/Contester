@@ -41,6 +41,8 @@
                 <p>Нет в базе данных</p>
                 <h3>Время окончания:</h3>
                 <p>Нет в базе данных</p>
+                <h3>Продолжительность:</h3>
+                <p>Нет в базе данных</p>
                 <center>
                     <form action="1/contest.jsp" method="GET">
                         <input type="password" id="password" name="password" placeholder="Введите пароль для входа">

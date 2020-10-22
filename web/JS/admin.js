@@ -132,13 +132,27 @@ function Save(document, cnt, type, number){
     }
 }
 
-function Delete(document, test, number){
+function Delete(document, task, number){
     var Url = "../delete_task";
     var data = new Map();
     data.set("name", getCookie(document, "name"));
     data.set("surname", getCookie(document, "surname"));
-    data.set("test", test);
+    data.set("task", task);
     data.set("contest", number);
+    var request = new XMLHttpRequest();
+    request.open("POST", Url + query(data));
+    request.send();
+    request.onreadystatechange = onServerAnswer;
+}
+
+function DeleteTest(document, number){
+    var test = document.getElementById("index" + number).textContent;
+    if (test === -1) return;
+    var Url = "../delete_test";
+    var data = new Map();
+    data.set("name", getCookie(document, "name"));
+    data.set("surname", getCookie(document, "surname"));
+    data.set("test", test);
     var request = new XMLHttpRequest();
     request.open("POST", Url + query(data));
     request.send();
@@ -190,4 +204,16 @@ function AddTask(document, contestId) {
             }
         }
     };
+}
+
+function Generate(document, number){
+    var Url = "../generate";
+    var data = new Map();
+    data.set("name", getCookie(document, "name"));
+    data.set("surname", getCookie(document, "surname"));
+    data.set("contest", number);
+    var request = new XMLHttpRequest();
+    request.open("POST", Url + query(data));
+    request.send();
+    request.onreadystatechange = onServerAnswer;
 }

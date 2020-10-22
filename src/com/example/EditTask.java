@@ -63,10 +63,11 @@ public class EditTask extends HttpServlet {
                      "   <td><input id=\"example" + (i + 1) + "\" type=\"checkbox\" onchange=\"Change(document, " + (i + 1) + ");\"" + (tests.get(i).isExample() ? " checked" : "") + "></td>\n" +
                      "   <td><input id=\"public"  + (i + 1) + "\" type=\"checkbox\" onchange=\"Change(document, " + (i + 1) + ");\"" + (tests.get(i).isPublic() ? " checked" : "") + "></td>\n" +
                      "   <td><button id=\"btn" + (i + 1) + "\" disabled>Изменено</button></td>\n" +
-                     "   <td><button                                   >Удалить</button></td>\n" +
+                     "   <td><button onclick=\"DeleteTest(document, " + (i + 1) + ")\">Удалить</button></td>\n" +
                      "</tr>\n");
         }
         pw.print("</table>\n" +
+                 "<br/>\n" +
                  "<center>\n" +
                  "   <button onclick=\"if(cnt === -1) cnt = " + tests.size() + "; Save(document, cnt, 'task', " + task.getId() + ");\">Сохранить всё</button>\n" +
                  "   <button onclick=\"if(cnt === -1) cnt = " + tests.size() + "; ++cnt; NewRow(document, cnt);\">Новый тест</button>\n" +

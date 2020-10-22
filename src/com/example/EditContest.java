@@ -59,10 +59,13 @@ public class EditContest extends HttpServlet {
                     "</tr>\n");
         }
         pw.print("</table>\n" +
+                "<br/>\n" +
                 "<center>\n" +
                 "   <button onclick=\"Save(document, cnt, page_type, page_number);\">Сохранить всё</button>\n" +
                 "   <button onclick=\"Create(document, page_number)\">Новое задание</button>\n" +
+                "   <button onclick=\"Generate(document, page_contest)\">Сгенерировать</button>\n" +
                 "</center>\n" +
+                "<br/>\n" +
                 "<div id=\"down2\"></div>");
     }
 }

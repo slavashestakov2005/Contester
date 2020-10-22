@@ -101,7 +101,7 @@ function Check(document, number) {
     if (request.readyState === 4 && request.status === 200) {
         var answer = request.responseText;
         if (answer === "Fail"){
-            document.location.replace("../main.jsp");
+            document.location.replace("../" + number + ".jsp");
             alert("Неверный пароль или контест не идёт.");
         }
     }
