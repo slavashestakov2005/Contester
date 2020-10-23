@@ -4,7 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class Admin {
-    private static String adminNameFile = "C:\\Users\\Public\\Documents\\Contester\\admin_name.txt";
+    private static String adminNameFile = Root.rootDirectory + "\\admin_name.txt";
     private static String adminName, adminSurname;
 
     static {

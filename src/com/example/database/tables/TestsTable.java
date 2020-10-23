@@ -22,10 +22,37 @@ public class TestsTable {
         columns.add("PUBLIC", 6, "public");     // text     NOT NULL
     }
 
+    public static Test selectTestByID(int testId){
+        Test test = null;
+        try {
+            ResultSet resultSet = DataBaseHelper.executeQuery("SELECT * FROM " + table + " WHERE " + columns.getName("ID") + " = " + testId);
+            if (resultSet.next()) {
+                test = Test.parseSQL(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return test;
+    }
+
     public static ArrayList<Test> getTestsForTask(int taskId){
         ArrayList<Test> tests = new ArrayList<>();
         try {
             ResultSet resultSet = DataBaseHelper.executeQuery("SELECT * FROM " + table + " WHERE " + columns.getName("TASK") + " = " + taskId);
+            while (resultSet.next()) {
+                tests.add(Test.parseSQL(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tests;
+    }
+
+    public static ArrayList<Test> getExampleTestsForTask(int taskId) {
+        ArrayList<Test> tests = new ArrayList<>();
+        try {
+            ResultSet resultSet = DataBaseHelper.executeQuery("SELECT * FROM " + table + " WHERE " +
+                    columns.getName("TASK") + " = " + taskId + " AND " + columns.getName("EXAMPLE") + " = 1");
             while (resultSet.next()) {
                 tests.add(Test.parseSQL(resultSet));
             }

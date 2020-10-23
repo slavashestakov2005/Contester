@@ -1,5 +1,9 @@
 package com.example.runner;
 
+import com.example.Root;
+import com.example.database.tables.TasksTable;
+import com.example.database.tables.TestsTable;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -7,14 +11,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class RunQuery {
-    private static final String root = "C:\\Users\\Public\\Documents\\Contester";
-    private static final String fileNameOutput = root + "\\Programs";
+    private static final String fileNameOutput = Root.rootDirectory + "\\Programs";
     private static final String commandStart = "cmd /c ";
 
 
     private HttpServletRequest request;
     private HttpServletResponse response;
     private String name, surname, code, path, fileName;
+    private int contestId;
     private Lang lang;
     private AnswerWriter answer;
     private long time;
@@ -33,7 +37,7 @@ public class RunQuery {
             compileFile();
             answer.start();
             runProgram();
-            answer.finish();
+            answer.finish(contestId);
             response.setContentType("text/html;charset=utf-8");
             PrintWriter pw = response.getWriter();
             pw.print(answer.getAnswer());
@@ -51,8 +55,9 @@ public class RunQuery {
         surname = request.getParameterValues("surname")[0];
         code = request.getParameterValues("code")[0];
         lang = Lang.fromString(request.getParameterValues("lang")[0]);
+        contestId = Integer.parseInt(request.getParameterValues("contest")[0]);
         path = request.getParameterValues("contest")[0] + "\\" + request.getParameterValues("task")[0];
-        fileName = root + "\\Contests\\" + path + "\\sendings\\" + Languages.generateFileName(lang, name, surname);
+        fileName = Root.rootDirectory + "\\Contests\\" + path + "\\sendings\\" + Languages.generateFileName(lang, name, surname, time);
     }
 
     private void saveFile() throws IOException {
@@ -67,30 +72,30 @@ public class RunQuery {
     }
 
     protected void runProgram() throws InterruptedException, IOException {
-        File[] files = new File(root + "\\Contests\\" + path + "\\tests").listFiles();
+        File[] files = new File(Root.rootDirectory + "\\Contests\\" + path + "\\tests").listFiles();
         Thread.sleep(10000);    /** for program compile **/
-        for (int i = 0; i < files.length; i += 2) {
+        for (int i = 0; i < files.length; ++i) {
             String input = files[i].getPath();
-            String output = fileNameOutput + "\\" + time + "_" + (i / 2 + 1) + "_out.txt";
+            String output = fileNameOutput + "\\" + time + "_" + files[i].getName();
             executeFile(Languages.getExecuteCommand(lang, input, output, time));
         }
         Thread.sleep(10000);    /** for program running **/
-        for (int i = 0; i < files.length; i += 2) {
-            String output = fileNameOutput + "\\" + time + "_" + (i / 2 + 1) + "_out.txt";
-            String correctOutput = files[i + 1].getPath();
-            System.out.println(output + " " + isCorrect(output, correctOutput));
+        for (int i = 0; i < files.length; ++i) {
+            String output = fileNameOutput + "\\" + time + "_" + files[i].getName();
+            System.out.println(output + " " + isCorrect(output, files[i].getName().split("\\.")[0]));
             Files.delete(Paths.get(output));
         }
         deleteFile();
         Thread.sleep(10000);    /** for files delete **/
     }
 
-    protected boolean isCorrect(String fileName1, String fileName2){
-        if (Checker.equals(fileName1, fileName2)){
-            answer.addTask(true);
+    protected boolean isCorrect(String outputFile, String testId){
+        String[] correctAnswer = TestsTable.selectTestByID(Integer.parseInt(testId)).getOutput().split("\\s+");
+        if (Checker.equals(correctAnswer, outputFile)){
+            answer.addTest(true);
             return true;
         }
-        answer.addTask(false);
+        answer.addTest(false);
         return false;
     }
 

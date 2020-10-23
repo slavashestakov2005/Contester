@@ -17,10 +17,7 @@ public class Languages {
         return null;
     }
 
-    public static String generateFileName(Lang lang, String name, String surname){
-        String fileName = name + "_" + surname;
-        Sendings.addSending(fileName);
-        fileName += "_" + Sendings.getCountSendings(fileName) + "." + lang;
-        return fileName;
+    public static String generateFileName(Lang lang, String name, String surname, long time){
+        return time + "_" + name + "_" + surname + "." + lang;
     }
 }

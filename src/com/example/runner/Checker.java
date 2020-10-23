@@ -21,8 +21,6 @@ public class Checker {
             for(String s : result) System.out.print("'" + s + "', ");
             System.out.println("]");
             return result.toArray(new String[0]);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

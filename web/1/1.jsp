@@ -76,7 +76,7 @@
                 </table>
                 <div id="code">
                     <p>Решение:</p>
-                    <% out.print("<form action=\"run?contest=Контест №1&task=A%2BB&name="); %>${cookie['name'].getValue()}<% out.print("&surname="); %>${cookie['surname'].getValue()}<% out.print("\" method=\"post\">"); %>
+                    <% out.print("<form action=\"../run?contest=1&task=1&name="); %>${cookie['name'].getValue()}<% out.print("&surname="); %>${cookie['surname'].getValue()}<% out.print("\" method=\"post\">"); %>
                         <textarea id="code_text" name="code" placeholder="Введите код" oninput="textInput(document)"></textarea>
                         <br/>
                         <input id="code_file" type="file" oninput="codeInput(document, 'file');" onchange="readFile(document);"/>

@@ -1,5 +1,7 @@
 package com.example.runner;
 
+import com.example.Root;
+
 public enum Lang {
     CPP("cpp", "exe"),
     PY("py", "pyc");
@@ -12,7 +14,7 @@ public enum Lang {
     }
 
     public String programName(long time){
-        return "C:\\Users\\Public\\Documents\\Contester\\Programs\\" + time + "." + end2;
+        return Root.rootDirectory +  "\\Programs\\" + time + "." + end2;
     }
 
     public static Lang fromString(String end1){

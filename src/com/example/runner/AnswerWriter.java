@@ -23,19 +23,19 @@ public class AnswerWriter {
                 .append("\t</tr>\n");
     }
 
-    public void finish(){
+    public void finish(int contestId){
         builder.append("</table>\n")
                 .append("<br>\n")
                 .append("<center><button onclick=\"move()\">Назад</button></center>\n")
                 .append("<script>\n")
                 .append("\tfunction move(){\n")
-                .append("\t\tdocument.location.replace(\"contest.jsp\");\n")
+                .append("\t\tdocument.location.replace(\"" + contestId + "/contest.jsp\");\n")
                 .append("\t\treturn false;\n")
                 .append("\t}\n")
                 .append("</script>");
     }
 
-    public void addTask(boolean result){
+    public void addTest(boolean result){
         builder.append("\t<tr>\n")
                 .append("\t\t<td>\n")
                 .append("\t\t\t<p>").append(cnt).append("</p>\n")
