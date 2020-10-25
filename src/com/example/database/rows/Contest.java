@@ -81,4 +81,13 @@ public class Contest {
                 ContestsTable.columns.getName("FINISH") + " = " + finish + ", " +
                 ContestsTable.columns.getName("PASSWORD") + " = \'" + password + "'";
     }
+
+    public String insertString() {
+        return "(" + ContestsTable.columns.getName("NAME") + ", " +
+                ContestsTable.columns.getName("ABOUT") + ", " +
+                ContestsTable.columns.getName("START") + ", " +
+                ContestsTable.columns.getName("FINISH") + ", " +
+                ContestsTable.columns.getName("PASSWORD") + ") VALUES ('" +
+                name + "', '" +  about + "', " + start + ", " + finish + ", '" + password + "')";
+    }
 }

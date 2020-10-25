@@ -3,6 +3,7 @@ package com.example.database.tables;
 import com.example.database.Columns;
 import com.example.database.DataBaseHelper;
 import com.example.database.rows.Contest;
+import com.example.database.rows.Task;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -50,5 +51,18 @@ public class ContestsTable {
 
     public static void updateContestByID(Contest contest){
         DataBaseHelper.execute("UPDATE " + table + " SET " + contest.updateString() + " WHERE " + columns.getName("ID") + " = " + contest.getId());
+    }
+
+    public static int add(Contest contest) {
+        try {
+            DataBaseHelper.execute("INSERT INTO " + table + contest.insertString());
+            ResultSet resultSet = DataBaseHelper.executeQuery("SELECT last_insert_rowid()");
+            if (resultSet.next()) {
+                return Integer.parseInt(resultSet.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }

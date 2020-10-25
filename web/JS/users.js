@@ -12,6 +12,13 @@ function query(parameters){
     return result;
 }
 
+function ToCorrectText(s){
+    var el = document.createElement("div");
+    el.innerText = el.textContent = s;
+    s = el.innerHTML;
+    return s;
+}
+
 
 function textInput(document) {
     var textarea = document.getElementById("code_text");
@@ -25,10 +32,6 @@ function codeInput(document, type) {
     var codeText = document.getElementById("code_text");
     if (type === "file") codeText.value = "";
     if (type === "text") codeFile.value = "";
-}
-
-function sendCode(code) {
-    alert(code);
 }
 
 function readFile(document) {
@@ -105,4 +108,24 @@ function Check(document, number) {
             alert("Неверный пароль или контест не идёт.");
         }
     }
+}
+
+function CreateContest(document) {
+    var Url = "create_contest";
+    var data = new Map();
+    data.set("name", getCookie(document, "name"));
+    data.set("surname", getCookie(document, "surname"));
+    var request = new XMLHttpRequest();
+    request.open("POST", Url + query(data));
+    request.send();
+    request.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            var answer = this.responseText;
+            if (answer !== "Fail") {
+                document.getElementById("content").innerHTML = answer;
+            } else {
+                alert("Ошибка доступа");
+            }
+        }
+    };
 }

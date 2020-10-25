@@ -17,6 +17,7 @@ public class MainPageGenerator {
                 .append(part3).append(contest.getName())
                 .append(part4).append(contest.getName())
                 .append(part5);
+        if (tasks != null)
         for(Task task : tasks){
             text.append("\t\t\t\t<h2><a href=\"").append(task.getId()).append(".jsp\">").append(task.getName()).append("</a></h2>\n");
         }

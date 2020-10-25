@@ -16,6 +16,7 @@
     </head>
     <body>
         <div id="header">
+            <div id="nav1"><center><button id="image" onclick="CreateContest(document)"><img src="Images/add.png"></button></center></div>
             <div id="nav2">
                 <p align="right">
                     <script> document.write(getCookie(document, "name")); </script>

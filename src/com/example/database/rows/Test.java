@@ -1,6 +1,5 @@
 package com.example.database.rows;
 
-import com.example.database.tables.TasksTable;
 import com.example.database.tables.TestsTable;
 
 import java.sql.ResultSet;
@@ -72,6 +71,7 @@ public class Test {
                 ", isPublic=" + isPublic +
                 '}';
     }
+
     public String updateString(){
         return TestsTable.columns.getName("TASK") + " = '" + task + "', " +
                 TestsTable.columns.getName("INPUT") + " = '" + input + "', " +
@@ -79,7 +79,6 @@ public class Test {
                 TestsTable.columns.getName("EXAMPLE") + " = " + (isExample ? 1 : 0) + ", " +
                 TestsTable.columns.getName("PUBLIC") + " = " + (isPublic ? 1 : 0);
     }
-
 
     public String insertString() {
         return "(" + TestsTable.columns.getName("TASK") + ", " +

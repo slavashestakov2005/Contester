@@ -33,6 +33,5 @@ public class Tests extends HttpServlet {
             if (id == -1) TestsTable.add(new Test(task, input, output, isExample, isPublic));
             else TestsTable.update(new Test(id, task, input, output, isExample, isPublic));
         }
-        System.out.println(id + " : " + task + " : " + input + " : " + output + " : " + isExample + " : " + isPublic);
     }
 }

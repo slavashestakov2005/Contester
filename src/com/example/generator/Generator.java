@@ -1,5 +1,6 @@
 package com.example.generator;
 
+import com.example.Contests;
 import com.example.Root;
 import com.example.database.rows.Contest;
 import com.example.database.rows.Task;
@@ -14,7 +15,6 @@ import java.util.ArrayList;
 
 public class Generator {
     public static void start(int contestId) throws IOException {
-        System.out.println("Хотите сгенерировать контест №" + contestId);
         Contest contest = ContestsTable.selectContestByID(contestId);
         ArrayList<Task> tasks = ContestsTasksTable.getTasksForContest(contestId);
         deleteOldFiles(contestId);
@@ -27,10 +27,12 @@ public class Generator {
                 saveTest(contestId, task.getId(), tests.get(i).getId(), tests.get(i).getInput());
             }
         }
+        ArrayList<Contest> contests = ContestsTable.getAll();
+        for(Contest contests1 : contests)  StartPageGenerator.generate(contests1, contests);
+        ContesterPageGenerator.generate(contests);
     }
 
     public static void deleteOldFiles(int contestId) throws IOException {
-        System.out.println("Удаление старых папок");
         Path directory = Paths.get(Root.webDirectory + "\\" + contestId);
         if (Files.exists(directory)) Files.walkFileTree(directory, new DeleteVisitor());
         directory = Paths.get(Root.rootDirectory + "\\Contests\\" + contestId);
@@ -38,7 +40,6 @@ public class Generator {
     }
 
     public static void createNewDirectories(int contestId, ArrayList<Task> tasks) throws IOException {
-        System.out.println("Создание новых");
         Files.createDirectories(Paths.get(Root.webDirectory + "\\" + contestId));
         String contestDirectory = Root.rootDirectory + "\\Contests\\" + contestId;
         Files.createDirectories(Paths.get(contestDirectory));
@@ -51,12 +52,10 @@ public class Generator {
 
     public static void saveTest(int contestId, int taskId, int testId, String text) throws IOException {
         String path = Root.rootDirectory + "\\Contests\\" + contestId + "\\" + taskId + "\\tests\\" + testId + ".txt";
-        System.out.print("Save : " + path);
         Writer out = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(path), "UTF-8"));
         out.write(text);
         out.close();
-        System.out.println(" -> OK");
     }
 
     public static String toHTML(String text, int tabs){

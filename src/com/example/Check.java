@@ -16,7 +16,6 @@ public class Check extends HttpServlet {
         String surname = request.getParameter("surname");
         String password = request.getParameter("password");
         int contesId = Integer.parseInt(request.getParameter("contest"));
-        System.out.println(password);
         /** work with they **/
         response.setContentType("text/html;charset=utf-8");
         PrintWriter pw = response.getWriter();

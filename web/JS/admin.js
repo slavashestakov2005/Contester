@@ -66,7 +66,7 @@ function NewRow(document, cnt){
     td5.innerHTML = '<input id="example' 	+ cnt + '" type="checkbox" onchange="' + change + '">';
     td6.innerHTML = '<input id="public' 	+ cnt + '" type="checkbox" onchange="' + change + '">';
     td7.innerHTML = '<button id="btn' 		+ cnt + '">Изменено</button>';
-    td8.innerHTML = '<button                          >Удалить</button>';
+    td8.innerHTML = '<button onclick="DeleteTest(document, -1)">Удалить</button>';
 }
 
 function Change(document, cnt){
@@ -201,6 +201,40 @@ function AddTask(document, contestId) {
             } else {
                 alert("Ошибка доступа");
                 document.location.replace("contest.jsp");
+            }
+        }
+    };
+}
+
+
+function AddContest(document) {
+    var start = document.getElementById("start_datetime").value;
+    var finish = document.getElementById("finish_datetime").value;
+    if (!checkTime(start) || !checkTime(finish)){
+        alert("Ошибка заполнения полей времени. Значения должны располагаться в диапазоне от " + minTime + " до " + maxTime + ".");
+        return;
+    }
+    var Url = "add_contest";
+    var data = new Map();
+    data.set("name", getCookie(document, "name"));
+    data.set("surname", getCookie(document, "surname"));
+    data.set("c_name", document.getElementById("contest_name").value);
+    data.set("c_about", document.getElementById("contest_description").value);
+    data.set("start", splitDateTime(start));
+    data.set("finish", splitDateTime(finish));
+    data.set("password", document.getElementById("password").value);
+    var request = new XMLHttpRequest();
+    request.open("POST", Url + query(data));
+    request.send();
+    request.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            var answer = this.responseText;
+            if (answer === "Ok") {
+                alert("Изменения сохранены");
+                document.location.replace("main.jsp");
+            } else {
+                alert("Ошибка доступа");
+                document.location.replace("main.jsp");
             }
         }
     };
