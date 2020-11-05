@@ -48,24 +48,17 @@
 			<div id="nav3"><center><h1><a href="contest.jsp">Контест №1</a></h1></center></div>
 		</div>
 		<div id="page">
-			<div id="sidebar">
-				<h2><a href="1.jsp">A+B</a></h2>
-				<h2><a href="2.jsp">Задача №1</a></h2>
-				<br/>
-				<h2><a href="../main.jsp">Вернуться</a></h2>
-				<div id="down"></div>
-			</div>
+			<iframe src="sidebar.html" width="150px" height="100%" scrolling="no" frameborder="no" style="position: absolute;">Список задач</iframe>"
 			<div id="content">
 				<center><h2>Контест №1</h2></center>
 				<h3>Описание:</h3>
-				<p>Здесь расположено описание контеста.</p>
-				<p>Оно может отсутствовать, тогда по умолчанию.</p>
+				<p>Здесь расположено описание контеста. Оно может отсутствовать, тогда по умолчанию.</p>
 				<h3>Время старта:</h3>
-				<p>Нет в базе данных</p>
+				<p>21.10.2020 21:56</p>
 				<h3>Время окончания:</h3>
-				<p>Нет в базе данных</p>
+				<p>01.11.2020 23:59</p>
 				<h3>Продолжительность:</h3>
-				<p>Нет в базе данных</p>
+				<p>11:02:03</p>
 				<div id="down2"></div>
 			</div>
 		</div>

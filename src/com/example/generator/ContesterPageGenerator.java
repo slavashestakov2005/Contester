@@ -1,20 +1,13 @@
 package com.example.generator;
 
 import com.example.Root;
-import com.example.database.rows.Contest;
-
 import java.io.*;
-import java.util.ArrayList;
 
 public class ContesterPageGenerator {
-    public static void generate(ArrayList<Contest> contests) throws IOException {
+    public static void generate() throws IOException {
         String pageName = Root.webDirectory + "\\main.jsp";
         StringBuilder text = new StringBuilder();
         text.append(part1);
-        for(Contest contest : contests){
-            text.append("\t\t\t\t<h2><a href=\"").append(contest.getId()).append(".jsp\">").append(contest.getName()).append("</a></h2>\n");
-        }
-        text.append(part3);
         Writer out = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(pageName), "UTF-8"));
         out.write(text.toString());
@@ -64,9 +57,7 @@ public class ContesterPageGenerator {
             "\t\t\t<div id=\"nav3\"><center><h1><a href=\"main.jsp\">Контестер</a></h1></center></div>\n" +
             "\t\t</div>\n" +
             "\t\t<div id=\"page\">\n" +
-            "\t\t\t<div id=\"sidebar\">\n";
-    private static String part3 = "\t\t\t\t<div id=\"down\"></div>\n" +
-            "\t\t\t</div>\n" +
+            "\t\t\t<iframe src=\"sidebar.html\" width=\"150px\" height=\"100%\" scrolling=\"no\" frameborder=\"no\" style=\"position: absolute; \">Список контестов</iframe>\n" +
             "\t\t\t<div id=\"content\">\n" +
             "\t\t\t\t<center><h2>Контестер</h2></center>\n" +
             "\t\t\t\t<p>Контестер — web приложение для создания контестов по информатике.</p>\n" +

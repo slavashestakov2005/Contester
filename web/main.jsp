@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="Windows-1251"%>
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%
@@ -16,7 +16,7 @@
 
 <html lang="ru">
     <head>
-        <meta charset="Windows-1251">
+        <meta charset="UTF-8">
         <link rel="shortcut icon" href="Images/image.ico" type="image/x-icon">
         <link rel="stylesheet" href="CSS/users.css">
         <link rel="stylesheet" href="CSS/admin.css">
@@ -24,7 +24,7 @@
         <script src="JS/admin.js" type="text/javascript"> </script>
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-        <title>Контестер</title>
+        <title>РљРѕРЅС‚РµСЃС‚РµСЂ</title>
     </head>
     <body>
         <div id="header">
@@ -35,23 +35,20 @@
                     <br/>
                     <script> document.write(getCookie(document, "surname")); </script>
                     <br/>
-                    <a href="index.jsp">Выйти</a>
+                    <a href="index.jsp">Р’С‹Р№С‚Рё</a>
                 </p>
             </div>
-            <div id="nav3"><center><h1><a href="main.jsp">Контестер</a></h1></center></div>
+            <div id="nav3"><center><h1><a href="main.jsp">РљРѕРЅС‚РµСЃС‚РµСЂ</a></h1></center></div>
         </div>
         <div id="page">
-            <div id="sidebar">
-                <h2><a href="1.jsp">Контест №1</a></h2>
-                <div id="down"></div>
-            </div>
+            <iframe src="sidebar.html" width="150px" height="100%" scrolling="no" frameborder="no" style="position: absolute; ">РЎРїРёСЃРѕРє РєРѕРЅС‚РµСЃС‚РѕРІ</iframe>
             <div id="content">
-                <center><h2>Контестер</h2></center>
-                <p>Контестер — web приложение для создания контестов по информатике.</p>
-                <p>Контестер — web приложение для создания контестов по информатике.</p>
-                <p>Автор: Шестаков Вячеслав, ученик Инженерной Школы гимназии "Униврс №1".</p>
-                <p>Руководитель: Вахитова Екатерина Юрьевна, учитель гимназии "Униврс №1".</p>
-                <p>Идея: возникла благодаря ОЦ Сириусу и Канухину Александру в частности.</p>
+                <center><h2>РљРѕРЅС‚РµСЃС‚РµСЂ</h2></center>
+                <p>РљРѕРЅС‚РµСЃС‚РµСЂ вЂ” web РїСЂРёР»РѕР¶РµРЅРёРµ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РєРѕРЅС‚РµСЃС‚РѕРІ РїРѕ РёРЅС„РѕСЂРјР°С‚РёРєРµ.</p>
+                <p>РљРѕРЅС‚РµСЃС‚РµСЂ вЂ” web РїСЂРёР»РѕР¶РµРЅРёРµ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РєРѕРЅС‚РµСЃС‚РѕРІ РїРѕ РёРЅС„РѕСЂРјР°С‚РёРєРµ.</p>
+                <p>РђРІС‚РѕСЂ: РЁРµСЃС‚Р°РєРѕРІ Р’СЏС‡РµСЃР»Р°РІ, СѓС‡РµРЅРёРє РРЅР¶РµРЅРµСЂРЅРѕР№ РЁРєРѕР»С‹ РіРёРјРЅР°Р·РёРё "РЈРЅРёРІСЂСЃ в„–1".</p>
+                <p>Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ: Р’Р°С…РёС‚РѕРІР° Р•РєР°С‚РµСЂРёРЅР° Р®СЂСЊРµРІРЅР°, СѓС‡РёС‚РµР»СЊ РіРёРјРЅР°Р·РёРё "РЈРЅРёРІСЂСЃ в„–1".</p>
+                <p>РРґРµСЏ: РІРѕР·РЅРёРєР»Р° Р±Р»Р°РіРѕРґР°СЂСЏ РћР¦ РЎРёСЂРёСѓСЃСѓ Рё РљР°РЅСѓС…РёРЅСѓ РђР»РµРєСЃР°РЅРґСЂСѓ РІ С‡Р°СЃС‚РЅРѕСЃС‚Рё.</p>
                 <div id="down2"></div>
             </div>
         </div>

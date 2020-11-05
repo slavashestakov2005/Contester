@@ -2,9 +2,7 @@ package com.example;
 
 import com.example.database.rows.Contest;
 import com.example.database.tables.ContestsTable;
-import com.example.generator.ContesterPageGenerator;
-import com.example.generator.MainPageGenerator;
-import com.example.generator.StartPageGenerator;
+import com.example.generator.*;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,12 +34,16 @@ public class AddContest extends HttpServlet {
         else status = "Fail";
         pw.print(status);
         if (status.equals("Ok")){
-            int id = ContestsTable.add(new Contest(cName, cAbout, start, finish, password));
+            Contest contest = new Contest(cName, cAbout, start, finish, password);
+            int id = ContestsTable.add(contest);
+            contest = new Contest(id, cName, cAbout, start, finish, password);
             ArrayList<Contest> contests = ContestsTable.getAll();
-            for(Contest contests1 : contests)  StartPageGenerator.generate(contests1, contests);
-            ContesterPageGenerator.generate(contests);
+            ContestsSidebarGenerator.generate(contests);
+            StartPageGenerator.generate(contest);
+            /***/ContesterPageGenerator.generate();
             Files.createDirectories(Paths.get(Root.webDirectory +  "\\" + id));
-            MainPageGenerator.generate(new Contest(id, cName, cAbout, start, finish, password), null);
+            MainPageGenerator.generate(contest);
+            TasksSidebarGenerator.generate(contest, new ArrayList<>());
         }
     }
 }

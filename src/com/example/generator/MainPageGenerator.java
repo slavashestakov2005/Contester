@@ -3,30 +3,23 @@ package com.example.generator;
 import com.example.Root;
 import com.example.TimeHelper;
 import com.example.database.rows.Contest;
-import com.example.database.rows.Task;
 
 import java.io.*;
-import java.util.ArrayList;
 
 public class MainPageGenerator {
-    public static void generate(Contest contest,  ArrayList<Task> tasks) throws IOException {
+    public static void generate(Contest contest) throws IOException {
         String pageName = Root.webDirectory + "\\" + contest.getId() + "\\contest.jsp";
         StringBuilder text = new StringBuilder();
         text.append(part1).append(contest.getId())
                 .append(part2).append(contest.getId())
                 .append(part3).append(contest.getName())
                 .append(part4).append(contest.getName())
-                .append(part5);
-        if (tasks != null)
-        for(Task task : tasks){
-            text.append("\t\t\t\t<h2><a href=\"").append(task.getId()).append(".jsp\">").append(task.getName()).append("</a></h2>\n");
-        }
-        text.append(part6).append(contest.getName())
-                .append(part7).append(Generator.toHTML(contest.getAbout(), 4))
-                .append(part8).append(TimeHelper.toWeb(contest.getStart()))
-                .append(part9).append(TimeHelper.toWeb(contest.getFinish()))
-                .append(part10).append(TimeHelper.toDuration(contest.getFinish() - contest.getStart()))
-                .append(part11);
+                .append(part5).append(contest.getName())
+                .append(part6).append(Generator.toHTML(contest.getAbout(), 4))
+                .append(part7).append(TimeHelper.toWeb(contest.getStart()))
+                .append(part8).append(TimeHelper.toWeb(contest.getFinish()))
+                .append(part9).append(TimeHelper.toDuration(contest.getFinish() - contest.getStart()))
+                .append(part10);
         Writer out = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(pageName), "UTF-8"));
         out.write(text.toString());
@@ -87,19 +80,15 @@ public class MainPageGenerator {
     private static String part5 = "</a></h1></center></div>\n" +
             "\t\t</div>\n" +
             "\t\t<div id=\"page\">\n" +
-            "\t\t\t<div id=\"sidebar\">\n";
-    private static String part6 = "\t\t\t\t<br/>\n" +
-            "\t\t\t\t<h2><a href=\"../main.jsp\">Вернуться</a></h2>\n" +
-            "\t\t\t\t<div id=\"down\"></div>\n" +
-            "\t\t\t</div>\n" +
+            "\t\t\t<iframe src=\"sidebar.html\" width=\"150px\" height=\"100%\" scrolling=\"no\" frameborder=\"no\" style=\"position: absolute;\">Список задач</iframe>\"\n" +
             "\t\t\t<div id=\"content\">\n" +
             "\t\t\t\t<center><h2>";
-    private static String part7 = "</h2></center>\n" +
+    private static String part6 = "</h2></center>\n" +
             "\t\t\t\t<h3>Описание:</h3>\n";
-    private static String part8 = "\t\t\t\t<h3>Время старта:</h3>\n\t\t\t\t<p>";
-    private static String part9 = "</p>\n\t\t\t\t<h3>Время окончания:</h3>\n\t\t\t\t<p>";
-    private static String part10 = "</p>\n\t\t\t\t<h3>Продолжительность:</h3>\n\t\t\t\t<p>";
-    private static String part11 = "</p>\n\t\t\t\t<div id=\"down2\"></div>\n" +
+    private static String part7 = "\t\t\t\t<h3>Время старта:</h3>\n\t\t\t\t<p>";
+    private static String part8 = "</p>\n\t\t\t\t<h3>Время окончания:</h3>\n\t\t\t\t<p>";
+    private static String part9 = "</p>\n\t\t\t\t<h3>Продолжительность:</h3>\n\t\t\t\t<p>";
+    private static String part10 = "</p>\n\t\t\t\t<div id=\"down2\"></div>\n" +
             "\t\t\t</div>\n" +
             "\t\t</div>\n" +
             "\t</body>\n" +

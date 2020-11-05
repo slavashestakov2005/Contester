@@ -9,22 +9,18 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class TaskPageGenerator {
-    public static void generate(Contest contest, Task task, ArrayList<Task> tasks, ArrayList<Test> tests) throws IOException {
+    public static void generate(Contest contest, Task task, ArrayList<Test> tests) throws IOException {
         String pageName = Root.webDirectory + "\\" + contest.getId() + "\\" + task.getId() + ".jsp";
         StringBuilder text = new StringBuilder();
         text.append(part1).append(task.getId())
                 .append(part2).append(contest.getId())
                 .append(part3).append(contest.getName())
                 .append(part4).append(contest.getName())
-                .append(part5);
-        for(Task task1 : tasks){
-            text.append("\t\t\t\t<h2><a href=\"").append(task1.getId()).append(".jsp\">").append(task1.getName()).append("</a></h2>\n");
-        }
-        text.append(part6).append(task.getName())
-                .append(part7).append(Generator.toHTML(task.getAbout(), 4))
-                .append(part8).append(Generator.toHTML(task.getInput(), 4))
-                .append(part9).append(Generator.toHTML(task.getOutput(), 4))
-                .append(part10);
+                .append(part5).append(task.getName())
+                .append(part6).append(Generator.toHTML(task.getAbout(), 4))
+                .append(part7).append(Generator.toHTML(task.getInput(), 4))
+                .append(part8).append(Generator.toHTML(task.getOutput(), 4))
+                .append(part9);
         for(Test test : tests){
             text.append("\t\t\t\t\t<tr>\n").append("\t\t\t\t\t\t<td>\n");
             text.append(Generator.toHTML(test.getInput(), 7));
@@ -32,7 +28,7 @@ public class TaskPageGenerator {
             text.append(Generator.toHTML(test.getOutput(), 7));
             text.append("\t\t\t\t\t\t</td>\n").append("\t\t\t\t\t</tr>\n");
         }
-        text.append(part11).append(contest.getId()).append(part12).append(task.getId()).append(part13);
+        text.append(part10).append(contest.getId()).append(part11).append(task.getId()).append(part12);
         Writer out = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(pageName), "UTF-8"));
         out.write(text.toString());
@@ -80,28 +76,24 @@ public class TaskPageGenerator {
     private static String part5 = "</a></h1></center></div>\n" +
             "\t\t</div>\n" +
             "\t\t<div id=\"page\">\n" +
-            "\t\t\t<div id=\"sidebar\">\n";
-    private static String part6 = "\t\t\t\t<br/>\n" +
-            "\t\t\t\t<h2><a href=\"../main.jsp\">Вернуться</a></h2>\n" +
-            "\t\t\t\t<div id=\"down\"></div>\n" +
-            "\t\t\t</div>\n" +
+            "\t\t\t<iframe src=\"sidebar.html\" width=\"150px\" height=\"100%\" scrolling=\"no\" frameborder=\"no\" style=\"position: absolute;\">Список задач</iframe>\"\n" +
             "\t\t\t<div id=\"content\">\n" +
             "\t\t\t\t<center><h2>";
-    private static String part7 = "</h2></center>\n" +
+    private static String part6 = "</h2></center>\n" +
             "\t\t\t\t<h3>Условие:</h3>\n";
-    private static String part8 = "\t\t\t\t<h3>Входные данные:</h3>\n";
-    private static String part9 = "\t\t\t\t<h3>Выходные данные:</h3>\n";
-    private static String part10 = "\t\t\t\t<table border=\"1\" width=\"95%\">\n" +
+    private static String part7 = "\t\t\t\t<h3>Входные данные:</h3>\n";
+    private static String part8 = "\t\t\t\t<h3>Выходные данные:</h3>\n";
+    private static String part9 = "\t\t\t\t<table border=\"1\" width=\"95%\">\n" +
             "\t\t\t\t\t<tr>\n" +
             "\t\t\t\t\t\t<td width=\"50%\"><center>Input</center></td>\n" +
             "\t\t\t\t\t\t<td width=\"50%\"><center>Output</center></td>\n" +
             "\t\t\t\t\t</tr>\n";
-    private static String part11 = "\t\t\t\t</table>\n" +
+    private static String part10 = "\t\t\t\t</table>\n" +
             "\t\t\t\t<div id=\"code\">\n" +
             "\t\t\t\t\t<p>Решение:</p>\n" +
             "\t\t\t\t\t<% out.print(\"<form action=\\\"../run?contest=";
-    private static String part12 = "&task=";
-    private static String part13 = "&name=\"); %>${cookie['name'].getValue()}<% out.print(\"&surname=\"); %>${cookie['surname'].getValue()}<% out.print(\"\\\" method=\\\"post\\\">\"); %>\n" +
+    private static String part11 = "&task=";
+    private static String part12 = "&name=\"); %>${cookie['name'].getValue()}<% out.print(\"&surname=\"); %>${cookie['surname'].getValue()}<% out.print(\"\\\" method=\\\"post\\\">\"); %>\n" +
             "\t\t\t\t\t\t<textarea id=\"code_text\" name=\"code\" placeholder=\"Введите код\" oninput=\"textInput(document)\"></textarea>\n" +
             "\t\t\t\t\t\t<br/>\n" +
             "\t\t\t\t\t\t<input id=\"code_file\" type=\"file\" oninput=\"codeInput(document, 'file');\" onchange=\"readFile(document);\"/>\n" +

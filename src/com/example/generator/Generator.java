@@ -1,6 +1,5 @@
 package com.example.generator;
 
-import com.example.Contests;
 import com.example.Root;
 import com.example.database.rows.Contest;
 import com.example.database.rows.Task;
@@ -19,17 +18,17 @@ public class Generator {
         ArrayList<Task> tasks = ContestsTasksTable.getTasksForContest(contestId);
         deleteOldFiles(contestId);
         createNewDirectories(contestId, tasks);
-        MainPageGenerator.generate(contest, tasks);
+        MainPageGenerator.generate(contest);
         for(Task task : tasks){
-            TaskPageGenerator.generate(contest, task, tasks, TestsTable.getExampleTestsForTask(task.getId()));
+            TaskPageGenerator.generate(contest, task, TestsTable.getExampleTestsForTask(task.getId()));
             ArrayList<Test> tests = TestsTable.getTestsForTask(task.getId());
             for(int i = 0; i < tests.size(); ++i){
                 saveTest(contestId, task.getId(), tests.get(i).getId(), tests.get(i).getInput());
             }
         }
-        ArrayList<Contest> contests = ContestsTable.getAll();
-        for(Contest contests1 : contests)  StartPageGenerator.generate(contests1, contests);
-        ContesterPageGenerator.generate(contests);
+        StartPageGenerator.generate(contest);
+        /***/ContesterPageGenerator.generate();
+        TasksSidebarGenerator.generate(contest, tasks);
     }
 
     public static void deleteOldFiles(int contestId) throws IOException {
