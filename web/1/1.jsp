@@ -4,7 +4,7 @@
 
 <html lang="ru">
 	<head>
-		<meta charset="Windows-1251">
+		<meta charset="UTF-8">
 		<link rel="shortcut icon" href="../Images/image.ico" type="image/x-icon">
 		<link rel="stylesheet" href="../CSS/users.css">
 		<link rel="stylesheet" href="../CSS/admin.css">
