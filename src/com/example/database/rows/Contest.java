@@ -1,5 +1,6 @@
 package com.example.database.rows;
 
+import com.example.database.DataBaseHelper;
 import com.example.database.tables.ContestsTable;
 
 import java.sql.ResultSet;
@@ -11,7 +12,7 @@ public class Contest {
     private long start, finish;
     private String password;
 
-    public Contest(int id, String name, String about, long start, long finish, String password) {
+    private Contest(boolean type, int id, String name, String about, long start, long finish, String password) {
         this.id = id;
         this.name = name;
         this.about = about;
@@ -20,12 +21,21 @@ public class Contest {
         this.password = password;
     }
 
-    public Contest(String name, String about, long start, long finish, String password) {
-        this.name = name;
-        this.about = about;
+    public Contest(int id, String name, String about, long start, long finish, String password) {
+        this.id = id;
+        this.name = DataBaseHelper.toSQL(name);
+        this.about = DataBaseHelper.toSQL(about);
         this.start = start;
         this.finish = finish;
-        this.password = password;
+        this.password = DataBaseHelper.toSQL(password);
+    }
+
+    public Contest(String name, String about, long start, long finish, String password) {
+        this.name = DataBaseHelper.toSQL(name);
+        this.about = DataBaseHelper.toSQL(about);
+        this.start = start;
+        this.finish = finish;
+        this.password = DataBaseHelper.toSQL(password);
     }
 
     public int getId() {
@@ -59,7 +69,7 @@ public class Contest {
         long start = resultSet.getLong(ContestsTable.columns.getIndex("START"));
         long finish = resultSet.getLong(ContestsTable.columns.getIndex("FINISH"));
         String password = resultSet.getString(ContestsTable.columns.getIndex("PASSWORD"));
-        return new Contest(id, name, about, start, finish, password);
+        return new Contest(false, id, name, about, start, finish, password);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.database.rows;
 
+import com.example.database.DataBaseHelper;
 import com.example.database.tables.TestsTable;
 
 import java.sql.ResultSet;
@@ -10,7 +11,7 @@ public class Test {
     private String input, output;
     private boolean isExample, isPublic;
 
-    public Test(int id, int task, String input, String output, boolean isExample, boolean isPublic) {
+    private Test(boolean type, int id, int task, String input, String output, boolean isExample, boolean isPublic) {
         this.id = id;
         this.task = task;
         this.input = input;
@@ -19,10 +20,19 @@ public class Test {
         this.isPublic = isPublic;
     }
 
+    public Test(int id, int task, String input, String output, boolean isExample, boolean isPublic) {
+        this.id = id;
+        this.task = task;
+        this.input = DataBaseHelper.toSQL(input);
+        this.output = DataBaseHelper.toSQL(output);
+        this.isExample = isExample;
+        this.isPublic = isPublic;
+    }
+
     public Test(int task, String input, String output, boolean isExample, boolean isPublic) {
         this.task = task;
-        this.input = input;
-        this.output = output;
+        this.input = DataBaseHelper.toSQL(input);
+        this.output = DataBaseHelper.toSQL(output);
         this.isExample = isExample;
         this.isPublic = isPublic;
     }
@@ -58,7 +68,7 @@ public class Test {
         String output = resultSet.getString(TestsTable.columns.getIndex("OUTPUT"));
         boolean isExample = resultSet.getInt(TestsTable.columns.getIndex("EXAMPLE")) == 1;
         boolean isPublic = resultSet.getInt(TestsTable.columns.getIndex("PUBLIC")) == 1;
-        return new Test(id, task, input, output, isExample, isPublic);
+        return new Test(false, id, task, input, output, isExample, isPublic);
     }
 
     @Override

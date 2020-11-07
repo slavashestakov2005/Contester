@@ -1,10 +1,6 @@
 package com.example.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Stack;
 
 public class DataBaseHelper {
@@ -25,7 +21,9 @@ public class DataBaseHelper {
 
     public static void execute(String sql){
         try {
-            statements.peek().execute(sql);
+            synchronized (statements){
+                statements.peek().execute(sql);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -33,7 +31,9 @@ public class DataBaseHelper {
 
     public static ResultSet executeQuery(String sql){
         try {
-            return statements.peek().executeQuery(sql);
+            synchronized (statements) {
+                return statements.peek().executeQuery(sql);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -42,13 +42,21 @@ public class DataBaseHelper {
 
     public static void push(){
         try {
-            statements.push(connection.createStatement());
+            synchronized (statements) {
+                statements.push(connection.createStatement());
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public static void pop(){
-        statements.pop();
+        synchronized (statements) {
+            statements.pop();
+        }
+    }
+
+    public static String toSQL(String sql){
+        return sql.replaceAll("'", "''");
     }
 }

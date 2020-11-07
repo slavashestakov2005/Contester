@@ -1,5 +1,6 @@
 package com.example.database.rows;
 
+import com.example.database.DataBaseHelper;
 import com.example.database.tables.TasksTable;
 
 import java.sql.ResultSet;
@@ -9,7 +10,7 @@ public class Task {
     private int id;
     private String name, about, input, output;
 
-    public Task(int id, String name, String about, String input, String output) {
+    private Task(boolean type, int id, String name, String about, String input, String output) {
         this.id = id;
         this.name = name;
         this.about = about;
@@ -17,11 +18,19 @@ public class Task {
         this.output = output;
     }
 
+    public Task(int id, String name, String about, String input, String output) {
+        this.id = id;
+        this.name = DataBaseHelper.toSQL(name);
+        this.about = DataBaseHelper.toSQL(about);
+        this.input = DataBaseHelper.toSQL(input);
+        this.output = DataBaseHelper.toSQL(output);
+    }
+
     public Task(String name, String about, String input, String output) {
-        this.name = name;
-        this.about = about;
-        this.input = input;
-        this.output = output;
+        this.name = DataBaseHelper.toSQL(name);
+        this.about = DataBaseHelper.toSQL(about);
+        this.input = DataBaseHelper.toSQL(input);
+        this.output = DataBaseHelper.toSQL(output);
     }
 
     public int getId() {
@@ -50,7 +59,7 @@ public class Task {
         String about = resultSet.getString(TasksTable.columns.getIndex("ABOUT"));
         String input = resultSet.getString(TasksTable.columns.getIndex("INPUT"));
         String output = resultSet.getString(TasksTable.columns.getIndex("OUTPUT"));
-        return new Task(id, name, about, input, output);
+        return new Task(false, id, name, about, input, output);
     }
 
     @Override
