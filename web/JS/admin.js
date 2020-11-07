@@ -37,6 +37,10 @@ function checkTime(time) {
     return minTimeSplit <= time && time <= maxTimeSplit;
 }
 
+function checkPassword(password){
+    return /^[\w_\+\-\*\/]+$/.test(password);
+}
+
 
 function NewRow(document, cnt){
     var row = document.createElement("tr");
@@ -112,8 +116,13 @@ function Save(document, cnt, type, number){
         var Url = "../contests";
         var start = document.getElementById("start_datetime").value;
         var finish = document.getElementById("finish_datetime").value;
+        var password = document.getElementById("contest_password").value;
         if (!checkTime(start) || !checkTime(finish)){
             alert("Ошибка заполнения полей времени. Значения должны располагаться в диапазоне от " + minTime + " до " + maxTime + ".");
+            return;
+        }
+        if (!checkPassword(password)){
+            alert("Пароль должен содержать только буквы, цифры и _ + - * /");
             return;
         }
         var data = new Map();
@@ -124,7 +133,7 @@ function Save(document, cnt, type, number){
         data.set("t_about", document.getElementById("task_description").value);
         data.set("start", splitDateTime(start));
         data.set("finish", splitDateTime(finish));
-        data.set("password", document.getElementById("password").value);
+        data.set("password", password);
         var request = new XMLHttpRequest();
         request.open("POST", Url + query(data));
         request.send();

@@ -42,7 +42,7 @@ public class EditContest extends HttpServlet {
         pw.print("<center><h3>Время окончания:</h3></center>\n");
         pw.print("<input type=\"datetime-local\" id=\"finish_datetime\" " + TimeHelper.getDateTimeAttributes() + " value=\"" + TimeHelper.toJS(contest.getFinish()) + "\">\n");
         pw.print("<center><h3>Пароль:</h3></center>\n");
-        pw.print("<input type=\"text\" id=\"password\" value=\"" + contest.getPassword() + "\">\n");
+        pw.print("<textarea class=\"tasks_data_small\" id=\"contest_password\">" + contest.getPassword() + "</textarea>\n");
         pw.print("<center><h3>Задания:</h3></center>\n");
         pw.print("<table border=\"1\" width=\"100%\" id=\"task\">\n" +
                 "            <tr>\n" +

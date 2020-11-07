@@ -15,12 +15,12 @@ public class Check extends HttpServlet {
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String password = request.getParameter("password");
-        int contesId = Integer.parseInt(request.getParameter("contest"));
+        int contestId = Integer.parseInt(request.getParameter("contest"));
         /** work with they **/
         response.setContentType("text/html;charset=utf-8");
         PrintWriter pw = response.getWriter();
         final String status;
-        if (Admin.checkUser(name, surname) || InputToContestChecker.check(password, contesId)) status = "Ok";
+        if (Admin.checkUser(name, surname) || InputToContestChecker.check(password, contestId)) status = "Ok";
         else status = "Fail";
         pw.write(status);
     }
