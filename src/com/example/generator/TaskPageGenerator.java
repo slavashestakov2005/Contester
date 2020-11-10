@@ -17,18 +17,28 @@ public class TaskPageGenerator {
                 .append(part3).append(contest.getName())
                 .append(part4).append(contest.getName())
                 .append(part5).append(task.getName())
-                .append(part6).append(Generator.toHTML(task.getAbout(), 4))
-                .append(part7).append(Generator.toHTML(task.getInput(), 4))
-                .append(part8).append(Generator.toHTML(task.getOutput(), 4))
-                .append(part9);
-        for(Test test : tests){
-            text.append("\t\t\t\t\t<tr>\n").append("\t\t\t\t\t\t<td>\n");
-            text.append(Generator.toHTML(test.getInput(), 7));
-            text.append("\t\t\t\t\t\t</td>\n").append("\t\t\t\t\t\t<td>\n");
-            text.append(Generator.toHTML(test.getOutput(), 7));
-            text.append("\t\t\t\t\t\t</td>\n").append("\t\t\t\t\t</tr>\n");
+                .append(part6);
+        String now = task.getAbout();
+        if (now != null && now.length() > 0) text.append(part7).append(Generator.toHTML(now, 4));
+        now = task.getInput();
+        if (now != null && now.length() > 0) text.append(part8).append(Generator.toHTML(now, 4));
+        now = task.getOutput();
+        if (now != null && now.length() > 0) text.append(part9).append(Generator.toHTML(now, 4));
+        if (tests != null && tests.size() > 0) {
+            text.append(part10);
+            for (Test test : tests) {
+                text.append("\t\t\t\t\t<tr>\n").append("\t\t\t\t\t\t<td>\n");
+                text.append(Generator.toHTML(test.getInput(), 7));
+                text.append("\t\t\t\t\t\t</td>\n").append("\t\t\t\t\t\t<td>\n");
+                text.append(Generator.toHTML(test.getOutput(), 7));
+                text.append("\t\t\t\t\t\t</td>\n").append("\t\t\t\t\t</tr>\n");
+            }
+            text.append(part11);
         }
-        text.append(part10).append(contest.getId()).append(part11).append(task.getId()).append(part12);
+        text.append(part12).append(contest.getId()).append(part13).append(task.getId()).append(part14);
+        now = task.getSolution();
+        if (now != null && now.length() > 0) text.append(part15).append(task.getId()).append(part16);
+        text.append(part17);
         Writer out = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(pageName), "UTF-8"));
         out.write(text.toString());
@@ -65,9 +75,7 @@ public class TaskPageGenerator {
             "\t\t\t<div id=\"nav1\"><center><button id=\"image\" onclick=\"Edit(document, page_type, page_number); \"><img src=\"../Images/edit.png\"></button></center></div>\n" +
             "\t\t\t<div id=\"nav2\">\n" +
             "\t\t\t\t<p align=\"right\">\n" +
-            "\t\t\t\t\t<script> document.write(getCookie(document, \"name\")); </script>\n" +
-            "\t\t\t\t\t<br/>\n" +
-            "\t\t\t\t\t<script> document.write(getCookie(document, \"surname\")); </script>\n" +
+            "\t\t\t\t\t<script>printNameSurname(document);</script>\n" +
             "\t\t\t\t\t<br/>\n" +
             "\t\t\t\t\t<a href=\"../index.jsp\">Выйти</a>\n" +
             "\t\t\t\t</p>\n" +
@@ -79,21 +87,22 @@ public class TaskPageGenerator {
             "\t\t\t<iframe src=\"sidebar.html\" width=\"150px\" height=\"100%\" scrolling=\"no\" frameborder=\"no\" style=\"position: absolute;\">Список задач</iframe>\"\n" +
             "\t\t\t<div id=\"content\">\n" +
             "\t\t\t\t<center><h2>";
-    private static String part6 = "</h2></center>\n" +
-            "\t\t\t\t<h3>Условие:</h3>\n";
-    private static String part7 = "\t\t\t\t<h3>Входные данные:</h3>\n";
-    private static String part8 = "\t\t\t\t<h3>Выходные данные:</h3>\n";
-    private static String part9 = "\t\t\t\t<table border=\"1\" width=\"95%\">\n" +
+    private static String part6 = "</h2></center>\n";
+    private static String part7 = "\t\t\t\t<h3>Условие:</h3>\n";
+    private static String part8 = "\t\t\t\t<h3>Входные данные:</h3>\n";
+    private static String part9 = "\t\t\t\t<h3>Выходные данные:</h3>\n";
+    private static String part10 = "\t\t\t\t<h3>Примеры:</h3>\n" +
+            "\t\t\t\t<table border=\"1\" width=\"95%\">\n" +
             "\t\t\t\t\t<tr>\n" +
             "\t\t\t\t\t\t<td width=\"50%\"><center>Input</center></td>\n" +
             "\t\t\t\t\t\t<td width=\"50%\"><center>Output</center></td>\n" +
             "\t\t\t\t\t</tr>\n";
-    private static String part10 = "\t\t\t\t</table>\n" +
-            "\t\t\t\t<div id=\"code\">\n" +
+    private static String part11 = "\t\t\t\t</table>\n";
+    private static String part12 = "\t\t\t\t<div id=\"code\">\n" +
             "\t\t\t\t\t<p>Решение:</p>\n" +
             "\t\t\t\t\t<% out.print(\"<form action=\\\"../run?contest=";
-    private static String part11 = "&task=";
-    private static String part12 = "&name=\"); %>${cookie['name'].getValue()}<% out.print(\"&surname=\"); %>${cookie['surname'].getValue()}<% out.print(\"\\\" method=\\\"post\\\">\"); %>\n" +
+    private static String part13 = "&task=";
+    private static String part14 = "&name=\"); %>${cookie['name'].getValue()}<% out.print(\"&surname=\"); %>${cookie['surname'].getValue()}<% out.print(\"\\\" method=\\\"post\\\">\"); %>\n" +
             "\t\t\t\t\t\t<textarea id=\"code_text\" name=\"code\" placeholder=\"Введите код\" oninput=\"textInput(document)\"></textarea>\n" +
             "\t\t\t\t\t\t<br/>\n" +
             "\t\t\t\t\t\t<input id=\"code_file\" type=\"file\" oninput=\"codeInput(document, 'file');\" onchange=\"readFile(document);\"/>\n" +
@@ -103,8 +112,10 @@ public class TaskPageGenerator {
             "\t\t\t\t\t\t</select>\n" +
             "\t\t\t\t\t\t<input type=\"submit\" value=\"Отправить\" onclick=\"return Start(this);\" />\n" +
             "\t\t\t\t\t</form>\n" +
-            "\t\t\t\t</div>\n" +
-            "\t\t\t\t<div id=\"down2\"></div>\n" +
+            "\t\t\t\t</div>\n";
+    private static String part15 = "\t\t\t\t<button onclick=\"document.location.href='";
+    private static String part16 = "_solution.jsp'\">Решение</button>\n";
+    private static String part17 = "\t\t\t\t<div id=\"down2\"></div>\n" +
             "\t\t\t</div>\n" +
             "\t\t</div>\n" +
             "\t</body>\n" +

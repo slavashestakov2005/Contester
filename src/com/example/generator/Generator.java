@@ -21,6 +21,8 @@ public class Generator {
         MainPageGenerator.generate(contest);
         for(Task task : tasks){
             TaskPageGenerator.generate(contest, task, TestsTable.getExampleTestsForTask(task.getId()));
+            String solution = task.getSolution();
+            if (solution != null && solution.length() > 0) SolutionPageGenerator.generate(contest, task);
             ArrayList<Test> tests = TestsTable.getTestsForTask(task.getId());
             for(int i = 0; i < tests.size(); ++i){
                 saveTest(contestId, task.getId(), tests.get(i).getId(), tests.get(i).getInput());

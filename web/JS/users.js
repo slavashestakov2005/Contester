@@ -20,6 +20,24 @@ function ToCorrectText(s){
 }
 
 
+function checkName(password){
+    return /^[\w_а-яА-Я\+\-\*\/]+$/.test(password);
+}
+
+
+function printNameSurname(document){
+    var name = getCookie(document, "name");
+    var surname = getCookie(document, "surname");
+    if (!checkName(name) || !checkName(surname)){
+        alert("Имя и фамилия могут содержать только буквы, цифры и _ + - * /");
+        document.location.replace("index.jsp");
+    }
+    document.write(name);
+    document.write("<br \>\n");
+    document.write(surname);
+}
+
+
 function textInput(document) {
     var textarea = document.getElementById("code_text");
     textarea.style.height = '1px';
@@ -47,7 +65,7 @@ function readFile(document) {
 }
 
 function Edit(document, type, number) {
-    if (type === 'task'){
+    if (type === 'task' || type === 'solution'){
         const Url = "../edit_task";
         var data = new Map();
         data.set("name", getCookie(document, "name"));

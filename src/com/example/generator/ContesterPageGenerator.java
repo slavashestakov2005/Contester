@@ -47,9 +47,7 @@ public class ContesterPageGenerator {
             "\t\t\t<div id=\"nav1\"><center><button id=\"image\" onclick=\"CreateContest(document)\"><img src=\"Images/add.png\"></button></center></div>\n" +
             "\t\t\t<div id=\"nav2\">\n" +
             "\t\t\t\t<p align=\"right\">\n" +
-            "\t\t\t\t\t<script> document.write(getCookie(document, \"name\")); </script>\n" +
-            "\t\t\t\t\t<br/>\n" +
-            "\t\t\t\t\t<script> document.write(getCookie(document, \"surname\")); </script>\n" +
+            "\t\t\t\t\t<script>printNameSurname(document);</script>\n" +
             "\t\t\t\t\t<br/>\n" +
             "\t\t\t\t\t<a href=\"index.jsp\">Выйти</a>\n" +
             "\t\t\t\t</p>\n" +

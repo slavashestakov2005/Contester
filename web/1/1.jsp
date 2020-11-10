@@ -26,9 +26,7 @@
 			<div id="nav1"><center><button id="image" onclick="Edit(document, page_type, page_number); "><img src="../Images/edit.png"></button></center></div>
 			<div id="nav2">
 				<p align="right">
-					<script> document.write(getCookie(document, "name")); </script>
-					<br/>
-					<script> document.write(getCookie(document, "surname")); </script>
+					<script>printNameSurname(document);</script>
 					<br/>
 					<a href="../index.jsp">Выйти</a>
 				</p>

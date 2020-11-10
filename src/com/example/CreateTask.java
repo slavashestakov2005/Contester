@@ -33,6 +33,8 @@ public class CreateTask extends HttpServlet {
         pw.print("<textarea class=\"tasks_data_middle\" id=\"task_input\"></textarea>\n");
         pw.print("<center><h3>Выходные данные:</h3></center>\n");
         pw.print("<textarea class=\"tasks_data_middle\" id=\"task_output\"></textarea>\n");
+        pw.print("<center><h3>Решение:</h3></center>\n");
+        pw.print("<textarea class=\"tasks_data_large\" id=\"task_solution\"></textarea>\n");
         pw.print("<center>\n" +
                 "   <button onclick=\"AddTask(document, page_number);\">Сохранить всё</button>\n" +
                 "</center>\n" +

@@ -18,6 +18,7 @@ public class TasksTable {
         columns.add("ABOUT", 3, "description"); // text
         columns.add("INPUT", 4, "input");       // text
         columns.add("OUTPUT", 5, "output");     // text
+        columns.add("SOLUTION", 6, "solution"); // text
     }
 
     public static Task selectTaskByID(int taskId){

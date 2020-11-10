@@ -22,6 +22,7 @@ public class Tasks extends HttpServlet {
         String tAbout = request.getParameter("t_about");
         String tInput = request.getParameter("t_input");
         String tOutput = request.getParameter("t_output");
+        String tSolution = request.getParameter("t_solution");
         /** work with they **/
         response.setContentType("text/html;charset=utf-8");
         PrintWriter pw = response.getWriter();
@@ -30,7 +31,7 @@ public class Tasks extends HttpServlet {
         else status = "Fail";
         pw.write(status);
         if (status.equals("Ok")){
-            TasksTable.updateTaskByID(new Task(id, tName, tAbout, tInput, tOutput));
+            TasksTable.updateTaskByID(new Task(id, tName, tAbout, tInput, tOutput, tSolution));
         }
     }
 }

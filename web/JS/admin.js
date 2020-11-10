@@ -88,6 +88,7 @@ function Save(document, cnt, type, number){
         data.set("t_about", document.getElementById("task_description").value);
         data.set("t_input", document.getElementById("task_input").value);
         data.set("t_output", document.getElementById("task_output").value);
+        data.set("t_solution", document.getElementById("task_solution").value);
         var request = new XMLHttpRequest();
         request.open("POST", Url + query(data));
         request.send();
@@ -198,6 +199,7 @@ function AddTask(document, contestId) {
     data.set("t_about", document.getElementById("task_description").value);
     data.set("t_input", document.getElementById("task_input").value);
     data.set("t_output", document.getElementById("task_output").value);
+    data.set("t_solution", document.getElementById("task_solution").value);
     var request = new XMLHttpRequest();
     request.open("POST", Url + query(data));
     request.send();

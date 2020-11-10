@@ -12,12 +12,14 @@ public class StartPageGenerator {
         StringBuilder text = new StringBuilder();
         text.append(part1).append(contest.getName())
                 .append(part2).append(contest.getName())
-                .append(part3).append(Generator.toHTML(contest.getAbout(), 4))
-                .append(part4).append(TimeHelper.toWeb(contest.getStart()))
-                .append(part5).append(TimeHelper.toWeb(contest.getFinish()))
-                .append(part6).append(TimeHelper.toDuration(contest.getFinish() - contest.getStart()))
-                .append(part7).append(contest.getId())
-                .append(part8);
+                .append(part3);
+        String now = contest.getAbout();
+        if (now != null && now.length() > 0) text.append(part4).append(Generator.toHTML(now, 4));
+        text.append(part5).append(TimeHelper.toWeb(contest.getStart()))
+                .append(part6).append(TimeHelper.toWeb(contest.getFinish()))
+                .append(part7).append(TimeHelper.toDuration(contest.getFinish() - contest.getStart()))
+                .append(part8).append(contest.getId())
+                .append(part9);
         Writer out = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(pageName), "UTF-8"));
         out.write(text.toString());
@@ -46,9 +48,7 @@ public class StartPageGenerator {
             "\t\t\t<div id=\"nav1\"><center><button id=\"image\" onclick=\"CreateContest(document)\"><img src=\"Images/add.png\"></button></center></div>\n" +
             "\t\t\t<div id=\"nav2\">\n" +
             "\t\t\t\t<p align=\"right\">\n" +
-            "\t\t\t\t\t<script> document.write(getCookie(document, \"name\")); </script>\n" +
-            "\t\t\t\t\t<br/>\n" +
-            "\t\t\t\t\t<script> document.write(getCookie(document, \"surname\")); </script>\n" +
+            "\t\t\t\t\t<script>printNameSurname(document);</script>\n" +
             "\t\t\t\t\t<br/>\n" +
             "\t\t\t\t\t<a href=\"index.jsp\">Выйти</a>\n" +
             "\t\t\t\t</p>\n" +
@@ -59,14 +59,14 @@ public class StartPageGenerator {
             "\t\t\t<iframe src=\"sidebar.html\" width=\"150px\" height=\"100%\" scrolling=\"no\" frameborder=\"no\" style=\"position: absolute; \">Список контестов</iframe>\n" +
             "\t\t\t<div id=\"content\">\n" +
             "\t\t\t\t<center><h2>";
-    private static String part3 = "</h2></center>\n" +
-            "\t\t\t\t<h3>Описание:</h3>\n";
-    private static String part4 = "\t\t\t\t<h3>Время старта:</h3>\n\t\t\t\t<p>";
-    private static String part5 = "</p>\n\t\t\t\t<h3>Время окончания:</h3>\n\t\t\t\t<p>";
-    private static String part6 = "</p>\n\t\t\t\t<h3>Продолжительность:</h3>\n\t\t\t\t<p>";
-    private static String part7 = "</p>\n\t\t\t\t<center>\n" +
+    private static String part3 = "</h2></center>\n";
+    private static String part4 = "\t\t\t\t<h3>Описание:</h3>\n";
+    private static String part5 = "\t\t\t\t<h3>Время старта:</h3>\n\t\t\t\t<p>";
+    private static String part6 = "</p>\n\t\t\t\t<h3>Время окончания:</h3>\n\t\t\t\t<p>";
+    private static String part7 = "</p>\n\t\t\t\t<h3>Продолжительность:</h3>\n\t\t\t\t<p>";
+    private static String part8 = "</p>\n\t\t\t\t<center>\n" +
             "\t\t\t\t\t<form action=\"";
-    private static String part8 = "/contest.jsp\" method=\"GET\">\n" +
+    private static String part9 = "/contest.jsp\" method=\"GET\">\n" +
             "\t\t\t\t\t\t<input type=\"password\" id=\"password\" name=\"password\" placeholder=\"Введите пароль для входа\">\n" +
             "\t\t\t\t\t\t<input type=\"submit\" value=\"Решать\" onclick=\"return Start(this);\" />\n" +
             "\t\t\t\t\t</form>\n" +

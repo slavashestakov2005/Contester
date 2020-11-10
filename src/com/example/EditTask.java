@@ -41,6 +41,8 @@ public class EditTask extends HttpServlet {
         pw.print("<textarea class=\"tasks_data_middle\" id=\"task_input\">" + task.getInput() + "</textarea>\n");
         pw.print("<center><h3>Выходные данные:</h3></center>\n");
         pw.print("<textarea class=\"tasks_data_middle\" id=\"task_output\">" + task.getOutput() + "</textarea>\n");
+        pw.print("<center><h3>Решение:</h3></center>\n");
+        pw.print("<textarea class=\"tasks_data_large\" id=\"task_solution\">" + task.getSolution() + "</textarea>\n");
         pw.print("<center><h3>Тесты:</h3></center>\n");
         pw.print("<table border=\"1\" width=\"100%\" id=\"task\">\n" +
                 "            <tr>\n" +

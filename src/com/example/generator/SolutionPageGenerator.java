@@ -1,27 +1,23 @@
 package com.example.generator;
 
 import com.example.Root;
-import com.example.TimeHelper;
 import com.example.database.rows.Contest;
+import com.example.database.rows.Task;
 
 import java.io.*;
 
-public class MainPageGenerator {
-    public static void generate(Contest contest) throws IOException {
-        String pageName = Root.webDirectory + "\\" + contest.getId() + "\\contest.jsp";
+public class SolutionPageGenerator {
+    public static void generate(Contest contest, Task task) throws IOException {
+        String pageName = Root.webDirectory + "\\" + contest.getId() + "\\" + task.getId() + "_solution.jsp";
         StringBuilder text = new StringBuilder();
-        text.append(part1).append(contest.getId())
+        text.append(part1).append(task.getId())
                 .append(part2).append(contest.getId())
                 .append(part3).append(contest.getName())
                 .append(part4).append(contest.getName())
-                .append(part5).append(contest.getName())
-                .append(part6);
-        String now = contest.getAbout();
-        if (now != null && now.length() > 0) text.append(part7).append(Generator.toHTML(now, 4));
-        text.append(part8).append(TimeHelper.toWeb(contest.getStart()))
-                .append(part9).append(TimeHelper.toWeb(contest.getFinish()))
-                .append(part10).append(TimeHelper.toDuration(contest.getFinish() - contest.getStart()))
-                .append(part11);
+                .append(part5).append(task.getName())
+                .append(part6).append(Generator.toHTML(task.getSolution(), 4))
+                .append(part7).append(task.getId())
+                .append(part8);
         Writer out = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(pageName), "UTF-8"));
         out.write(text.toString());
@@ -29,20 +25,8 @@ public class MainPageGenerator {
     }
 
     private static String part1 = "<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\"\n" +
-            "\t\t pageEncoding=\"UTF-8\"%>\n" +
+            "\t\tpageEncoding=\"UTF-8\"%>\n" +
             "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" +
-            "\n" +
-            "<%\n" +
-            "\ttry{\n" +
-            "\t\tString pwd = request.getParameter(\"password\");\n" +
-            "\t\tif (pwd != null) {\n" +
-            "\t\t\tCookie password = new Cookie(\"password\", pwd);\n" +
-            "\t\t\tpassword.setMaxAge(60 * 60 * 10);\n" +
-            "\t\t\t// Add both the cookies in the response header.\n" +
-            "\t\t\tresponse.addCookie(password);\n" +
-            "\t\t}\n" +
-            "\t}catch(Exception e){}\n" +
-            "%>\n" +
             "\n" +
             "<html lang=\"ru\">\n" +
             "\t<head>\n" +
@@ -54,10 +38,9 @@ public class MainPageGenerator {
             "\t\t<script src=\"../JS/admin.js\" type=\"text/javascript\"> </script>\n" +
             "\t\t<script>\n" +
             "\t\t\tvar cnt = -1;\n" +
-            "\t\t\tvar page_type = \"contest\";\n" +
+            "\t\t\tvar page_type = \"solution\";\n" +
             "\t\t\tvar page_number = ";
-    private static String part2 = ";\n" +
-            "\t\t\tvar page_contest = ";
+    private static String part2 = ";\n\t\t\tvar page_contest = ";
     private static String part3 = ";\n" +
             "\t\t\tCheck(document, page_contest);\n" +
             "\t\t</script>\n" +
@@ -80,15 +63,14 @@ public class MainPageGenerator {
     private static String part5 = "</a></h1></center></div>\n" +
             "\t\t</div>\n" +
             "\t\t<div id=\"page\">\n" +
-            "\t\t\t<iframe src=\"sidebar.html\" width=\"150px\" height=\"100%\" scrolling=\"no\" frameborder=\"no\" style=\"position: absolute;\">Список задач</iframe>\"\n" +
+            "\t\t\t<iframe src=\"sidebar.html\" width=\"150px\" height=\"100%\" scrolling=\"no\" frameborder=\"no\" style=\"position: absolute;\">Список задач</iframe>\n" +
             "\t\t\t<div id=\"content\">\n" +
             "\t\t\t\t<center><h2>";
-    private static String part6 = "</h2></center>\n";
-    private static String part7 = "\t\t\t\t<h3>Описание:</h3>\n";
-    private static String part8 = "\t\t\t\t<h3>Время старта:</h3>\n\t\t\t\t<p>";
-    private static String part9 = "</p>\n\t\t\t\t<h3>Время окончания:</h3>\n\t\t\t\t<p>";
-    private static String part10 = "</p>\n\t\t\t\t<h3>Продолжительность:</h3>\n\t\t\t\t<p>";
-    private static String part11 = "</p>\n\t\t\t\t<div id=\"down2\"></div>\n" +
+    private static String part6 = "</h2></center>\n" +
+            "\t\t\t\t<h3>Решение:</h3>\n";
+    private static String part7 = "\t\t\t\t<button onclick=\"document.location.href='";
+    private static String part8 = ".jsp'\">Вернуться</button>\n" +
+            "\t\t\t\t<div id=\"down2\"></div>\n" +
             "\t\t\t</div>\n" +
             "\t\t</div>\n" +
             "\t</body>\n" +
