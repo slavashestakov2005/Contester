@@ -2,6 +2,13 @@ package com.example.runner;
 
 public class AnswerWriter {
     private StringBuilder builder;
+    private String error, MESSAGE_1 = "Не правильный вывод на тесте №", MESSAGE_2 = ".\n" +
+            "<table border=\"1\" width=\"95%\">\n" +
+            "\t<tr>\n" +
+            "\t\t<td width=\"34%\"><center>Ввод:</center></td>\n" +
+            "\t\t<td width=\"33%\"><center>Коректный вывод:</center></td>\n" +
+            "\t\t<td width=\"33%\"><center>Ваш вывод:</center></td>\n" +
+            "\t</tr>\n";
     private int cnt;
 
     public AnswerWriter(){
@@ -49,12 +56,25 @@ public class AnswerWriter {
         ++cnt;
     }
 
+    public void setError(String input, String correct, String out){
+        if (error.length() == 0){
+            error = MESSAGE_1 + cnt + MESSAGE_2;
+            error += "\t<tr>\n" +
+                    "\t\t<td>" + input + "</td>\n" +
+                    "\t\t<td>" + correct + "</td>\n" +
+                    "\t\t<td>" + out + "</td\n>" +
+                    "\t</tr>\n" +
+                    "</table>\n";
+        }
+    }
+
     public String getAnswer(){
-        return builder.toString();
+        return builder.append(error).toString();
     }
 
     public void clear(){
         builder = new StringBuilder();
+        error = "";
         cnt = 1;
     }
 }

@@ -38,7 +38,7 @@ function checkTime(time) {
 }
 
 function checkPassword(password){
-    return /^[\w_\+\-\*\/]+$/.test(password);
+    return /^[\w_\+\-\*\/]*$/.test(password);
 }
 
 

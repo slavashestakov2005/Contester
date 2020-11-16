@@ -1,30 +1,34 @@
 package com.example.runner;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Checker {
-    public static String[] readFile(String fileName){
+    public static String read(String fileName){
         try {
             FileInputStream in = new FileInputStream(fileName);
-            String lines[] = new String(in.readAllBytes()).split("[\r\n]+");
+            String line = new String(in.readAllBytes());
             in.close();
-            ArrayList<String> result = new ArrayList<>();
-            for(String line : lines){
-                String words[] = line.trim().split("\\s+");
-                if (words.length > 0 && words[0].length() > 0 && words[0].charAt(0) != '#') result.addAll(Arrays.asList(words));
-            }
-            System.out.print(fileName + ": [");
-            for(String s : result) System.out.print("'" + s + "', ");
-            System.out.println("]");
-            return result.toArray(new String[0]);
+            return line;
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static String[] readFile(String fileName){
+        String lines[] = read(fileName).split("[\r\n]+");
+        ArrayList<String> result = new ArrayList<>();
+        for(String line : lines){
+            String words[] = line.trim().split("\\s+");
+            if (words.length > 0 && words[0].length() > 0 && words[0].charAt(0) != '#') result.addAll(Arrays.asList(words));
+        }
+        System.out.print(fileName + ": [");
+        for(String s : result) System.out.print("'" + s + "', ");
+        System.out.println("]");
+        return result.toArray(new String[0]);
     }
 
     public static boolean equals(String fileName1, String filename2){

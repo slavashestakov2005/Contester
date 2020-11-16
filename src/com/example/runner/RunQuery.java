@@ -1,7 +1,7 @@
 package com.example.runner;
 
 import com.example.Root;
-import com.example.database.tables.TasksTable;
+import com.example.database.rows.Test;
 import com.example.database.tables.TestsTable;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class RunQuery {
     private static final String fileNameOutput = Root.rootDirectory + "\\Programs";
@@ -73,6 +75,14 @@ public class RunQuery {
 
     protected void runProgram() throws InterruptedException, IOException {
         File[] files = new File(Root.rootDirectory + "\\Contests\\" + path + "\\tests").listFiles();
+        Arrays.sort(files, new Comparator<File>() {
+            @Override
+            public int compare(File o1, File o2) {
+                String name1 = o1.getName().replaceFirst("[.][^.]+$", "");
+                String name2 = o2.getName().replaceFirst("[.][^.]+$", "");
+                return Long.compare(Long.parseLong(name1), Long.parseLong(name2));
+            }
+        });
         Thread.sleep(10000);    /** for program compile **/
         for (int i = 0; i < files.length; ++i) {
             String input = files[i].getPath();
@@ -86,17 +96,23 @@ public class RunQuery {
             Files.delete(Paths.get(output));
         }
         deleteFile();
-        Thread.sleep(10000);    /** for files delete **/
     }
 
     protected boolean isCorrect(String outputFile, String testId){
-        String[] correctAnswer = TestsTable.selectTestByID(Integer.parseInt(testId)).getOutput().split("\\s+");
+        Test test = TestsTable.selectTestByID(Integer.parseInt(testId));
+        String[] correctAnswer = test.getOutput().split("\\s+");
         if (Checker.equals(correctAnswer, outputFile)){
             answer.addTest(true);
             return true;
         }
-        answer.addTest(false);
-        return false;
+        else{
+            if (test.isPublic()){
+                String output = Checker.read(outputFile);
+                answer.setError(test.getInput(), test.getOutput(), output);
+            }
+            answer.addTest(false);
+            return false;
+        }
     }
 
     protected void executeFile(String command) throws IOException {

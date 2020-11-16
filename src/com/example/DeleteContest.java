@@ -1,6 +1,5 @@
 package com.example;
 
-import com.example.database.tables.ContestsTable;
 import com.example.database.tables.TablesHelper;
 
 import javax.servlet.annotation.WebServlet;

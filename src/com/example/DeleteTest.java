@@ -1,7 +1,6 @@
 package com.example;
 
 import com.example.database.tables.TablesHelper;
-import com.example.database.tables.TestsTable;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
