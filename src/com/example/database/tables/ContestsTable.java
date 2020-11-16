@@ -3,7 +3,6 @@ package com.example.database.tables;
 import com.example.database.Columns;
 import com.example.database.DataBaseHelper;
 import com.example.database.rows.Contest;
-import com.example.database.rows.Task;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -51,6 +50,10 @@ public class ContestsTable {
 
     public static void updateContestByID(Contest contest){
         DataBaseHelper.execute("UPDATE " + table + " SET " + contest.updateString() + " WHERE " + columns.getName("ID") + " = " + contest.getId());
+    }
+
+    public static void delete(int contestId){
+        DataBaseHelper.execute("DELETE FROM " + table + " WHERE " + columns.getName("ID") + " = " + contestId);
     }
 
     public static int add(Contest contest) {

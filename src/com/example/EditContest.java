@@ -64,6 +64,7 @@ public class EditContest extends HttpServlet {
                 "   <button onclick=\"Save(document, cnt, page_type, page_number);\">Сохранить всё</button>\n" +
                 "   <button onclick=\"Create(document, page_number)\">Новое задание</button>\n" +
                 "   <button onclick=\"Generate(document, page_contest)\">Сгенерировать</button>\n" +
+                "   <button onclick=\"DeleteContest(document, page_contest)\">Удалить</button>\n" +
                 "</center>\n" +
                 "<br/>\n" +
                 "<div id=\"down2\"></div>");

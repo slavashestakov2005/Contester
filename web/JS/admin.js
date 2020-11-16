@@ -155,6 +155,30 @@ function Delete(document, task, number){
     request.onreadystatechange = onServerAnswer;
 }
 
+function DeleteContest(document, number){
+    var Url = "../delete_contest";
+    var doDelete = prompt("Вы действительно хотите удалить?\nДля удаления введите \"да\".");
+    if (doDelete !== "да") return;
+    var data = new Map();
+    data.set("name", getCookie(document, "name"));
+    data.set("surname", getCookie(document, "surname"));
+    data.set("contest", number);
+    var request = new XMLHttpRequest();
+    request.open("POST", Url + query(data));
+    request.send();
+    request.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            var answer = this.responseText;
+            if (answer === "Ok") {
+                alert("Изменения сохранены");
+                document.location.replace("../main.jsp");
+            } else {
+                alert("Ошибка доступа");
+            }
+        }
+    };
+}
+
 function DeleteTest(document, number){
     var test = document.getElementById("index" + number).textContent;
     if (test === -1) return;

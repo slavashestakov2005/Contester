@@ -38,6 +38,10 @@ public class TasksTable {
         DataBaseHelper.execute("UPDATE " + table + " SET " + task.updateString() + " WHERE " + columns.getName("ID") + " = " + task.getId());
     }
 
+    public static void delete(int taskId){
+        DataBaseHelper.execute("DELETE FROM " + table + " WHERE " + columns.getName("ID") + " = " + taskId);
+    }
+
     public static int add(Task task) {
         try {
             DataBaseHelper.execute("INSERT INTO " + table + task.insertString());

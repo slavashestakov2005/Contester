@@ -73,4 +73,8 @@ public class TestsTable {
     public static void delete(int testId) {
         DataBaseHelper.execute("DELETE FROM " + table + " WHERE " + columns.getName("ID") + " = " + testId);
     }
+
+    public static void deleteForTask(int taskId) {
+        DataBaseHelper.execute("DELETE FROM " + table + " WHERE " + columns.getName("TASK") + " = " + taskId);
+    }
 }
