@@ -147,3 +147,24 @@ function CreateContest(document) {
         }
     };
 }
+
+function EditSettings(document){
+    var Url = "edit_settings";
+    var data = new Map();
+    data.set("name", getCookie(document, "name"));
+    data.set("surname", getCookie(document, "surname"));
+    var request = new XMLHttpRequest();
+    request.open("POST", Url + query(data));
+    request.send();
+    request.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            var answer = this.responseText;
+            if (answer !== "Fail") {
+                window.parent.document.getElementById("content").innerHTML = answer;
+            } else {
+                alert("Ошибка доступа");
+            }
+        }
+    };
+    return false;
+}

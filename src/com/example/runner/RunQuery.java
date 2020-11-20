@@ -1,7 +1,9 @@
 package com.example.runner;
 
 import com.example.Root;
+import com.example.database.rows.Lang;
 import com.example.database.rows.Test;
+import com.example.database.tables.LangsTable;
 import com.example.database.tables.TestsTable;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +36,7 @@ public class RunQuery {
     public void execute(){
         try {
             init();
-            System.out.println("POST запрос от " + name + " " + surname + " : " + lang);
+            System.out.println("POST запрос от " + name + " " + surname + " : " + lang.getEnd1());
             saveFile();
             compileFile();
             answer.start();
@@ -56,10 +58,10 @@ public class RunQuery {
         name = request.getParameterValues("name")[0];
         surname = request.getParameterValues("surname")[0];
         code = request.getParameterValues("code")[0];
-        lang = Lang.fromString(request.getParameterValues("lang")[0]);
+        lang = LangsTable.getLang(request.getParameterValues("lang")[0]);
         contestId = Integer.parseInt(request.getParameterValues("contest")[0]);
         path = request.getParameterValues("contest")[0] + "\\" + request.getParameterValues("task")[0];
-        fileName = Root.rootDirectory + "\\Contests\\" + path + "\\sendings\\" + Languages.generateFileName(lang, name, surname, time);
+        fileName = Root.rootDirectory + "\\Contests\\" + path + "\\sendings\\" + Languages.generateFileName2(lang, name, surname, time);
     }
 
     private void saveFile() throws IOException {
@@ -121,6 +123,6 @@ public class RunQuery {
     }
 
     protected void deleteFile() throws IOException {
-        Files.delete(Paths.get(lang.programName(time)));
+        Files.delete(Paths.get(Languages.generateProgramName(lang, time)));
     }
 }

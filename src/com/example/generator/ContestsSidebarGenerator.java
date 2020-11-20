@@ -27,11 +27,14 @@ public class ContestsSidebarGenerator {
             "\t\t<meta charset=\"UTF-8\">\n" +
             "\t\t<link rel=\"shortcut icon\" href=\"Images/image.ico\" type=\"image/x-icon\">\n" +
             "\t\t<link rel=\"stylesheet\" href=\"CSS/users.css\">\n" +
+            "\t\t<script src=\"JS/users.js\" type=\"text/javascript\"> </script>" +
             "\t\t<title>Контесты</title>\n" +
             "\t</head>\n" +
             "\t<body height=\"auto\">\n" +
             "\t\t<div id=\"sidebar\">\n";
-    private static String part2 = "\t\t\t<div id=\"down\"></div>\n" +
+    private static String part2 = "\t\t\t<br/>\n" +
+            "\t\t\t<h2><a href=\"#\" onclick=\"return EditSettings(document);\" target=\"_parent\">Настройки</a></h2>\n" +
+            "\t\t\t<div id=\"down\"></div>\n" +
             "\t\t</div>\n" +
             "\t</body>\n" +
             "</html>";

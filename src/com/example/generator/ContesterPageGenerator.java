@@ -40,6 +40,7 @@ public class ContesterPageGenerator {
             "\t\t<script src=\"JS/admin.js\" type=\"text/javascript\"> </script>\n" +
             "\t\t<script src=\"https://polyfill.io/v3/polyfill.min.js?features=es6\"></script>\n" +
             "\t\t<script id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js\"></script>\n" +
+            "\t\t<script> var lang = -1; </script>\n" +
             "\t\t<title>Контестер</title>\n" +
             "\t</head>\n" +
             "\t<body>\n" +

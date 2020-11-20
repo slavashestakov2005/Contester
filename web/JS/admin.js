@@ -65,12 +65,43 @@ function NewRow(document, cnt){
     row.appendChild(td8);
     td1.innerHTML = '' + cnt;
     td2.innerHTML = '<p id="index'          + cnt + '">-1</p>';
-    td3.innerHTML = '<textarea id="input'	+ cnt + '"class="input_output" oninput="' + change + '"></textarea>';
+    td3.innerHTML = '<textarea id="input'	+ cnt + '" class="input_output" oninput="' + change + '"></textarea>';
     td4.innerHTML = '<textarea id="output' 	+ cnt + '" class="input_output" oninput="' + change + '"></textarea>';
     td5.innerHTML = '<input id="example' 	+ cnt + '" type="checkbox" onchange="' + change + '">';
     td6.innerHTML = '<input id="public' 	+ cnt + '" type="checkbox" onchange="' + change + '">';
     td7.innerHTML = '<button id="btn' 		+ cnt + '">Изменено</button>';
-    td8.innerHTML = '<button onclick="DeleteTest(document, -1)">Удалить</button>';
+    td8.innerHTML = '<button onclick="DeleteTest(document, ' + cnt + ');">Удалить</button>';
+}
+
+function NewRowLang(document, cnt){
+    var row = document.createElement("tr");
+    var change = 'Change(document, ' + cnt + ');';
+    row.id = "" + cnt;
+    document.getElementById("langs").appendChild(row);
+    var td1 = document.createElement("td");
+    var td2 = document.createElement("td");
+    var td3 = document.createElement("td");
+    var td4 = document.createElement("td");
+    var td5 = document.createElement("td");
+    var td6 = document.createElement("td");
+    var td7 = document.createElement("td");
+    var td8 = document.createElement("td");
+    row.appendChild(td1);
+    row.appendChild(td2);
+    row.appendChild(td3);
+    row.appendChild(td4);
+    row.appendChild(td5);
+    row.appendChild(td6);
+    row.appendChild(td7);
+    row.appendChild(td8);
+    td1.innerHTML = '<p id="index'          + cnt + '">-1</p>';
+    td2.innerHTML = '<textarea id="name'	+ cnt + '" class="input_output" oninput="' + change + '"></textarea>';
+    td3.innerHTML = '<textarea id="end1' 	+ cnt + '" class="input_output" oninput="' + change + '"></textarea>';
+    td4.innerHTML = '<textarea id="end2' 	+ cnt + '" class="input_output" oninput="' + change + '"></textarea>';
+    td5.innerHTML = '<textarea id="compile' + cnt + '" class="input_output" oninput="' + change + '"></textarea>';
+    td5.innerHTML = '<textarea id="execute' + cnt + '" class="input_output" oninput="' + change + '"></textarea>';
+    td7.innerHTML = '<button id="btn' 		+ cnt + '">Изменено</button>';
+    td8.innerHTML = '<button onclick="DeleteLang(document, ' + cnt + ');">Удалить</button>';
 }
 
 function Change(document, cnt){
@@ -142,6 +173,37 @@ function Save(document, cnt, type, number){
     }
 }
 
+function SaveLangs(document, cnt) {
+    var  Url = "check";
+    var data = new Map();
+    data.set("name", getCookie(document, "name"));
+    data.set("surname", getCookie(document, "surname"));
+    data.set("password", "");
+    data.set("contest", -1);
+    var request = new XMLHttpRequest();
+    request.open("POST", Url + query(data));
+    request.send();
+    request.onreadystatechange = onServerAnswer;
+    Url = "langs";
+    for (var i = 1; i <= cnt; ++i) {
+        if (document.getElementById("btn" + i).disabled === false) {
+            var data = new Map();
+            data.set("l_id", document.getElementById("index" + i).textContent);
+            data.set("l_name", document.getElementById("name" + i).value);
+            data.set("l_end1", document.getElementById("end1" + i).value);
+            data.set("l_end2", document.getElementById("end2" + i).value);
+            data.set("l_compile", document.getElementById("compile" + i).value);
+            data.set("l_execute", document.getElementById("execute" + i).value);
+            data.set("name", getCookie(document, "name"));
+            data.set("surname", getCookie(document, "surname"));
+            var request = new XMLHttpRequest();
+            request.open("POST", Url + query(data));
+            request.send();
+            document.getElementById("btn" + i).disabled = true;
+        }
+    }
+}
+
 function Delete(document, task, number){
     var Url = "../delete_task";
     var data = new Map();
@@ -180,13 +242,31 @@ function DeleteContest(document, number){
 }
 
 function DeleteTest(document, number){
+    if (number === -1) return;
     var test = document.getElementById("index" + number).textContent;
+    // document.getElementById(number).remove();
     if (test === -1) return;
     var Url = "../delete_test";
     var data = new Map();
     data.set("name", getCookie(document, "name"));
     data.set("surname", getCookie(document, "surname"));
     data.set("test", test);
+    var request = new XMLHttpRequest();
+    request.open("POST", Url + query(data));
+    request.send();
+    request.onreadystatechange = onServerAnswer;
+}
+
+function DeleteLang(document, number){
+    if (number === -1) return;
+    var lang = document.getElementById("index" + number).textContent;
+    // document.getElementById(number).remove();
+    if (lang === -1) return;
+    var Url = "delete_lang";
+    var data = new Map();
+    data.set("name", getCookie(document, "name"));
+    data.set("surname", getCookie(document, "surname"));
+    data.set("lang", lang);
     var request = new XMLHttpRequest();
     request.open("POST", Url + query(data));
     request.send();
