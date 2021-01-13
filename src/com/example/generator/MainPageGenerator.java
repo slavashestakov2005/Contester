@@ -21,7 +21,8 @@ public class MainPageGenerator {
         text.append(part8).append(TimeHelper.toWeb(contest.getStart()))
                 .append(part9).append(TimeHelper.toWeb(contest.getFinish()))
                 .append(part10).append(TimeHelper.toDuration(contest.getFinish() - contest.getStart()))
-                .append(part11);
+                .append(part11).append(contest.getId())
+                .append(part12);
         Writer out = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(pageName), "UTF-8"));
         out.write(text.toString());
@@ -88,7 +89,9 @@ public class MainPageGenerator {
     private static String part8 = "\t\t\t\t<h3>Время старта:</h3>\n\t\t\t\t<p>";
     private static String part9 = "</p>\n\t\t\t\t<h3>Время окончания:</h3>\n\t\t\t\t<p>";
     private static String part10 = "</p>\n\t\t\t\t<h3>Продолжительность:</h3>\n\t\t\t\t<p>";
-    private static String part11 = "</p>\n\t\t\t\t<div id=\"down2\"></div>\n" +
+    private static String part11 = "</p>\n\t\t\t\t<h3>Результаты:</h3>\n" +
+            "\t\t\t\t<p><a href=\"#\" onclick=\"viewResults(";
+    private static String part12 = ", 1);\">Результаты</a></p>\n\t\t\t\t<div id=\"down2\"></div>\n" +
             "\t\t\t</div>\n" +
             "\t\t</div>\n" +
             "\t</body>\n" +

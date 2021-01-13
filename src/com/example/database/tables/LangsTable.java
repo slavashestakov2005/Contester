@@ -55,4 +55,13 @@ public class LangsTable {
         }
         return null;
     }
+
+    public static Lang selectTaskByID(int langId) {
+        try {
+            return Lang.parseSQL(DataBaseHelper.executeQuery("SELECT * FROM " + table + " WHERE " + columns.getName("ID") + " = " + langId));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

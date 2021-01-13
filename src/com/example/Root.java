@@ -3,7 +3,7 @@ package com.example;
 import java.io.File;
 
 public class Root {
-    public static String rootDirectory, webDirectory;
+    public static final String rootDirectory, webDirectory;
 
     static {
         rootDirectory = new File("").getAbsoluteFile().getParentFile().getParent();

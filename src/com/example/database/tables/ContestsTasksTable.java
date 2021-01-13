@@ -15,8 +15,8 @@ public class ContestsTasksTable {
 
     static {
         columns = new Columns();
-        columns.add("CONTEST", 1, "id_contest");   // int      NOT NULL    PK
-        columns.add("TASK", 2, "id_task");         // text     NOT NULL    PK
+        columns.add("CONTEST", 1, "id_contest");   // int       NOT NULL    PK
+        columns.add("TASK", 2, "id_task");         // int       NOT NULL    PK
     }
 
     public static ArrayList<Task> getTasksForContest(int contestId) {

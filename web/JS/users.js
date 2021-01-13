@@ -168,3 +168,23 @@ function EditSettings(document){
     };
     return false;
 }
+
+function getResultUrl(type) {
+    if (type === 0) return "result";
+    return "../result";
+}
+
+function viewResults(contestId, type){
+    var Url = getResultUrl(type);
+    var data = new Map();
+    data.set("contest", contestId);
+    var request = new XMLHttpRequest();
+    request.open("GET", Url + query(data));
+    request.send();
+    request.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            window.parent.document.getElementById("content").innerHTML = this.responseText;
+        }
+    };
+    return false;
+}

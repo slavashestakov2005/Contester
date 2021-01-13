@@ -19,7 +19,8 @@ public class StartPageGenerator {
                 .append(part6).append(TimeHelper.toWeb(contest.getFinish()))
                 .append(part7).append(TimeHelper.toDuration(contest.getFinish() - contest.getStart()))
                 .append(part8).append(contest.getId())
-                .append(part9);
+                .append(part9).append(contest.getId())
+                .append(part10);
         Writer out = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(pageName), "UTF-8"));
         out.write(text.toString());
@@ -65,9 +66,11 @@ public class StartPageGenerator {
     private static String part5 = "\t\t\t\t<h3>Время старта:</h3>\n\t\t\t\t<p>";
     private static String part6 = "</p>\n\t\t\t\t<h3>Время окончания:</h3>\n\t\t\t\t<p>";
     private static String part7 = "</p>\n\t\t\t\t<h3>Продолжительность:</h3>\n\t\t\t\t<p>";
-    private static String part8 = "</p>\n\t\t\t\t<center>\n" +
+    private static String part8 = "</p>\n\t\t\t\t<h3>Результаты:</h3>\n" +
+            "\t\t\t\t<p><a href=\"#\" onclick=\"viewResults(";
+    private static String part9 = ", 0);\">Результаты</a></p>\n\t\t\t\t<center>\n" +
             "\t\t\t\t\t<form action=\"";
-    private static String part9 = "/contest.jsp\" method=\"GET\">\n" +
+    private static String part10 = "/contest.jsp\" method=\"GET\">\n" +
             "\t\t\t\t\t\t<input type=\"password\" id=\"password\" name=\"password\" placeholder=\"Введите пароль для входа\">\n" +
             "\t\t\t\t\t\t<input type=\"submit\" value=\"Решать\" onclick=\"return Start(this);\" />\n" +
             "\t\t\t\t\t</form>\n" +

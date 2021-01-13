@@ -1,5 +1,7 @@
 package com.example.database;
 
+import com.example.Root;
+
 import java.sql.*;
 import java.util.Stack;
 
@@ -11,7 +13,7 @@ public class DataBaseHelper {
         try {
             connection = null;
             Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Public\\Documents\\Contester\\database.db");
+            connection = DriverManager.getConnection("jdbc:sqlite:" + Root.rootDirectory  + "\\database.db");
             statements = new Stack<>();
             statements.push(connection.createStatement());
         } catch (SQLException | ClassNotFoundException e) {

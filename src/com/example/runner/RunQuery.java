@@ -22,7 +22,7 @@ public class RunQuery {
     private HttpServletRequest request;
     private HttpServletResponse response;
     private String name, surname, code, path, fileName;
-    private int contestId;
+    private int task, contestId;
     private Lang lang;
     private AnswerWriter answer;
     private long time;
@@ -45,8 +45,9 @@ public class RunQuery {
             response.setContentType("text/html;charset=utf-8");
             PrintWriter pw = response.getWriter();
             pw.print(answer.getAnswer());
+            Results.add(surname + " " + name, task, answer.getStatus() ? Results.STATUS_OK : Results.STATUS_FAIL);
             answer.clear();
-        } catch (IOException | InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -60,7 +61,8 @@ public class RunQuery {
         code = request.getParameterValues("code")[0];
         lang = LangsTable.getLang(request.getParameterValues("lang")[0]);
         contestId = Integer.parseInt(request.getParameterValues("contest")[0]);
-        path = request.getParameterValues("contest")[0] + "\\" + request.getParameterValues("task")[0];
+        task = Integer.parseInt(request.getParameterValues("task")[0]);
+        path = request.getParameterValues("contest")[0] + "\\" + task;
         fileName = Root.rootDirectory + "\\Contests\\" + path + "\\sendings\\" + Languages.generateFileName2(lang, name, surname, time);
     }
 

@@ -366,3 +366,34 @@ function Generate(document, number){
     request.send();
     request.onreadystatechange = onServerAnswer;
 }
+
+function DeleteLangFromContest(document, cnt) {
+    alert("Delete lang " + cnt);
+}
+
+function AddLangToContest(document){
+    var e = document.getElementById("langs_list");
+    var langShortName = e.value;
+    var langLongName = e.options[e.selectedIndex].text;
+    var langId = langShortName.substr(2);
+    alert(langShortName + " : " + langLongName);
+
+    var row = document.createElement("tr");
+    row.id = "lang_row_" + langId;
+    document.getElementById("langs_table").appendChild(row);
+    var td1 = document.createElement("td");
+    var td2 = document.createElement("td");
+    var td3 = document.createElement("td");
+    var td4 = document.createElement("td");
+    row.appendChild(td1);
+    row.appendChild(td2);
+    row.appendChild(td3);
+    row.appendChild(td4);
+    td1.innerHTML = langId;
+    td2.innerHTML = langLongName;
+    td3.innerHTML = '<center><button id="lang_btn' 		+ langId + '">Добавлено</button></center>';
+    td4.innerHTML = '<center><button onclick="DeleteLangFromContest(document, ' + langId + ');">Удалить</button></center>';
+
+    let option = document.getElementById(langShortName);
+    option.parentNode.removeChild(option);
+}

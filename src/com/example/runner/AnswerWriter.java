@@ -10,12 +10,14 @@ public class AnswerWriter {
             "\t\t<td width=\"33%\"><center>Ваш вывод:</center></td>\n" +
             "\t</tr>\n";
     private int cnt;
+    private boolean status = true;
 
     public AnswerWriter(){
         clear();
     }
 
     public void fail(){
+        status = false;
         clear();
         builder.append("<center><font color=\"red\" size=\"13\">Running failed!</font></center>");
     }
@@ -43,6 +45,7 @@ public class AnswerWriter {
     }
 
     public void addTest(boolean result){
+        status &= result;
         builder.append("\t<tr>\n")
                 .append("\t\t<td>\n")
                 .append("\t\t\t<p>").append(cnt).append("</p>\n")
@@ -76,5 +79,9 @@ public class AnswerWriter {
         builder = new StringBuilder();
         error = "";
         cnt = 1;
+    }
+
+    public boolean getStatus() {
+        return status;
     }
 }

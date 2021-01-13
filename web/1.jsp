@@ -39,6 +39,8 @@
                 <p>01.11.2020 23:59</p>
                 <h3>Продолжительность:</h3>
                 <p>11:02:03</p>
+                <h3>Результаты:</h3>
+                <p><a href="#" onclick="viewResults(1, 0);">Результаты</a></p>
                 <center>
                     <form action="1/contest.jsp" method="GET">
                         <input type="password" id="password" name="password" placeholder="Введите пароль для входа">
