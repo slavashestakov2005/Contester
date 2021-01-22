@@ -60,6 +60,8 @@ public class EditSettings extends HttpServlet {
                 "<center>\n" +
                 "   <button onclick=\"if(lang_c === -1) lang_c = " + langs.size() + "; SaveLangs(document, lang_c);\">Сохранить всё</button>\n" +
                 "   <button onclick=\"if(lang_c === -1) lang_c = " + langs.size() + "; ++lang_c; NewRowLang(document, lang_c);\">Новый язык</button>\n" +
+                "   <br>\n" +
+                "   <button onclick=\"window.open('latex_render.html', '_blank')\">Просмотр LaTeX</button>\n" +
                 "</center>\n" +
                 "<div id=\"down2\"></div>");
         System.out.println("Lang => " + langs.size());

@@ -188,3 +188,25 @@ function viewResults(contestId, type){
     };
     return false;
 }
+
+function renderLatex(document){
+    var Url = "render";
+    var data = new Map();
+    data.set("name", getCookie(document, "name"));
+    data.set("surname", getCookie(document, "surname"));
+    data.set("text", document.getElementById("text_area").value);
+    var request = new XMLHttpRequest();
+    request.open("POST", Url + query(data));
+    request.send();
+    request.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            var answer = this.responseText;
+            if (answer !== "Fail") {
+                document.getElementById("latex_frame").contentDocument.location.reload();
+            } else {
+                alert("Ошибка доступа");
+            }
+        }
+    };
+    return false;
+}
