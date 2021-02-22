@@ -11,12 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.concurrent.TimeUnit;
 
 public class RunQuery {
     private static final String fileNameOutput = Root.rootDirectory + "\\Programs";
-    private static final String commandStart = "cmd /c ";
+    private static final long freeTime = 290;
 
 
     private HttpServletRequest request;
@@ -25,7 +27,8 @@ public class RunQuery {
     private int task, contestId;
     private Lang lang;
     private AnswerWriter answer;
-    private long time;
+    private long time, timeLimit = 1000 + freeTime, memoryLimit = 16 * 1024, compileLimit = 10000;
+    private ExecutedResult result;
 
 
     public RunQuery(HttpServletRequest request, HttpServletResponse response) {
@@ -38,14 +41,14 @@ public class RunQuery {
             init();
             System.out.println("POST запрос от " + name + " " + surname + " : " + lang.getEnd1());
             saveFile();
-            compileFile();
             answer.start();
-            runProgram();
+            if (!compileFile()) result.status = Status.CE;
+            else runProgram();
             answer.finish(contestId);
             response.setContentType("text/html;charset=utf-8");
             PrintWriter pw = response.getWriter();
             pw.print(answer.getAnswer());
-            Results.add(surname + " " + name, task, answer.getStatus() ? Results.STATUS_OK : Results.STATUS_FAIL);
+            Results.add(surname + " " + name, task, result.status);
             answer.clear();
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,6 +67,7 @@ public class RunQuery {
         task = Integer.parseInt(request.getParameterValues("task")[0]);
         path = request.getParameterValues("contest")[0] + "\\" + task;
         fileName = Root.rootDirectory + "\\Contests\\" + path + "\\sendings\\" + Languages.generateFileName2(lang, name, surname, time);
+        result = new ExecutedResult();
     }
 
     private void saveFile() throws IOException {
@@ -73,8 +77,9 @@ public class RunQuery {
         out.close();
     }
 
-    private void compileFile() throws IOException {
-        Runtime.getRuntime().exec(commandStart + Languages.getCompileCommand(lang, fileName, time));
+    private boolean compileFile() throws IOException, InterruptedException {
+        Process process = Runtime.getRuntime().exec(Languages.getCompileCommand(lang, fileName, time));
+        return process.waitFor(compileLimit, TimeUnit.MILLISECONDS);
     }
 
     protected void runProgram() throws InterruptedException, IOException {
@@ -87,44 +92,134 @@ public class RunQuery {
                 return Long.compare(Long.parseLong(name1), Long.parseLong(name2));
             }
         });
-        Thread.sleep(10000);    /** for program compile **/
-        for (int i = 0; i < files.length; ++i) {
-            String input = files[i].getPath();
-            String output = fileNameOutput + "\\" + time + "_" + files[i].getName();
-            executeFile(Languages.getExecuteCommand(lang, input, output, time));
-        }
-        Thread.sleep(10000);    /** for program running **/
-        for (int i = 0; i < files.length; ++i) {
-            String output = fileNameOutput + "\\" + time + "_" + files[i].getName();
-            System.out.println(output + " " + isCorrect(output, files[i].getName().split("\\.")[0]));
-            Files.delete(Paths.get(output));
+        for (File file : files) {
+            result.start();
+            String input = file.getPath();
+            String output = fileNameOutput + "\\" + time + "_" + file.getName();
+            String command = Languages.getExecuteCommand(lang, time);
+            System.out.println(command + " > " + output + " < " + input);
+            int testId = Integer.parseInt(file.getName().split("\\.")[0]);
+            Test test = TestsTable.selectTestByID(testId);
+            if (executeFile(command, test)) {
+                System.out.println(output + " " + isCorrect(test));
+            }
+            answer.addTest(result.status, result.endTime - result.startTime - freeTime, result.memory);
         }
         deleteFile();
     }
 
-    protected boolean isCorrect(String outputFile, String testId){
-        Test test = TestsTable.selectTestByID(Integer.parseInt(testId));
+    protected boolean executeFile(String command, Test test) throws IOException, InterruptedException {
+        Process process = Runtime.getRuntime().exec(command);
+        long pid = process.pid();
+        System.out.println("PID : " + pid);
+        RunTask runTask = new RunTask(process);
+        runTask.start();
+
+        OutputStream outputStream = process.getOutputStream();
+        outputStream.write(test.getInput().getBytes());
+        outputStream.close();
+        InputStream is = process.getInputStream();
+        InputStreamReader isr = new InputStreamReader(is);
+        BufferedReader br = new BufferedReader(isr);
+        ArrayList<String> lines = new ArrayList<>();
+        String line;
+        while ((line = br.readLine()) != null) {
+            lines.add(line);
+            result.memory = Math.max(result.memory, TaskListParser.getMemory(pid));
+        }
+        br.close();
+
+        boolean res = process.waitFor(timeLimit, TimeUnit.MILLISECONDS);
+        runTask.join();
+        result.text = lines.toArray(new String[0]);
+        if (result.status == Status.OK) {
+            if (!res) {
+                result.status = Status.TLE;
+                process.destroy();
+            } else if (process.exitValue() != 0) result.status = Status.RE;
+        }
+        return result.status == Status.OK;
+    }
+
+    protected boolean isCorrect(Test test){
         String[] correctAnswer = test.getOutput().split("\\s+");
-        if (Checker.equals(correctAnswer, outputFile)){
-            answer.addTest(true);
+        if (Checker.check(correctAnswer, result.text)){
+            result.status = Status.OK;
             return true;
         }
         else{
             if (test.isPublic()){
-                String output = Checker.read(outputFile);
-                answer.setError(test.getInput(), test.getOutput(), output);
+                answer.setError(test.getInput(), test.getOutput(), fromArray());
             }
-            answer.addTest(false);
+            result.status = Status.WA;
             return false;
         }
     }
 
-    protected void executeFile(String command) throws IOException {
-        System.out.println(command);
-        Runtime.getRuntime().exec(commandStart + command);
+    private String fromArray(){
+        StringBuilder builder = new StringBuilder();
+        for(String line : result.text) builder.append(line).append("<br/>\n");
+        return builder.toString();
     }
 
-    protected void deleteFile() throws IOException {
-        Files.delete(Paths.get(Languages.generateProgramName(lang, time)));
+    protected void deleteFile() {
+        safetyDeleteFile(Languages.generateProgramName(lang, time));
+    }
+
+    protected void safetyDeleteFile(String name){
+        try {
+            Files.delete(Paths.get(name));
+        } catch (IOException e) {
+            System.err.println("Нет удаляемого файла!");
+        }
+    }
+
+    private static class ExecutedResult{
+        public long startTime, endTime, memory;
+        public Status status;
+        public String[] text;
+
+        public void start(){
+            startTime = endTime = memory = 0;
+            status = Status.OK;
+            text = null;
+        }
+    }
+
+    private class RunTask extends Thread{
+        Process process;
+        long pid;
+
+        public RunTask(Process process) {
+            this.process = process;
+            this.pid = process.pid();
+        }
+
+        public void run() {
+            while (!process.isAlive()) try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            result.startTime = System.currentTimeMillis();
+            System.out.println("#pid | start " + pid + " | " + result.startTime);
+            TaskListParser.addNew();
+            while (process.isAlive()) try {
+                result.memory = Math.max(result.memory, TaskListParser.getMemory(pid));
+                result.endTime = System.currentTimeMillis();
+                System.out.println("#pid | end " + pid + " | " + result.endTime);
+                if (result.memory > memoryLimit) {
+                    result.status = Status.MLE;
+                    process.destroy();
+                }
+                if (result.startTime + timeLimit < result.endTime){
+                    result.status = Status.TLE;
+                    process.destroy();
+                }
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

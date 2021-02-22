@@ -10,16 +10,13 @@ public class AnswerWriter {
             "\t\t<td width=\"33%\"><center>Ваш вывод:</center></td>\n" +
             "\t</tr>\n";
     private int cnt;
-    private boolean status = true;
 
     public AnswerWriter(){
         clear();
     }
 
-    public void fail(){
-        status = false;
-        clear();
-        builder.append("<center><font color=\"red\" size=\"13\">Running failed!</font></center>");
+    public void fail(Status newStatus){
+        builder.append("<center><font color=\"red\" size=\"13\">").append(newStatus).append("!</font></center>");
     }
 
     public void start(){
@@ -38,23 +35,26 @@ public class AnswerWriter {
                 .append("<center><button onclick=\"move()\">Назад</button></center>\n")
                 .append("<script>\n")
                 .append("\tfunction move(){\n")
-                .append("\t\tdocument.location.replace(\"" + contestId + "/contest.jsp\");\n")
+                .append("\t\tdocument.location.replace(\"").append(contestId).append("/contest.jsp\");\n")
                 .append("\t\treturn false;\n")
                 .append("\t}\n")
                 .append("</script>");
     }
 
-    public void addTest(boolean result){
-        status &= result;
+    public void addTest(Status result, long time, long memory){
         builder.append("\t<tr>\n")
                 .append("\t\t<td>\n")
                 .append("\t\t\t<p>").append(cnt).append("</p>\n")
                 .append("\t\t</td>\n")
                 .append("\t\t<td>\n")
-                .append("\t\t\t<p><font color=").append(result ? "\"green\">Ok" : "\"red\">Fail").append("</font></p>\n")
+                .append("\t\t\t<p>").append(result.htmlString()).append("</p>\n")
                 .append("\t\t</td>\n")
-                .append("\t\t<td />\n")
-                .append("\t\t<td />\n")
+                .append("\t\t<td>\n")
+                .append("\t\t\t<p>").append(time).append("</p>\n")
+                .append("\t\t</td>\n")
+                .append("\t\t<td>\n")
+                .append("\t\t\t<p>").append(memory).append("</p>\n")
+                .append("\t\t</td>\n")
                 .append("\t</tr>\n");
         ++cnt;
     }
@@ -79,9 +79,5 @@ public class AnswerWriter {
         builder = new StringBuilder();
         error = "";
         cnt = 1;
-    }
-
-    public boolean getStatus() {
-        return status;
     }
 }

@@ -42,4 +42,13 @@ public class Checker {
     private static boolean equals(String[] file1, String[] file2) {
         return Arrays.equals(file1, file2);
     }
+
+    public static boolean check(String[] correct, String[] answer){
+        ArrayList<String> list = new ArrayList<>();
+        for(String line : answer){
+            String words[] = line.trim().split("\\s+");
+            if (words.length > 0 && words[0].length() > 0 && words[0].charAt(0) != '#') list.addAll(Arrays.asList(words));
+        }
+        return equals(correct, list.toArray(new String[0]));
+    }
 }

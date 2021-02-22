@@ -29,8 +29,12 @@ public class EditSettings extends HttpServlet {
     }
 
     private void generatePage(PrintWriter pw) {
-        pw.print("<center><h3>Доступные языки:</h3></center>\n");
-        pw.print("<table border=\"1\" width=\"100%\" id=\"langs\">\n" +
+        pw.print("<center><h3>Правила записи:</h3></center>\n" +
+                "Для записи команд запуска и компиляции используется синтаксис MessageFormat.format, где:<br>\n" +
+                "{0} — обозначает имя программы (имя после компиляции и до запуска).<br>\n" +
+                "{1} — обозначает имя файла с кодом (до компиляции).<br>\n" +
+                "<center><h3>Доступные языки:</h3></center>\n" +
+                "<table border=\"1\" width=\"100%\" id=\"langs\">\n" +
                 "            <tr>\n" +
                 "                <td width=\"5%\">№</td>\n" +
                 "                <td width=\"10%\">Название</td>\n" +
@@ -62,8 +66,10 @@ public class EditSettings extends HttpServlet {
                 "   <button onclick=\"if(lang_c === -1) lang_c = " + langs.size() + "; ++lang_c; NewRowLang(document, lang_c);\">Новый язык</button>\n" +
                 "   <br>\n" +
                 "   <button onclick=\"window.open('latex_render.html', '_blank')\">Просмотр LaTeX</button>\n" +
+                "   <br>\n" +
+                "   <button onclick=\"window.open('res_loader.html', '_blank')\">Загрузка файлов</button>\n" +
                 "</center>\n" +
-                "<div id=\"down2\"></div>");
+        "<div id=\"down2\"></div>");
         System.out.println("Lang => " + langs.size());
     }
 }
