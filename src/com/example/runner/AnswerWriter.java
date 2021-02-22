@@ -50,14 +50,19 @@ public class AnswerWriter {
                 .append("\t\t\t<p>").append(result.htmlString()).append("</p>\n")
                 .append("\t\t</td>\n")
                 .append("\t\t<td>\n")
-                .append("\t\t\t<p>").append(time).append("</p>\n")
+                .append("\t\t\t<p>").append(result != Status.CE ? time / 1000.0 : "&mdash;").append("</p>\n")
                 .append("\t\t</td>\n")
                 .append("\t\t<td>\n")
-                .append("\t\t\t<p>").append(memory).append("</p>\n")
+                .append("\t\t\t<p>").append(result != Status.CE ? beautifulMemory(memory) : "&mdash;").append("</p>\n")
                 .append("\t\t</td>\n")
                 .append("\t</tr>\n");
         ++cnt;
     }
+
+    private String beautifulMemory(long memory){
+        if (memory >= 5 * 1024) return String.format("%.1f Мб", memory / 1024.0);
+        return String.format("%d Кб", memory);
+}
 
     public void setError(String input, String correct, String out){
         if (error.length() == 0){

@@ -13,12 +13,14 @@ public class TasksTable {
 
     static {
         columns = new Columns();
-        columns.add("ID", 1, "id");             // int      NOT NULL    PK      AI      UNIQUE
-        columns.add("NAME", 2, "name");         // text     NOT NULL
-        columns.add("ABOUT", 3, "description"); // text
-        columns.add("INPUT", 4, "input");       // text
-        columns.add("OUTPUT", 5, "output");     // text
-        columns.add("SOLUTION", 6, "solution"); // text
+        columns.add("ID", 1, "id");                     // int      NOT NULL    PK      AI      UNIQUE
+        columns.add("NAME", 2, "name");                 // text     NOT NULL
+        columns.add("ABOUT", 3, "description");         // text
+        columns.add("INPUT", 4, "input");               // text
+        columns.add("OUTPUT", 5, "output");             // text
+        columns.add("SOLUTION", 6, "solution");         // text
+        columns.add("TIME_LIMIT", 7, "timeLimit");      // int      NOT NULL    (MS)
+        columns.add("MEMORY_LIMIT", 8, "memoryLimit");  // int      NOT NULL    (MB)
     }
 
     public static Task selectTaskByID(int taskId){

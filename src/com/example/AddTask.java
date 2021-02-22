@@ -25,6 +25,8 @@ public class AddTask extends HttpServlet {
         String tInput = request.getParameter("t_input");
         String tOutput = request.getParameter("t_output");
         String tSolution = request.getParameter("t_solution");
+        int tTimeLimit = Integer.parseInt(request.getParameter("t_time"));
+        int tMemoryLimit = Integer.parseInt(request.getParameter("t_memory"));
         /** work with they **/
         response.setContentType("text/html;charset=utf-8");
         PrintWriter pw = response.getWriter();
@@ -33,7 +35,7 @@ public class AddTask extends HttpServlet {
         else status = "Fail";
         pw.print(status);
         if (status.equals("Ok")){
-            int id = TasksTable.add(new Task(tName, tAbout, tInput, tOutput, tSolution));
+            int id = TasksTable.add(new Task(tName, tAbout, tInput, tOutput, tSolution, tTimeLimit, tMemoryLimit));
             ContestsTasksTable.add(new ContestTask(contestId, id));
         }
     }

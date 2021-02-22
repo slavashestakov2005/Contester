@@ -2,8 +2,10 @@ package com.example.runner;
 
 import com.example.Root;
 import com.example.database.rows.Lang;
+import com.example.database.rows.Task;
 import com.example.database.rows.Test;
 import com.example.database.tables.LangsTable;
+import com.example.database.tables.TasksTable;
 import com.example.database.tables.TestsTable;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,16 +20,17 @@ import java.util.concurrent.TimeUnit;
 
 public class RunQuery {
     private static final String fileNameOutput = Root.rootDirectory + "\\Programs";
-    private static final long freeTime = 290;
+    private static final long freeTime = 290, freeMemory = 3600, compileLimit = 10000, defaultTime = 30, defaultMemory = 496;
 
 
     private HttpServletRequest request;
     private HttpServletResponse response;
     private String name, surname, code, path, fileName;
-    private int task, contestId;
+    private Task task;
+    private int contestId;
     private Lang lang;
     private AnswerWriter answer;
-    private long time, timeLimit = 1000 + freeTime, memoryLimit = 16 * 1024, compileLimit = 10000;
+    private long time;
     private ExecutedResult result;
 
 
@@ -48,7 +51,7 @@ public class RunQuery {
             response.setContentType("text/html;charset=utf-8");
             PrintWriter pw = response.getWriter();
             pw.print(answer.getAnswer());
-            Results.add(surname + " " + name, task, result.status);
+            Results.add(surname + " " + name, task.getId(), result.status);
             answer.clear();
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,8 +67,8 @@ public class RunQuery {
         code = request.getParameterValues("code")[0];
         lang = LangsTable.getLang(request.getParameterValues("lang")[0]);
         contestId = Integer.parseInt(request.getParameterValues("contest")[0]);
-        task = Integer.parseInt(request.getParameterValues("task")[0]);
-        path = request.getParameterValues("contest")[0] + "\\" + task;
+        task = TasksTable.selectTaskByID(Integer.parseInt(request.getParameterValues("task")[0]));
+        path = request.getParameterValues("contest")[0] + "\\" + task.getId();
         fileName = Root.rootDirectory + "\\Contests\\" + path + "\\sendings\\" + Languages.generateFileName2(lang, name, surname, time);
         result = new ExecutedResult();
     }
@@ -100,10 +103,16 @@ public class RunQuery {
             System.out.println(command + " > " + output + " < " + input);
             int testId = Integer.parseInt(file.getName().split("\\.")[0]);
             Test test = TestsTable.selectTestByID(testId);
-            if (executeFile(command, test)) {
-                System.out.println(output + " " + isCorrect(test));
+            try {
+                if (executeFile(command, test)) {
+                    System.out.println(output + " " + isCorrect(test));
+                }
+            } catch (Exception ex){
+                result.status = Status.CE;
             }
-            answer.addTest(result.status, result.endTime - result.startTime - freeTime, result.memory);
+            long runTime = Math.max(defaultTime, result.endTime - result.startTime - freeTime);
+            long runMemory = Math.max(defaultMemory, result.memory - freeMemory);
+            answer.addTest(result.status, runTime, runMemory);
         }
         deleteFile();
     }
@@ -125,11 +134,10 @@ public class RunQuery {
         String line;
         while ((line = br.readLine()) != null) {
             lines.add(line);
-            result.memory = Math.max(result.memory, TaskListParser.getMemory(pid));
         }
         br.close();
 
-        boolean res = process.waitFor(timeLimit, TimeUnit.MILLISECONDS);
+        boolean res = process.waitFor(task.getTimeLimit() + freeTime, TimeUnit.MILLISECONDS);
         runTask.join();
         result.text = lines.toArray(new String[0]);
         if (result.status == Status.OK) {
@@ -208,11 +216,11 @@ public class RunQuery {
                 result.memory = Math.max(result.memory, TaskListParser.getMemory(pid));
                 result.endTime = System.currentTimeMillis();
                 System.out.println("#pid | end " + pid + " | " + result.endTime);
-                if (result.memory > memoryLimit) {
+                if (result.memory - freeMemory > 1024 * task.getMemoryLimit()) {
                     result.status = Status.MLE;
                     process.destroy();
                 }
-                if (result.startTime + timeLimit < result.endTime){
+                if (result.startTime + freeTime + task.getTimeLimit() < result.endTime){
                     result.status = Status.TLE;
                     process.destroy();
                 }

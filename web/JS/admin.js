@@ -120,6 +120,14 @@ function Save(document, cnt, type, number){
         data.set("t_input", document.getElementById("task_input").value);
         data.set("t_output", document.getElementById("task_output").value);
         data.set("t_solution", document.getElementById("task_solution").value);
+        var t_time = document.getElementById("task_time").value;
+        var t_memory = document.getElementById("task_memory").value;
+        if (t_time <= 0 || t_memory <= 0){
+            alert("Время и память на выполнение программы должны быть положительными.");
+            return;
+        }
+        data.set("t_time", t_time);
+        data.set("t_memory", t_memory);
         var request = new XMLHttpRequest();
         request.open("POST", Url + query(data));
         request.send();
@@ -304,6 +312,14 @@ function AddTask(document, contestId) {
     data.set("t_input", document.getElementById("task_input").value);
     data.set("t_output", document.getElementById("task_output").value);
     data.set("t_solution", document.getElementById("task_solution").value);
+    var t_time = document.getElementById("task_time").value;
+    var t_memory = document.getElementById("task_memory").value;
+    if (t_time <= 0 || t_memory <= 0){
+        alert("Время и память на выполнение программы должны быть положительными.");
+        return;
+    }
+    data.set("t_time", t_time);
+    data.set("t_memory", t_memory);
     var request = new XMLHttpRequest();
     request.open("POST", Url + query(data));
     request.send();

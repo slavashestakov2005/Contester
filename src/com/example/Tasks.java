@@ -23,6 +23,8 @@ public class Tasks extends HttpServlet {
         String tInput = request.getParameter("t_input");
         String tOutput = request.getParameter("t_output");
         String tSolution = request.getParameter("t_solution");
+        int tTimeLimit = Integer.parseInt(request.getParameter("t_time"));
+        int tMemoryLimit = Integer.parseInt(request.getParameter("t_memory"));
         /** work with they **/
         response.setContentType("text/html;charset=utf-8");
         PrintWriter pw = response.getWriter();
@@ -31,7 +33,7 @@ public class Tasks extends HttpServlet {
         else status = "Fail";
         pw.write(status);
         if (status.equals("Ok")){
-            TasksTable.updateTaskByID(new Task(id, tName, tAbout, tInput, tOutput, tSolution));
+            TasksTable.updateTaskByID(new Task(id, tName, tAbout, tInput, tOutput, tSolution, tTimeLimit, tMemoryLimit));
         }
     }
 }

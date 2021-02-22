@@ -35,6 +35,10 @@ public class EditTask extends HttpServlet {
         Task task = TasksTable.selectTaskByID(taskId);
         pw.print("<center><h3>Название:</h3></center>\n");
         pw.print("<textarea class=\"tasks_data_small\" id=\"task_name\">" + task.getName() + "</textarea>\n");
+        pw.print("<center><h3>Время (мс):</h3></center>\n");
+        pw.print("<textarea class=\"tasks_data_small\" id=\"task_time\">" + task.getTimeLimit() + "</textarea>\n");
+        pw.print("<center><h3>Память (Мб):</h3></center>\n");
+        pw.print("<textarea class=\"tasks_data_small\" id=\"task_memory\">" + task.getMemoryLimit() + "</textarea>\n");
         pw.print("<center><h3>Условие:</h3></center>\n");
         pw.print("<textarea class=\"tasks_data_large\" id=\"task_description\">" + task.getAbout() + "</textarea>\n");
         pw.print("<center><h3>Входные данные:</h3></center>\n");
