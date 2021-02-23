@@ -18,7 +18,7 @@ public class Languages {
         return MessageFormat.format(lang.getExecuteCommand(), generateProgramName(lang, time));
     }
 
-    public static String generateFileName2(Lang lang, String name, String surname, long time){
+    public static String generateFileName(Lang lang, String name, String surname, long time){
         return time + "_" + name + "_" + surname + "." + lang.getEnd1();
     }
 }

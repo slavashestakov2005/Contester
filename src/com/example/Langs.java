@@ -23,6 +23,10 @@ public class Langs extends HttpServlet {
         String lEnd2 = request.getParameter("l_end2");
         String lCompile = request.getParameter("l_compile");
         String lExecute = request.getParameter("l_execute");
+        int lFreeTime = Integer.parseInt(request.getParameter("l_freeTime"));
+        int lFreeMemory = Integer.parseInt(request.getParameter("l_freeMemory"));
+        int lMinTime = Integer.parseInt(request.getParameter("l_minTime"));
+        int lMinMemory = Integer.parseInt(request.getParameter("l_minMemory"));
         /** work with they **/
         response.setContentType("text/html;charset=utf-8");
         PrintWriter pw = response.getWriter();
@@ -31,8 +35,8 @@ public class Langs extends HttpServlet {
         else status = "Fail";
         pw.write(status);
         if (status.equals("Ok")){
-            if (id == -1) LangsTable.add(new Lang(lName, lEnd1, lEnd2, lCompile, lExecute));
-            else LangsTable.update(new Lang(id, lName, lEnd1, lEnd2, lCompile, lExecute));
+            if (id == -1) LangsTable.add(new Lang(lName, lEnd1, lEnd2, lCompile, lExecute, lFreeTime, lFreeMemory, lMinTime, lMinMemory));
+            else LangsTable.update(new Lang(id, lName, lEnd1, lEnd2, lCompile, lExecute, lFreeTime, lFreeMemory, lMinTime, lMinMemory));
         }
     }
 }

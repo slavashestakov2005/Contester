@@ -40,7 +40,7 @@ public class ContesterPageGenerator {
             "\t\t<script src=\"JS/admin.js\" type=\"text/javascript\"> </script>\n" +
             "\t\t<script src=\"https://polyfill.io/v3/polyfill.min.js?features=es6\"></script>\n" +
             "\t\t<script id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js\"></script>\n" +
-            "\t\t<script> var lang = -1; </script>\n" +
+            "\t\t<script> var lang_c = -1; </script>\n" +
             "\t\t<title>Контестер</title>\n" +
             "\t</head>\n" +
             "\t<body>\n" +
@@ -59,7 +59,6 @@ public class ContesterPageGenerator {
             "\t\t\t<iframe src=\"sidebar.html\" width=\"150px\" height=\"100%\" scrolling=\"no\" frameborder=\"no\" style=\"position: absolute; \">Список контестов</iframe>\n" +
             "\t\t\t<div id=\"content\">\n" +
             "\t\t\t\t<center><h2>Контестер</h2></center>\n" +
-            "\t\t\t\t<p>Контестер — web приложение для создания контестов по информатике.</p>\n" +
             "\t\t\t\t<p>Контестер — web приложение для создания контестов по информатике.</p>\n" +
             "\t\t\t\t<p>Автор: Шестаков Вячеслав, ученик Инженерной Школы гимназии \"Униврс №1\".</p>\n" +
             "\t\t\t\t<p>Руководитель: Вахитова Екатерина Юрьевна, учитель гимназии \"Униврс №1\".</p>\n" +

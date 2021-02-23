@@ -14,12 +14,16 @@ public class LangsTable {
 
     static {
         columns = new Columns();
-        columns.add("ID", 1, "id");             // int      NOT NULL    PK      AI      UNIQUE
-        columns.add("NAME", 2, "name");         // text     NOT NULL
-        columns.add("END1", 3, "end1");         // text     NOT NULL                    UNIQUE
-        columns.add("END2", 4, "end2");         // text     NOT NULL
-        columns.add("COMPILE", 5, "compile");   // text     NOT NULL
-        columns.add("EXECUTE", 6, "execute");   // text     NOT NULL
+        columns.add("ID", 1, "id");                     // int      NOT NULL    PK      AI      UNIQUE
+        columns.add("NAME", 2, "name");                 // text     NOT NULL
+        columns.add("END1", 3, "end1");                 // text     NOT NULL                    UNIQUE
+        columns.add("END2", 4, "end2");                 // text     NOT NULL
+        columns.add("COMPILE", 5, "compile");           // text     NOT NULL
+        columns.add("EXECUTE", 6, "execute");           // text     NOT NULL
+        columns.add("FREE_TIME", 7, "freeTime");        // int      NOT NULL    (MS)
+        columns.add("FREE_MEMORY", 8, "freeMemory");    // int      NOT NULL    (KB)
+        columns.add("MIN_TIME", 9, "minTime");          // int      NOT NULL    (MS)
+        columns.add("MIN_MEMORY", 10, "minMemory");     // int      NOT NULL    (KB)
     }
 
     public static ArrayList<Lang> getAll() {

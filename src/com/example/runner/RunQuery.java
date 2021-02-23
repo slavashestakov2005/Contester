@@ -14,13 +14,10 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.concurrent.TimeUnit;
 
 public class RunQuery {
-    private static final String fileNameOutput = Root.rootDirectory + "\\Programs";
-    private static final long freeTime = 290, freeMemory = 3600, compileLimit = 10000, defaultTime = 30, defaultMemory = 496;
+    private static final long compileLimit = 10000;
 
 
     private HttpServletRequest request;
@@ -69,7 +66,7 @@ public class RunQuery {
         contestId = Integer.parseInt(request.getParameterValues("contest")[0]);
         task = TasksTable.selectTaskByID(Integer.parseInt(request.getParameterValues("task")[0]));
         path = request.getParameterValues("contest")[0] + "\\" + task.getId();
-        fileName = Root.rootDirectory + "\\Contests\\" + path + "\\sendings\\" + Languages.generateFileName2(lang, name, surname, time);
+        fileName = Root.rootDirectory + "\\Contests\\" + path + "\\sendings\\" + Languages.generateFileName(lang, name, surname, time);
         result = new ExecutedResult();
     }
 
@@ -85,33 +82,21 @@ public class RunQuery {
         return process.waitFor(compileLimit, TimeUnit.MILLISECONDS);
     }
 
-    protected void runProgram() throws InterruptedException, IOException {
-        File[] files = new File(Root.rootDirectory + "\\Contests\\" + path + "\\tests").listFiles();
-        Arrays.sort(files, new Comparator<File>() {
-            @Override
-            public int compare(File o1, File o2) {
-                String name1 = o1.getName().replaceFirst("[.][^.]+$", "");
-                String name2 = o2.getName().replaceFirst("[.][^.]+$", "");
-                return Long.compare(Long.parseLong(name1), Long.parseLong(name2));
-            }
-        });
-        for (File file : files) {
+    protected void runProgram() {
+        ArrayList<Test> tests = TestsTable.getTestsForTask(task.getId());
+        for (Test test : tests){
             result.start();
-            String input = file.getPath();
-            String output = fileNameOutput + "\\" + time + "_" + file.getName();
             String command = Languages.getExecuteCommand(lang, time);
-            System.out.println(command + " > " + output + " < " + input);
-            int testId = Integer.parseInt(file.getName().split("\\.")[0]);
-            Test test = TestsTable.selectTestByID(testId);
+            System.out.println(command + " -> " + test.getId());
             try {
                 if (executeFile(command, test)) {
-                    System.out.println(output + " " + isCorrect(test));
+                    isCorrect(test);
                 }
             } catch (Exception ex){
                 result.status = Status.CE;
             }
-            long runTime = Math.max(defaultTime, result.endTime - result.startTime - freeTime);
-            long runMemory = Math.max(defaultMemory, result.memory - freeMemory);
+            long runTime = Math.max(lang.getMinTime(), result.endTime - result.startTime - lang.getFreeTime());
+            long runMemory = Math.max(lang.getMinMemory(), result.memory - lang.getFreeMemory());
             answer.addTest(result.status, runTime, runMemory);
         }
         deleteFile();
@@ -137,7 +122,7 @@ public class RunQuery {
         }
         br.close();
 
-        boolean res = process.waitFor(task.getTimeLimit() + freeTime, TimeUnit.MILLISECONDS);
+        boolean res = process.waitFor(task.getTimeLimit() + lang.getFreeTime(), TimeUnit.MILLISECONDS);
         runTask.join();
         result.text = lines.toArray(new String[0]);
         if (result.status == Status.OK) {
@@ -216,11 +201,11 @@ public class RunQuery {
                 result.memory = Math.max(result.memory, TaskListParser.getMemory(pid));
                 result.endTime = System.currentTimeMillis();
                 System.out.println("#pid | end " + pid + " | " + result.endTime);
-                if (result.memory - freeMemory > 1024 * task.getMemoryLimit()) {
+                if (result.memory - lang.getFreeMemory() > 1024 * task.getMemoryLimit()) {
                     result.status = Status.MLE;
                     process.destroy();
                 }
-                if (result.startTime + freeTime + task.getTimeLimit() < result.endTime){
+                if (result.startTime + lang.getFreeTime() + task.getTimeLimit() < result.endTime){
                     result.status = Status.TLE;
                     process.destroy();
                 }

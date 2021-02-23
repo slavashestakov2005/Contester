@@ -30,46 +30,53 @@ public class EditSettings extends HttpServlet {
 
     private void generatePage(PrintWriter pw) {
         pw.print("<center><h3>Правила записи:</h3></center>\n" +
-                "Для записи команд запуска и компиляции используется синтаксис MessageFormat.format, где:<br>\n" +
-                "{0} — обозначает имя программы (имя после компиляции и до запуска).<br>\n" +
-                "{1} — обозначает имя файла с кодом (до компиляции).<br>\n" +
+                "Для записи команд запуска и компиляции используется синтаксис java.text.MessageFormat.format, где:<br>\n" +
+                "{0} — обозначает имя программы (файл для запуска).<br>\n" +
+                "{1} — обозначает имя файла с кодом (файл для компиляции).<br>\n" +
                 "<center><h3>Доступные языки:</h3></center>\n" +
                 "<table border=\"1\" width=\"100%\" id=\"langs\">\n" +
-                "            <tr>\n" +
-                "                <td width=\"5%\">№</td>\n" +
-                "                <td width=\"10%\">Название</td>\n" +
-                "                <td width=\"10%\">Расширение 1</td>\n" +
-                "                <td width=\"10%\">Расширение 2</td>\n" +
-                "                <td width=\"35%\">Компиляция</td>\n" +
-                "                <td width=\"20%\">Запуск</td>\n" +
-                "                <td width=\"5%\">Изменено</td>\n" +
-                "                <td width=\"5%\">Удалить</td>\n" +
-                "            </tr>\n");
+                "\t<tr>\n" +
+                "\t\t<td width=\"3%\"><center>№</center></td>\n" +
+                "\t\t<td width=\"7%\"><center>Название</center></td>\n" +
+                "\t\t<td width=\"5%\"><center>Исходное расширение</center></td>\n" +
+                "\t\t<td width=\"5%\"><center>Конечное расширение</center></td>\n" +
+                "\t\t<td width=\"5%\"><center>Свободное время</center></td>\n" +
+                "\t\t<td width=\"5%\"><center>Свободная память</center></td>\n" +
+                "\t\t<td width=\"5%\"><center>Минимальное время</center></td>\n" +
+                "\t\t<td width=\"5%\"><center>Минимальная память</center></td>\n" +
+                "\t\t<td width=\"35%\"><center>Компиляция</center></td>\n" +
+                "\t\t<td width=\"15%\"><center>Запуск</center></td>\n" +
+                "\t\t<td width=\"5%\"><center>Изменено</center></td>\n" +
+                "\t\t<td width=\"5%\"><center>Удалить</center></td>\n" +
+                "\t</tr>\n");
         /** get all langs */
         ArrayList<Lang> langs = LangsTable.getAll();
         for(int i = 0; i < langs.size(); ++i){
             pw.print("<tr id=\"" + (i + 1) + "\">\n" +
-                    "   <td><p id=\"index" + (i + 1) + "\">" + langs.get(i).getId() + "</p></td>\n" +
-                    "   <td><textarea id=\"name" + (i + 1) + "\" class=\"input_output\" oninput=\"Change(document, " + (i + 1) + ");\">" + langs.get(i).getName() + "</textarea></td>\n" +
-                    "   <td><textarea id=\"end1" + (i + 1) + "\" class=\"input_output\" oninput=\"Change(document, " + (i + 1) + ");\">" + langs.get(i).getEnd1() + "</textarea></td>\n" +
-                    "   <td><textarea id=\"end2" + (i + 1) + "\" class=\"input_output\" oninput=\"Change(document, " + (i + 1) + ");\">" + langs.get(i).getEnd2() + "</textarea></td>\n" +
-                    "   <td><textarea id=\"compile" + (i + 1) + "\" class=\"input_output\" oninput=\"Change(document, " + (i + 1) + ");\">" + langs.get(i).getCompileCommand() + "</textarea></td>\n" +
-                    "   <td><textarea id=\"execute" + (i + 1) + "\" class=\"input_output\" oninput=\"Change(document, " + (i + 1) + ");\">" + langs.get(i).getExecuteCommand() + "</textarea></td>\n" +
-                    "   <td><button id=\"btn" + (i + 1) + "\" disabled>Изменено</button></td>\n" +
-                    "   <td><button onclick=\"DeleteLang(document, " + (i + 1) + ")\">Удалить</button></td>\n" +
+                    "\t<td><p id=\"index" + (i + 1) + "\">" + langs.get(i).getId() + "</p></td>\n" +
+                    "\t<td><textarea id=\"name" + (i + 1) + "\" class=\"input_output\" oninput=\"Change(document, " + (i + 1) + ");\">" + langs.get(i).getName() + "</textarea></td>\n" +
+                    "\t<td><textarea id=\"end1" + (i + 1) + "\" class=\"input_output\" oninput=\"Change(document, " + (i + 1) + ");\">" + langs.get(i).getEnd1() + "</textarea></td>\n" +
+                    "\t<td><textarea id=\"end2" + (i + 1) + "\" class=\"input_output\" oninput=\"Change(document, " + (i + 1) + ");\">" + langs.get(i).getEnd2() + "</textarea></td>\n" +
+                    "\t<td><textarea id=\"free_time" + (i + 1) + "\" class=\"input_output\" oninput=\"Change(document, " + (i + 1) + ");\">" + langs.get(i).getFreeTime() + "</textarea></td>\n" +
+                    "\t<td><textarea id=\"free_memory" + (i + 1) + "\" class=\"input_output\" oninput=\"Change(document, " + (i + 1) + ");\">" + langs.get(i).getFreeMemory() + "</textarea></td>\n" +
+                    "\t<td><textarea id=\"min_time" + (i + 1) + "\" class=\"input_output\" oninput=\"Change(document, " + (i + 1) + ");\">" + langs.get(i).getMinTime() + "</textarea></td>\n" +
+                    "\t<td><textarea id=\"min_memory" + (i + 1) + "\" class=\"input_output\" oninput=\"Change(document, " + (i + 1) + ");\">" + langs.get(i).getMinMemory() + "</textarea></td>\n" +
+                    "\t<td><textarea id=\"compile" + (i + 1) + "\" class=\"input_output\" oninput=\"Change(document, " + (i + 1) + ");\">" + langs.get(i).getCompileCommand() + "</textarea></td>\n" +
+                    "\t<td><textarea id=\"execute" + (i + 1) + "\" class=\"input_output\" oninput=\"Change(document, " + (i + 1) + ");\">" + langs.get(i).getExecuteCommand() + "</textarea></td>\n" +
+                    "\t<td><button id=\"btn" + (i + 1) + "\" disabled>Изменено</button></td>\n" +
+                    "\t<td><button onclick=\"DeleteLang(document, " + (i + 1) + ")\">Удалить</button></td>\n" +
                     "</tr>\n");
         }
         pw.print("</table>\n" +
                 "<br/>\n" +
                 "<center>\n" +
-                "   <button onclick=\"if(lang_c === -1) lang_c = " + langs.size() + "; SaveLangs(document, lang_c);\">Сохранить всё</button>\n" +
-                "   <button onclick=\"if(lang_c === -1) lang_c = " + langs.size() + "; ++lang_c; NewRowLang(document, lang_c);\">Новый язык</button>\n" +
-                "   <br>\n" +
-                "   <button onclick=\"window.open('latex_render.html', '_blank')\">Просмотр LaTeX</button>\n" +
-                "   <br>\n" +
-                "   <button onclick=\"window.open('res_loader.html', '_blank')\">Загрузка файлов</button>\n" +
+                "\t<button onclick=\"if(lang_c === -1) lang_c = " + langs.size() + "; SaveLangs(document, lang_c);\">Сохранить всё</button>\n" +
+                "\t<button onclick=\"if(lang_c === -1) lang_c = " + langs.size() + "; ++lang_c; NewRowLang(document, lang_c);\">Новый язык</button>\n" +
+                "\t<br>\n" +
+                "\t<button onclick=\"window.open('latex_render.html', '_blank')\">Просмотр LaTeX</button>\n" +
+                "\t<br>\n" +
+                "\t<button onclick=\"window.open('res_loader.html', '_blank')\">Загрузка файлов</button>\n" +
                 "</center>\n" +
-        "<div id=\"down2\"></div>");
-        System.out.println("Lang => " + langs.size());
+                "<div id=\"down2\"></div>");
     }
 }

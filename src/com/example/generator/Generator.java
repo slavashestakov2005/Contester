@@ -23,10 +23,6 @@ public class Generator {
             TaskPageGenerator.generate(contest, task, TestsTable.getExampleTestsForTask(task.getId()));
             String solution = task.getSolution();
             if (solution != null && solution.length() > 0) SolutionPageGenerator.generate(contest, task);
-            ArrayList<Test> tests = TestsTable.getTestsForTask(task.getId());
-            for(int i = 0; i < tests.size(); ++i){
-                saveTest(contestId, task.getId(), tests.get(i).getId(), tests.get(i).getInput());
-            }
         }
         StartPageGenerator.generate(contest);
         /***/ContesterPageGenerator.generate();
@@ -47,16 +43,7 @@ public class Generator {
         for(Task task : tasks){
             Files.createDirectories(Paths.get(contestDirectory +  "\\" + task.getId()));
             Files.createDirectories(Paths.get(contestDirectory +  "\\" + task.getId() + "\\sendings"));
-            Files.createDirectories(Paths.get(contestDirectory +  "\\" + task.getId() + "\\tests"));
         }
-    }
-
-    public static void saveTest(int contestId, int taskId, int testId, String text) throws IOException {
-        String path = Root.rootDirectory + "\\Contests\\" + contestId + "\\" + taskId + "\\tests\\" + testId + ".txt";
-        Writer out = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(path), "UTF-8"));
-        out.write(text);
-        out.close();
     }
 
     public static String toHTML(String text, int tabs){
