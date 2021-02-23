@@ -24,7 +24,7 @@
         <script src="JS/admin.js" type="text/javascript"> </script>
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-        <script> var lang = -1; </script>
+        <script> var lang_c = -1; </script>
         <title>Контестер</title>
     </head>
     <body>
@@ -43,7 +43,6 @@
             <iframe src="sidebar.html" width="150px" height="100%" scrolling="no" frameborder="no" style="position: absolute; ">Список контестов</iframe>
             <div id="content">
                 <center><h2>Контестер</h2></center>
-                <p>Контестер — web приложение для создания контестов по информатике.</p>
                 <p>Контестер — web приложение для создания контестов по информатике.</p>
                 <p>Автор: Шестаков Вячеслав, ученик Инженерной Школы гимназии "Униврс №1".</p>
                 <p>Руководитель: Вахитова Екатерина Юрьевна, учитель гимназии "Униврс №1".</p>

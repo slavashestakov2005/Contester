@@ -76,6 +76,7 @@ function NewRow(document, cnt){
 function NewRowLang(document, cnt){
     var row = document.createElement("tr");
     var change = 'Change(document, ' + cnt + ');';
+    var innerEnd = cnt + '" class="input_output" oninput="' + change + '"></textarea>';
     row.id = "" + cnt;
     document.getElementById("langs").appendChild(row);
     var td1 = document.createElement("td");
@@ -86,6 +87,10 @@ function NewRowLang(document, cnt){
     var td6 = document.createElement("td");
     var td7 = document.createElement("td");
     var td8 = document.createElement("td");
+    var td9 = document.createElement("td");
+    var td10 = document.createElement("td");
+    var td11 = document.createElement("td");
+    var td12 = document.createElement("td");
     row.appendChild(td1);
     row.appendChild(td2);
     row.appendChild(td3);
@@ -94,14 +99,23 @@ function NewRowLang(document, cnt){
     row.appendChild(td6);
     row.appendChild(td7);
     row.appendChild(td8);
-    td1.innerHTML = '<p id="index'          + cnt + '">-1</p>';
-    td2.innerHTML = '<textarea id="name'	+ cnt + '" class="input_output" oninput="' + change + '"></textarea>';
-    td3.innerHTML = '<textarea id="end1' 	+ cnt + '" class="input_output" oninput="' + change + '"></textarea>';
-    td4.innerHTML = '<textarea id="end2' 	+ cnt + '" class="input_output" oninput="' + change + '"></textarea>';
-    td5.innerHTML = '<textarea id="compile' + cnt + '" class="input_output" oninput="' + change + '"></textarea>';
-    td5.innerHTML = '<textarea id="execute' + cnt + '" class="input_output" oninput="' + change + '"></textarea>';
-    td7.innerHTML = '<button id="btn' 		+ cnt + '">Изменено</button>';
-    td8.innerHTML = '<button onclick="DeleteLang(document, ' + cnt + ');">Удалить</button>';
+    row.appendChild(td9);
+    row.appendChild(td10);
+    row.appendChild(td11);
+    row.appendChild(td11);
+    row.appendChild(td12);
+    td1.innerHTML = '<p id="index'          	+ cnt + '">-1</p>';
+    td2.innerHTML = '<textarea id="name'		+ innerEnd;
+    td3.innerHTML = '<textarea id="end1' 		+ innerEnd;
+    td4.innerHTML = '<textarea id="end2' 		+ innerEnd;
+    td5.innerHTML = '<textarea id="free_time' 	+ innerEnd;
+    td6.innerHTML = '<textarea id="free_memory' + innerEnd;
+    td7.innerHTML = '<textarea id="min_time'	+ innerEnd;
+    td8.innerHTML = '<textarea id="min_memory'	+ innerEnd;
+    td9.innerHTML = '<textarea id="compile' 	+ innerEnd;
+    td10.innerHTML = '<textarea id="execute' 	+ innerEnd;
+    td11.innerHTML = '<button id="btn' 			+ cnt + '">Изменено</button>';
+    td12.innerHTML = '<button onclick="DeleteLang(document, ' + cnt + ');">Удалить</button>';
 }
 
 function Change(document, cnt){
@@ -197,11 +211,15 @@ function SaveLangs(document, cnt) {
         if (document.getElementById("btn" + i).disabled === false) {
             var data = new Map();
             data.set("l_id", document.getElementById("index" + i).textContent);
-            data.set("l_name", document.getElementById("name" + i).value);
-            data.set("l_end1", document.getElementById("end1" + i).value);
-            data.set("l_end2", document.getElementById("end2" + i).value);
-            data.set("l_compile", document.getElementById("compile" + i).value);
-            data.set("l_execute", document.getElementById("execute" + i).value);
+            data.set("l_name",			document.getElementById("name" + i).value);
+            data.set("l_end1",			document.getElementById("end1" + i).value);
+            data.set("l_end2",			document.getElementById("end2" + i).value);
+            data.set("l_compile",		document.getElementById("compile" + i).value);
+            data.set("l_execute",		document.getElementById("execute" + i).value);
+            data.set("l_freeTime",		document.getElementById("free_time" + i).value);
+            data.set("l_freeMemory",	document.getElementById("free_memory" + i).value);
+            data.set("l_minTime",		document.getElementById("min_time" + i).value);
+            data.set("l_minMemory",		document.getElementById("min_memory" + i).value);
             data.set("name", getCookie(document, "name"));
             data.set("surname", getCookie(document, "surname"));
             var request = new XMLHttpRequest();
