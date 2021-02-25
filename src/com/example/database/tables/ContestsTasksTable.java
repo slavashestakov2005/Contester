@@ -23,11 +23,13 @@ public class ContestsTasksTable {
         ArrayList<Task> tasks = new ArrayList<>();
         try {
             ResultSet resultSet = DataBaseHelper.executeQuery("SELECT " + columns.getName("TASK")+ " FROM " + table + " WHERE " + columns.getName("CONTEST") + " = " + contestId);
-            while (resultSet.next()) {
-                int taskId = resultSet.getInt(1);
-                DataBaseHelper.push();
-                tasks.add(TasksTable.selectTaskByID(taskId));
-                DataBaseHelper.pop();
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    int taskId = resultSet.getInt(1);
+                    DataBaseHelper.push();
+                    tasks.add(TasksTable.selectTaskByID(taskId));
+                    DataBaseHelper.pop();
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

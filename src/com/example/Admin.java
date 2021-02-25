@@ -1,21 +1,21 @@
 package com.example;
 
-import java.io.FileInputStream;
-import java.io.IOException;
+import com.example.database.tables.ConstantsTable;
 
 public class Admin {
-    private static String adminNameFile = Root.rootDirectory + "\\admin_name.txt";
+    public static String NAME = "admin_name", SURNAME = "admin_surname";
     private static String adminName, adminSurname;
-
     static {
-        try {
-            FileInputStream in = new FileInputStream(adminNameFile);
-            String lines[] = new String(in.readAllBytes()).split("[\r\n]+");
-            adminName = lines[0];
-            adminSurname = lines[1];
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        adminName = ConstantsTable.selectByName(NAME).getValue();
+        adminSurname = ConstantsTable.selectByName(SURNAME).getValue();
+    }
+
+    public static void setName(String name){
+        adminName = name;
+    }
+
+    public static void setSurname(String surname){
+        adminSurname = surname;
     }
 
     public static boolean checkUser(String name, String surname){

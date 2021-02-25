@@ -15,6 +15,7 @@ public class InputToContestChecker {
 
     public static boolean check(String password, int contestId){
         Contest contest = ContestsTable.selectContestByID(contestId);
+        if (contest == null) return false;
         return checkPassword(contest, password) && checkTime(contest);
     }
 }

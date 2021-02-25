@@ -1,9 +1,11 @@
 package com.example.runner;
 
 import com.example.Root;
+import com.example.database.rows.ContestLang;
 import com.example.database.rows.Lang;
 import com.example.database.rows.Task;
 import com.example.database.rows.Test;
+import com.example.database.tables.ContestsLangsTable;
 import com.example.database.tables.LangsTable;
 import com.example.database.tables.TasksTable;
 import com.example.database.tables.TestsTable;
@@ -39,14 +41,26 @@ public class RunQuery {
     public void execute(){
         try {
             init();
+            response.setContentType("text/html;charset=utf-8");
+            PrintWriter pw = response.getWriter();
+            if (!ContestsLangsTable.isExists(new ContestLang(contestId, lang.getId()))){
+                pw.print("<center><font color=\"red\" size=\"13\">Запрещённый язык!</font></center>\n" +
+                        "<center><button onclick=\"move()\">Назад</button></center>\n" +
+                        "<script>\n" +
+                        "\tfunction move(){\n" +
+                        "\t\tdocument.location.replace(\"" + contestId + "/contest.jsp\");\n" +
+                        "\t\treturn false;\n" +
+                        "\t}\n" +
+                        "</script>");
+                System.out.println("Попытка обмана от " + name + " " + surname + "!");
+                return;
+            }
             System.out.println("POST запрос от " + name + " " + surname + " : " + lang.getEnd1());
             saveFile();
             answer.start();
             if (!compileFile()) result.status = Status.CE;
             else runProgram();
             answer.finish(contestId);
-            response.setContentType("text/html;charset=utf-8");
-            PrintWriter pw = response.getWriter();
             pw.print(answer.getAnswer());
             Results.add(surname + " " + name, task.getId(), result.status);
             answer.clear();

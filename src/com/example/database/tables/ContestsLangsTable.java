@@ -23,16 +23,28 @@ public class ContestsLangsTable {
         ArrayList<Lang> langs = new ArrayList<>();
         try {
             ResultSet resultSet = DataBaseHelper.executeQuery("SELECT " + columns.getName("LANG")+ " FROM " + table + " WHERE " + columns.getName("CONTEST") + " = " + contestId);
-            while (resultSet.next()) {
-                int langId = resultSet.getInt(1);
-                DataBaseHelper.push();
-                langs.add(LangsTable.selectTaskByID(langId));
-                DataBaseHelper.pop();
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    int langId = resultSet.getInt(1);
+                    DataBaseHelper.push();
+                    langs.add(LangsTable.selectTaskByID(langId));
+                    DataBaseHelper.pop();
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return langs;
+    }
+
+    public static boolean isExists(ContestLang contestLang){
+        try {
+            ResultSet resultSet = DataBaseHelper.executeQuery("SELECT * FROM " + table + " WHERE " + contestLang.deleteString());
+            if (resultSet != null) return !resultSet.isAfterLast();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static void delete(ContestLang contestLang){

@@ -85,11 +85,11 @@ public class Contest {
     }
 
     public String updateString(){
-        return ContestsTable.columns.getName("NAME") + " = \'" + name + "\', " +
-                ContestsTable.columns.getName("ABOUT") + " = \'" + about + "\', " +
+        return ContestsTable.columns.getName("NAME") + " = '" + name + "', " +
+                ContestsTable.columns.getName("ABOUT") + " = '" + about + "', " +
                 ContestsTable.columns.getName("START") + " = " + start + ", " +
                 ContestsTable.columns.getName("FINISH") + " = " + finish + ", " +
-                ContestsTable.columns.getName("PASSWORD") + " = \'" + password + "'";
+                ContestsTable.columns.getName("PASSWORD") + " = '" + password + "'";
     }
 
     public String insertString() {

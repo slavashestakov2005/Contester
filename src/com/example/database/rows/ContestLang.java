@@ -1,6 +1,6 @@
 package com.example.database.rows;
 
-import com.example.database.tables.ContestsTasksTable;
+import com.example.database.tables.ContestsLangsTable;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,8 +22,8 @@ public class ContestLang {
     }
 
     public static ContestLang parseSQL(ResultSet resultSet) throws SQLException {
-        int contest = resultSet.getInt(ContestsTasksTable.columns.getIndex("CONTEST"));
-        int lang = resultSet.getInt(ContestsTasksTable.columns.getIndex("LANG"));
+        int contest = resultSet.getInt(ContestsLangsTable.columns.getIndex("CONTEST"));
+        int lang = resultSet.getInt(ContestsLangsTable.columns.getIndex("LANG"));
         return new ContestLang(contest, lang);
     }
 
@@ -36,8 +36,8 @@ public class ContestLang {
     }
 
     public String deleteString(){
-        return ContestsTasksTable.columns.getName("CONTEST") + " = " + contest + " AND " +
-                ContestsTasksTable.columns.getName("LANG") + " = " + lang;
+        return ContestsLangsTable.columns.getName("CONTEST") + " = " + contest + " AND " +
+                ContestsLangsTable.columns.getName("LANG") + " = " + lang;
     }
 
     public String insertString() {

@@ -28,7 +28,7 @@ public class Columns {
         return "";
     }
 
-    public class Column {
+    public static class Column {
         public String tag;
         public int index;
         public String name;

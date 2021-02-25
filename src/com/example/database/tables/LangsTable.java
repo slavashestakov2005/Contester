@@ -30,8 +30,10 @@ public class LangsTable {
         ArrayList<Lang> langs = new ArrayList<>();
         try {
             ResultSet resultSet = DataBaseHelper.executeQuery("SELECT * FROM " + table);
-            while (resultSet.next()) {
-                langs.add(Lang.parseSQL(resultSet));
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    langs.add(Lang.parseSQL(resultSet));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -53,7 +55,8 @@ public class LangsTable {
 
     public static Lang getLang(String end1){
         try {
-            return Lang.parseSQL(DataBaseHelper.executeQuery("SELECT * FROM " + table + " WHERE " + columns.getName("END1") + " = '" + end1 + "'"));
+            ResultSet resultSet = DataBaseHelper.executeQuery("SELECT * FROM " + table + " WHERE " + columns.getName("END1") + " = '" + end1 + "'");
+            if (resultSet != null) return Lang.parseSQL(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -62,7 +65,8 @@ public class LangsTable {
 
     public static Lang selectTaskByID(int langId) {
         try {
-            return Lang.parseSQL(DataBaseHelper.executeQuery("SELECT * FROM " + table + " WHERE " + columns.getName("ID") + " = " + langId));
+            ResultSet resultSet = DataBaseHelper.executeQuery("SELECT * FROM " + table + " WHERE " + columns.getName("ID") + " = " + langId);
+            if (resultSet != null) return Lang.parseSQL(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -122,6 +122,10 @@ function Change(document, cnt){
     document.getElementById("btn" + cnt).disabled = false;
 }
 
+function ChangeConstant(document, cnt){
+    document.getElementById("constant_edit" + cnt).disabled = false;
+}
+
 function Save(document, cnt, type, number){
     if (type === 'task') {
         var Url = "../tasks";
@@ -226,6 +230,63 @@ function SaveLangs(document, cnt) {
             request.open("POST", Url + query(data));
             request.send();
             document.getElementById("btn" + i).disabled = true;
+        }
+    }
+}
+
+function SaveConstants(document, cnt){
+    var Url = "check";
+    var data = new Map();
+    data.set("name", getCookie(document, "name"));
+    data.set("surname", getCookie(document, "surname"));
+    data.set("password", "");
+    data.set("contest", -1);
+    var request = new XMLHttpRequest();
+    request.open("POST", Url + query(data));
+    request.send();
+    request.onreadystatechange = onServerAnswer;
+    Url = "constants";
+    for (var i = 1; i <= cnt; ++i) {
+        if (document.getElementById("constant_edit" + i).disabled === false) {
+            var data = new Map();
+            data.set("c_name",	document.getElementById("constant_name" + i).textContent);
+            data.set("c_value",	document.getElementById("constant_value" + i).value);
+            data.set("name", getCookie(document, "name"));
+            data.set("surname", getCookie(document, "surname"));
+            var request = new XMLHttpRequest();
+            request.open("POST", Url + query(data));
+            request.send();
+            document.getElementById("constant_edit" + i).disabled = true;
+        }
+    }
+}
+
+function SaveLangsToContest(document, contestId){
+    var Url = "../check";
+    var data = new Map();
+    data.set("name", getCookie(document, "name"));
+    data.set("surname", getCookie(document, "surname"));
+    data.set("password", "");
+    data.set("contest", -1);
+    var request = new XMLHttpRequest();
+    request.open("POST", Url + query(data));
+    request.send();
+    request.onreadystatechange = onServerAnswer;
+    Url = "../contests_langs";
+    var langsTable = document.getElementById("langs_table");
+    for (var i = 1, row; row = langsTable.rows[i]; ++i) {
+        let langId = row.cells[0].textContent;
+        let added = document.getElementById("lang_btn" + langId);
+        if (added.disabled == false) {
+            var data = new Map();
+            data.set("contest",	contestId);
+            data.set("lang",	row.cells[0].textContent);
+            data.set("name", getCookie(document, "name"));
+            data.set("surname", getCookie(document, "surname"));
+            var request = new XMLHttpRequest();
+            request.open("POST", Url + query(data));
+            request.send();
+            added.disabled = true;
         }
     }
 }
@@ -401,8 +462,44 @@ function Generate(document, number){
     request.onreadystatechange = onServerAnswer;
 }
 
-function DeleteLangFromContest(document, cnt) {
-    alert("Delete lang " + cnt);
+function DeleteLangFromContest(document, contestId, langId = null) {
+    if (langId === null){
+        let name = document.getElementById("lang_row_" + contestId).cells[1].textContent;
+        document.getElementById("lang_row_" + contestId).remove();
+        let opt = document.createElement("option");
+        opt.id = "l_" + contestId;
+        opt.value = "l_" + contestId;
+        opt.innerHTML = name;
+        document.getElementById("langs_list").appendChild(opt);
+        return;
+    }
+    Url = "../delete_contest_lang";
+    var data = new Map();
+    data.set("contest",	contestId);
+    data.set("lang",	langId);
+    data.set("name", getCookie(document, "name"));
+    data.set("surname", getCookie(document, "surname"));
+    var request = new XMLHttpRequest();
+    request.open("POST", Url + query(data));
+    request.send();
+    var langsTable = document.getElementById("langs_table");
+    request.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            var answer = this.responseText;
+            if (answer === "Ok") {
+                alert("Изменения сохранены");
+                let name = document.getElementById("lang_row_" + langId).cells[1].textContent;
+                document.getElementById("lang_row_" + langId).remove();
+                let opt = document.createElement("option");
+                opt.id = "l_" + langId;
+                opt.value = "l_" + langId;
+                opt.innerHTML = name;
+                document.getElementById("langs_list").appendChild(opt);
+            } else {
+                alert("Ошибка доступа");
+            }
+        }
+    };
 }
 
 function AddLangToContest(document){
@@ -410,7 +507,6 @@ function AddLangToContest(document){
     var langShortName = e.value;
     var langLongName = e.options[e.selectedIndex].text;
     var langId = langShortName.substr(2);
-    alert(langShortName + " : " + langLongName);
 
     var row = document.createElement("tr");
     row.id = "lang_row_" + langId;

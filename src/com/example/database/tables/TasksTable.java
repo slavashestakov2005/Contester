@@ -27,7 +27,7 @@ public class TasksTable {
         Task task = null;
         try {
             ResultSet resultSet = DataBaseHelper.executeQuery("SELECT * FROM " + table + " WHERE " + columns.getName("ID") + " = " + taskId);
-            if (resultSet.next()) {
+            if (resultSet != null && resultSet.next()) {
                 task = Task.parseSQL(resultSet);
             }
         } catch (SQLException e) {
@@ -48,7 +48,7 @@ public class TasksTable {
         try {
             DataBaseHelper.execute("INSERT INTO " + table + task.insertString());
             ResultSet resultSet = DataBaseHelper.executeQuery("SELECT last_insert_rowid()");
-            if (resultSet.next()) {
+            if (resultSet != null && resultSet.next()) {
                 return Integer.parseInt(resultSet.getString(1));
             }
         } catch (SQLException e) {

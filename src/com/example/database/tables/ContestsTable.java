@@ -26,8 +26,10 @@ public class ContestsTable {
         ArrayList<Contest> contests = new ArrayList<>();
         try {
             ResultSet resultSet = DataBaseHelper.executeQuery("SELECT * FROM " + table);
-            while (resultSet.next()) {
-                contests.add(Contest.parseSQL(resultSet));
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    contests.add(Contest.parseSQL(resultSet));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -39,7 +41,7 @@ public class ContestsTable {
         Contest contest = null;
         try {
             ResultSet resultSet = DataBaseHelper.executeQuery("SELECT * FROM " + table + " WHERE " + columns.getName("ID") + " = " + contestId);
-            if (resultSet.next()) {
+            if (resultSet != null && resultSet.next()) {
                 contest = Contest.parseSQL(resultSet);
             }
         } catch (SQLException e) {
@@ -60,7 +62,7 @@ public class ContestsTable {
         try {
             DataBaseHelper.execute("INSERT INTO " + table + contest.insertString());
             ResultSet resultSet = DataBaseHelper.executeQuery("SELECT last_insert_rowid()");
-            if (resultSet.next()) {
+            if (resultSet != null && resultSet.next()) {
                 return Integer.parseInt(resultSet.getString(1));
             }
         } catch (SQLException e) {

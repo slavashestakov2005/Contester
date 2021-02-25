@@ -26,7 +26,7 @@ public class TestsTable {
         Test test = null;
         try {
             ResultSet resultSet = DataBaseHelper.executeQuery("SELECT * FROM " + table + " WHERE " + columns.getName("ID") + " = " + testId);
-            if (resultSet.next()) {
+            if (resultSet != null && resultSet.next()) {
                 test = Test.parseSQL(resultSet);
             }
         } catch (SQLException e) {
@@ -39,8 +39,10 @@ public class TestsTable {
         ArrayList<Test> tests = new ArrayList<>();
         try {
             ResultSet resultSet = DataBaseHelper.executeQuery("SELECT * FROM " + table + " WHERE " + columns.getName("TASK") + " = " + taskId);
-            while (resultSet.next()) {
-                tests.add(Test.parseSQL(resultSet));
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    tests.add(Test.parseSQL(resultSet));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -53,8 +55,10 @@ public class TestsTable {
         try {
             ResultSet resultSet = DataBaseHelper.executeQuery("SELECT * FROM " + table + " WHERE " +
                     columns.getName("TASK") + " = " + taskId + " AND " + columns.getName("EXAMPLE") + " = 1");
-            while (resultSet.next()) {
-                tests.add(Test.parseSQL(resultSet));
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    tests.add(Test.parseSQL(resultSet));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
