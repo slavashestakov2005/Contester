@@ -4,7 +4,7 @@ import com.example.database.rows.Contest;
 import com.example.database.rows.Task;
 import com.example.database.tables.ContestsTable;
 import com.example.database.tables.ContestsTasksTable;
-import com.example.runner.Results;
+import com.example.database.tables.SendingsTable;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,12 +29,14 @@ public class Result extends HttpServlet {
                 "\t<tr>\n" +
                 "\t\t<td width=\"25%\">Участник</td>");
         ArrayList<Task> tasks = ContestsTasksTable.getTasksForContest(contestId);
+        ArrayList<Integer> tasksIds = new ArrayList<>();
         for(int taskIndex = 1; taskIndex <= tasks.size(); ++taskIndex){
             pw.print("\t\t<td width=\"10%\">" + taskIndex + "</td>\n");
+            tasksIds.add(tasks.get(taskIndex - 1).getId());
         }
         pw.print("\t\t<td width=\"10%\">Итого</td>\n");
         pw.print("\t</tr>\n");
-        HashMap<String, HashMap<Integer, Integer>> map = Results.getForContest(tasks);
+        HashMap<String, HashMap<Integer, Integer>> map = SendingsTable.selectAllForContest(tasksIds);
         HashMap<String, Integer> hashMap = new HashMap<>();
         for(String name : map.keySet()){
             HashMap<Integer, Integer> his = map.get(name);

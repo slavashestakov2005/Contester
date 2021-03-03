@@ -32,18 +32,10 @@ public class Generator {
     public static void deleteOldFiles(int contestId) throws IOException {
         Path directory = Paths.get(Root.webDirectory + "\\" + contestId);
         if (Files.exists(directory)) Files.walkFileTree(directory, new DeleteVisitor());
-        directory = Paths.get(Root.rootDirectory + "\\Contests\\" + contestId);
-        if (Files.exists(directory)) Files.walkFileTree(directory, new DeleteVisitor());
     }
 
     public static void createNewDirectories(int contestId, ArrayList<Task> tasks) throws IOException {
         Files.createDirectories(Paths.get(Root.webDirectory + "\\" + contestId));
-        String contestDirectory = Root.rootDirectory + "\\Contests\\" + contestId;
-        Files.createDirectories(Paths.get(contestDirectory));
-        for(Task task : tasks){
-            Files.createDirectories(Paths.get(contestDirectory +  "\\" + task.getId()));
-            Files.createDirectories(Paths.get(contestDirectory +  "\\" + task.getId() + "\\sendings"));
-        }
     }
 
     public static String toHTML(String text, int tabs){

@@ -123,7 +123,8 @@ public class TaskPageGenerator {
             "\t\t\t\t</div>\n";
     private static String part17 = "\t\t\t\t<button onclick=\"document.location.href='";
     private static String part18 = "_solution.jsp'\">Решение</button>\n";
-    private static String part19 = "\t\t\t\t<div id=\"down2\"></div>\n" +
+    private static String part19 = "\t\t\t\t<button onclick=\"viewCode(document, page_number)\">Мои посылки</button>" +
+            "\t\t\t\t<div id=\"down2\"></div>\n" +
             "\t\t\t</div>\n" +
             "\t\t</div>\n" +
             "\t</body>\n" +

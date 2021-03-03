@@ -189,6 +189,23 @@ function viewResults(contestId, type){
     return false;
 }
 
+function viewCode(document, taskId){
+    Url = "../view_code";
+    var data = new Map();
+    data.set("task",	taskId);
+    data.set("name", getCookie(document, "name"));
+    data.set("surname", getCookie(document, "surname"));
+    var request = new XMLHttpRequest();
+    request.open("GET", Url + query(data));
+    request.send();
+    request.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            window.parent.document.getElementById("content").innerHTML = this.responseText;
+        }
+    };
+    return false;
+}
+
 function renderLatex(document){
     var Url = "render";
     var data = new Map();

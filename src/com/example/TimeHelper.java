@@ -7,6 +7,7 @@ import java.util.Date;
 public class TimeHelper {
     private static DateFormat jsFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
     private static DateFormat webFormat = new SimpleDateFormat("dd.MM.yyyy' 'HH:mm");
+    private static DateFormat webFormatWithSeconds = new SimpleDateFormat("dd.MM.yyyy' 'HH:mm:ss");
 
     public static String toJS(long time){
         return jsFormat.format(new Date(time));
@@ -14,6 +15,10 @@ public class TimeHelper {
 
     public static String toWeb(long time){
         return webFormat.format(new Date(time));
+    }
+
+    public static String toWebWithSeconds(long time){
+        return webFormatWithSeconds.format(new Date(time));
     }
 
     public static String toDuration(long time){
