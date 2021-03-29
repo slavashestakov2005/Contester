@@ -30,6 +30,7 @@ function printNameSurname(document){
     var surname = getCookie(document, "surname");
     if (!checkName(name) || !checkName(surname)){
         alert("Имя и фамилия могут содержать только буквы, цифры и _ + - * /");
+        alert(name + " - " + surname);
         document.location.replace("index.jsp");
     }
     document.write(name);
@@ -66,7 +67,7 @@ function readFile(document) {
 
 function Edit(document, type, number) {
     if (type === 'task' || type === 'solution'){
-        const Url = "../edit_task";
+        const Url = "../../edit_task";
         var data = new Map();
         data.set("name", getCookie(document, "name"));
         data.set("surname", getCookie(document, "surname"));
@@ -87,7 +88,7 @@ function Edit(document, type, number) {
         };
     }
     if (type === 'contest'){
-        const Url = "../edit_contest";
+        const Url = "../../edit_contest";
         var data = new Map();
         data.set("name", getCookie(document, "name"));
         data.set("surname", getCookie(document, "surname"));
@@ -110,7 +111,7 @@ function Edit(document, type, number) {
 }
 
 function Check(document, number) {
-    const Url = "../check";
+    const Url = "../../check";
     var data = new Map();
     data.set("name", getCookie(document, "name"));
     data.set("surname", getCookie(document, "surname"));
@@ -129,7 +130,7 @@ function Check(document, number) {
 }
 
 function CreateContest(document) {
-    var Url = "create_contest";
+    var Url = "../create_contest";
     var data = new Map();
     data.set("name", getCookie(document, "name"));
     data.set("surname", getCookie(document, "surname"));
@@ -149,7 +150,7 @@ function CreateContest(document) {
 }
 
 function EditSettings(document){
-    var Url = "edit_settings";
+    var Url = "../edit_settings";
     var data = new Map();
     data.set("name", getCookie(document, "name"));
     data.set("surname", getCookie(document, "surname"));
@@ -170,8 +171,8 @@ function EditSettings(document){
 }
 
 function getResultUrl(type) {
-    if (type === 0) return "result";
-    return "../result";
+    if (type === 0) return "../result";
+    return "../../result";
 }
 
 function viewResults(contestId, type){
@@ -190,7 +191,7 @@ function viewResults(contestId, type){
 }
 
 function viewCode(document, taskId){
-    Url = "../view_code";
+    Url = "../../view_code";
     var data = new Map();
     data.set("task",	taskId);
     data.set("name", getCookie(document, "name"));

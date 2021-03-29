@@ -13,8 +13,16 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class RunQuery {
-    private static final long compileLimit = 10000;
+    public static final String COMPILE_TIME = "compile_time";
+    private static long compileLimit;
 
+    static {
+        compileLimit = Long.parseLong(ConstantsTable.selectByName(COMPILE_TIME).getValue());
+    }
+
+    public static void setCompileLimit(long compileLimit) {
+        RunQuery.compileLimit = compileLimit;
+    }
 
     private HttpServletRequest request;
     private HttpServletResponse response;

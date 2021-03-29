@@ -99,8 +99,8 @@ public class EditSettings extends HttpServlet {
                 "<br>\n" +
                 "<br/>\n" +
                 "<center>\n" +
-                "\t<button onclick=\"window.open('latex_render.html', '_blank')\">Просмотр LaTeX</button>\n" +
-                "\t<button onclick=\"window.open('res_loader.html', '_blank')\">Загрузка файлов</button>\n" +
+                "\t<button onclick=\"window.open('../latex_render.html', '_blank')\">Просмотр LaTeX</button>\n" +
+                "\t<button onclick=\"window.open('../res_loader.html', '_blank')\">Загрузка файлов</button>\n" +
                 "</center>\n" +
                 "<div id=\"down2\"></div>");
     }

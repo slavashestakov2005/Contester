@@ -2,6 +2,7 @@ package com.example;
 
 import com.example.database.rows.Constant;
 import com.example.database.tables.ConstantsTable;
+import com.example.runner.RunQuery;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,6 +31,7 @@ public class Constants extends HttpServlet {
             ConstantsTable.updateConstant(new Constant(cName, cValue));
             if (cName.equals(Admin.NAME)) Admin.setName(cValue);
             if (cName.equals(Admin.SURNAME)) Admin.setSurname(cValue);
+            if (cName.equals(RunQuery.COMPILE_TIME)) RunQuery.setCompileLimit(Long.parseLong(cValue));
         }
     }
 }

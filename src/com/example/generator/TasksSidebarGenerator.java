@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class TasksSidebarGenerator {
     public static void generate(Contest contest, ArrayList<Task> tasks) throws IOException {
-        String pageName = Root.webDirectory + "\\" + contest.getId() + "\\sidebar.html";
+        String pageName = Root.webDirectory + "\\User\\" + contest.getId() + "\\sidebar.html";
         StringBuilder text = new StringBuilder();
         text.append(part1);
         for(Task task : tasks){
@@ -26,14 +26,14 @@ public class TasksSidebarGenerator {
             "<html>\n" +
             "\t<head>\n" +
             "\t\t<meta charset=\"UTF-8\">\n" +
-            "\t\t<link rel=\"shortcut icon\" href=\"../Images/image.ico\" type=\"image/x-icon\">\n" +
-            "\t\t<link rel=\"stylesheet\" href=\"../CSS/users.css\">\n" +
+            "\t\t<link rel=\"shortcut icon\" href=\"../../Images/image.ico\" type=\"image/x-icon\">\n" +
+            "\t\t<link rel=\"stylesheet\" href=\"../../CSS/users.css\">\n" +
             "\t\t<title>Задачи</title>\n" +
             "\t</head>\n" +
             "\t<body height=\"auto\">\n" +
             "\t\t<div id=\"sidebar\">\n";
     private static String part2 = "\t\t\t<br/>\n" +
-            "\t\t\t<h2><a href=\"../main.jsp\" target=\"_parent\">Вернуться</a></h2>\n" +
+            "\t\t\t<h2><a href=\"../start.html\" target=\"_parent\">Вернуться</a></h2>\n" +
             "\t\t\t<div id=\"down\"></div>\n" +
             "\t\t</div>\n" +
             "\t</body>\n" +

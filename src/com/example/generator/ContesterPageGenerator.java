@@ -5,7 +5,7 @@ import java.io.*;
 
 public class ContesterPageGenerator {
     public static void generate() throws IOException {
-        String pageName = Root.webDirectory + "\\main.jsp";
+        String pageName = Root.webDirectory + "\\main.html";
         StringBuilder text = new StringBuilder();
         text.append(part1);
         Writer out = new BufferedWriter(new OutputStreamWriter(
@@ -50,10 +50,10 @@ public class ContesterPageGenerator {
             "\t\t\t\t<p align=\"right\">\n" +
             "\t\t\t\t\t<script>printNameSurname(document);</script>\n" +
             "\t\t\t\t\t<br/>\n" +
-            "\t\t\t\t\t<a href=\"index.jsp\">Выйти</a>\n" +
+            "\t\t\t\t\t<a href=\"index.html\">Выйти</a>\n" +
             "\t\t\t\t</p>\n" +
             "\t\t\t</div>\n" +
-            "\t\t\t<div id=\"nav3\"><center><h1><a href=\"main.jsp\">Контестер</a></h1></center></div>\n" +
+            "\t\t\t<div id=\"nav3\"><center><h1><a href=\"main.html\">Контестер</a></h1></center></div>\n" +
             "\t\t</div>\n" +
             "\t\t<div id=\"page\">\n" +
             "\t\t\t<iframe src=\"sidebar.html\" width=\"150px\" height=\"100%\" scrolling=\"no\" frameborder=\"no\" style=\"position: absolute; \">Список контестов</iframe>\n" +
@@ -62,7 +62,7 @@ public class ContesterPageGenerator {
             "\t\t\t\t<p>Контестер — web приложение для создания контестов по информатике.</p>\n" +
             "\t\t\t\t<p>Автор: Шестаков Вячеслав, ученик Инженерной Школы гимназии \"Униврс №1\".</p>\n" +
             "\t\t\t\t<p>Руководитель: Вахитова Екатерина Юрьевна, учитель гимназии \"Униврс №1\".</p>\n" +
-            "\t\t\t\t<p>Идея: возникла благодаря ОЦ Сириусу и Канухину Александру в частности.</p>\n" +
+            "\t\t\t\t<p>Контестер будет применяться в гимназии \"Униврс №1\" на спецкурсе по олимпиадной информатике.</p>\n" +
             "\t\t\t\t<div id=\"down2\"></div>\n" +
             "\t\t\t</div>\n" +
             "\t\t</div>\n" +

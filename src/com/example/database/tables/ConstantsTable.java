@@ -7,15 +7,20 @@ import com.example.database.rows.Constant;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ConstantsTable {
     private static final String table = "constants";
     public static final Columns columns;
+    private static HashMap<String, String> constants;
 
     static {
         columns = new Columns();
         columns.add("NAME", 1, "name");     // text     NOT NULL    PK      UNIQUE
         columns.add("VALUE", 2, "value");   // text     NOT NULL
+        ArrayList<Constant> constantArrayList = getAllConstants();
+        constants = new HashMap<>();
+        for(Constant constant : constantArrayList) constants.put(constant.getName(), constant.getValue());
     }
 
     public static ArrayList<Constant> getAllConstants() {
@@ -35,15 +40,10 @@ public class ConstantsTable {
 
     public static void updateConstant(Constant constant){
         DataBaseHelper.execute("UPDATE " + table + " SET " + constant.updateString() + " WHERE " + columns.getName("NAME") + " = '" + constant.getName() + "'");
+        constants.put(constant.getName(), constant.getValue());
     }
 
     public static Constant selectByName(String name){
-        try {
-            ResultSet resultSet = DataBaseHelper.executeQuery("SELECT * FROM " + table + " WHERE " + columns.getName("NAME") + " = '" + name + "'");
-            if (resultSet != null) return Constant.parseSQL(resultSet);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return new Constant(name, constants.get(name));
     }
 }

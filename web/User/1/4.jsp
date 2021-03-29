@@ -5,11 +5,11 @@
 <html lang="ru">
     <head>
         <meta charset="UTF-8">
-        <link rel="shortcut icon" href="../Images/image.ico" type="image/x-icon">
-        <link rel="stylesheet" href="../CSS/users.css">
-        <link rel="stylesheet" href="../CSS/admin.css">
-        <script src="../JS/users.js" type="text/javascript"> </script>
-        <script src="../JS/admin.js" type="text/javascript"> </script>
+        <link rel="shortcut icon" href="../../Images/image.ico" type="image/x-icon">
+        <link rel="stylesheet" href="../../CSS/users.css">
+        <link rel="stylesheet" href="../../CSS/admin.css">
+        <script src="../../JS/users.js" type="text/javascript"> </script>
+        <script src="../../JS/admin.js" type="text/javascript"> </script>
         <script>
             var cnt = -1;
             var page_type = "task";
@@ -19,24 +19,26 @@
         </script>
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-        <title>Контест №1</title>
+        <title>Пример</title>
     </head>
     <body>
         <div id="header">
-            <div id="nav1"><center><button id="image" onclick="Edit(document, page_type, page_number); "><img src="../Images/edit.png"></button></center></div>
+            <div id="nav1"><center><button id="image" onclick="Edit(document, page_type, page_number); "><img src="../../Images/edit.png"></button></center></div>
             <div id="nav2">
                 <p align="right">
                     <script>printNameSurname(document);</script>
                     <br/>
-                    <a href="../index.jsp">Выйти</a>
+                    <a href="edit.html">Редактировать</a>
+                    <a href="../../index.html">Выйти</a>
                 </p>
             </div>
-            <div id="nav3"><center><h1><a href="contest.jsp">Контест №1</a></h1></center></div>
+            <div id="nav3"><center><h1><a href="contest.jsp">Пример</a></h1></center></div>
         </div>
         <div id="page">
             <iframe src="sidebar.html" width="150px" height="100%" scrolling="no" frameborder="no" style="position: absolute;">Список задач</iframe>"
             <div id="content">
                 <center><h2>Формула</h2></center>
+                <center>(Время: 1 сек. Память: 16 Мб)</center>
                 <h3>Условие:</h3>
                 <p>Васины учителя математики устали от того, что он решает всё. И попытались задать ему сложное задание.</p>
                 <p>Васе дают два числа, A и B.</p>
@@ -50,6 +52,7 @@
                 <p>Два числа A и B, такие что \( 1 < A, B \leq 10^{18} \).</p>
                 <h3>Выходные данные:</h3>
                 <p>Вывести число C, которое должен получить Вася.</p>
+                <h3>Примеры:</h3>
                 <table border="1" width="95%">
                     <tr>
                         <td width="50%"><center>Input</center></td>
@@ -77,7 +80,7 @@
                     <input type="submit" value="Отправить" onclick="return Start(this);" />
                     </form>
                 </div>
-                <div id="down2"></div>
+                <button onclick="viewCode(document, page_number)">Мои посылки</button>				<div id="down2"></div>
             </div>
         </div>
     </body>

@@ -14,16 +14,19 @@
         <title>Просмотр LaTeX</title>
     </head>
     <body>
-        <center><h3>Правила по использованию \( \LaTeX{} \):</h3></center>
-        <ul>
-            <li>\( \LaTeX{} \) размещается между символами &quot;\ (&quot; и &quot;\ )&quot; (между знаками пробел не ставится).</li>
-            <li>\( \LaTeX{} \) можно использовать в описаниях к контестам и задач, но не в названиях к ним.</li>
-        </ul>
-        <textarea class="tasks_data_large" id="text_area" placeholder="Введите LaTeX" oninput="textInput(document)"></textarea>
-        <br>
-        <input type="button" value="Нарисовать" onclick="renderLatex(document);">
-        <br>
-        <iframe id="latex_frame" width="100%" height="300" src="latex.html"></iframe>
+        <script>
+            function f(document){
+                var formData = new FormData();
+                formData.append("myFile", document.getElementById("file").files[0], 'chris1.jpg');
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "res_load");
+                xhr.send(formData);
+            }
+        </script>
+        <form method="post">
+            <input type="file" id="file" name="file" />
+            <input type="button" id="btn" value="Загрузить" onclick="f(document)" />
+        </form>
         <center><button onclick="document.location.replace('Info/main.html');">На главную</button></center>
     </body>
 <html>

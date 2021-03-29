@@ -27,15 +27,17 @@ public class Generator {
         StartPageGenerator.generate(contest);
         /***/ContesterPageGenerator.generate();
         TasksSidebarGenerator.generate(contest, tasks);
+        ContestsSidebarGenerator.generate(ContestsTable.getAll());
+        UserPageGenerator.generate();
     }
 
     public static void deleteOldFiles(int contestId) throws IOException {
-        Path directory = Paths.get(Root.webDirectory + "\\" + contestId);
+        Path directory = Paths.get(Root.webDirectory + "\\User\\" + contestId);
         if (Files.exists(directory)) Files.walkFileTree(directory, new DeleteVisitor());
     }
 
     public static void createNewDirectories(int contestId, ArrayList<Task> tasks) throws IOException {
-        Files.createDirectories(Paths.get(Root.webDirectory + "\\" + contestId));
+        Files.createDirectories(Paths.get(Root.webDirectory + "\\User\\" + contestId));
     }
 
     public static String toHTML(String text, int tabs){

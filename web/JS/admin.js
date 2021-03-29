@@ -128,7 +128,7 @@ function ChangeConstant(document, cnt){
 
 function Save(document, cnt, type, number){
     if (type === 'task') {
-        var Url = "../tasks";
+        var Url = "../../tasks";
         var data = new Map();
         data.set("name", getCookie(document, "name"));
         data.set("surname", getCookie(document, "surname"));
@@ -151,7 +151,7 @@ function Save(document, cnt, type, number){
         request.send();
         request.onreadystatechange = onServerAnswer;
 
-        Url = "../tests";
+        Url = "../../tests";
         for (var i = 1; i <= cnt; ++i) {
             if (document.getElementById("btn" + i).disabled === false) {
                 var data = new Map();
@@ -171,7 +171,7 @@ function Save(document, cnt, type, number){
         }
     }
     if (type === 'contest'){
-        var Url = "../contests";
+        var Url = "../../contests";
         var start = document.getElementById("start_datetime").value;
         var finish = document.getElementById("finish_datetime").value;
         var password = document.getElementById("contest_password").value;
@@ -200,7 +200,7 @@ function Save(document, cnt, type, number){
 }
 
 function SaveLangs(document, cnt) {
-    var  Url = "check";
+    var  Url = "../check";
     var data = new Map();
     data.set("name", getCookie(document, "name"));
     data.set("surname", getCookie(document, "surname"));
@@ -210,7 +210,7 @@ function SaveLangs(document, cnt) {
     request.open("POST", Url + query(data));
     request.send();
     request.onreadystatechange = onServerAnswer;
-    Url = "langs";
+    Url = "../langs";
     for (var i = 1; i <= cnt; ++i) {
         if (document.getElementById("btn" + i).disabled === false) {
             var data = new Map();
@@ -235,7 +235,7 @@ function SaveLangs(document, cnt) {
 }
 
 function SaveConstants(document, cnt){
-    var Url = "check";
+    var Url = "../check";
     var data = new Map();
     data.set("name", getCookie(document, "name"));
     data.set("surname", getCookie(document, "surname"));
@@ -245,7 +245,7 @@ function SaveConstants(document, cnt){
     request.open("POST", Url + query(data));
     request.send();
     request.onreadystatechange = onServerAnswer;
-    Url = "constants";
+    Url = "../constants";
     for (var i = 1; i <= cnt; ++i) {
         if (document.getElementById("constant_edit" + i).disabled === false) {
             var data = new Map();
@@ -262,7 +262,7 @@ function SaveConstants(document, cnt){
 }
 
 function SaveLangsToContest(document, contestId){
-    var Url = "../check";
+    var Url = "../../check";
     var data = new Map();
     data.set("name", getCookie(document, "name"));
     data.set("surname", getCookie(document, "surname"));
@@ -272,7 +272,7 @@ function SaveLangsToContest(document, contestId){
     request.open("POST", Url + query(data));
     request.send();
     request.onreadystatechange = onServerAnswer;
-    Url = "../contests_langs";
+    Url = "../../contests_langs";
     var langsTable = document.getElementById("langs_table");
     for (var i = 1, row; row = langsTable.rows[i]; ++i) {
         let langId = row.cells[0].textContent;
@@ -292,7 +292,7 @@ function SaveLangsToContest(document, contestId){
 }
 
 function Delete(document, task, number){
-    var Url = "../delete_task";
+    var Url = "../../delete_task";
     var data = new Map();
     data.set("name", getCookie(document, "name"));
     data.set("surname", getCookie(document, "surname"));
@@ -305,7 +305,7 @@ function Delete(document, task, number){
 }
 
 function DeleteContest(document, number){
-    var Url = "../delete_contest";
+    var Url = "../../delete_contest";
     var doDelete = prompt("Вы действительно хотите удалить?\nДля удаления введите \"да\".");
     if (doDelete !== "да") return;
     var data = new Map();
@@ -333,7 +333,7 @@ function DeleteTest(document, number){
     var test = document.getElementById("index" + number).textContent;
     // document.getElementById(number).remove();
     if (test === -1) return;
-    var Url = "../delete_test";
+    var Url = "../../delete_test";
     var data = new Map();
     data.set("name", getCookie(document, "name"));
     data.set("surname", getCookie(document, "surname"));
@@ -346,10 +346,10 @@ function DeleteTest(document, number){
 
 function DeleteLang(document, number){
     if (number === -1) return;
-    var lang = document.getElementById("index" + number).textContent;
-    // document.getElementById(number).remove();
+    var lang = parseInt(document.getElementById("index" + number).textContent);
+    document.getElementById(number).remove();
     if (lang === -1) return;
-    var Url = "delete_lang";
+    var Url = "../../delete_lang";
     var data = new Map();
     data.set("name", getCookie(document, "name"));
     data.set("surname", getCookie(document, "surname"));
@@ -361,7 +361,7 @@ function DeleteLang(document, number){
 }
 
 function Create(document){
-    var Url = "../create_task";
+    var Url = "../../create_task";
     var data = new Map();
     data.set("name", getCookie(document, "name"));
     data.set("surname", getCookie(document, "surname"));
@@ -381,7 +381,7 @@ function Create(document){
 }
 
 function AddTask(document, contestId) {
-    var Url = "../add_task";
+    var Url = "../../add_task";
     var data = new Map();
     data.set("name", getCookie(document, "name"));
     data.set("surname", getCookie(document, "surname"));
@@ -424,7 +424,7 @@ function AddContest(document) {
         alert("Ошибка заполнения полей времени. Значения должны располагаться в диапазоне от " + minTime + " до " + maxTime + ".");
         return;
     }
-    var Url = "add_contest";
+    var Url = "../add_contest";
     var data = new Map();
     data.set("name", getCookie(document, "name"));
     data.set("surname", getCookie(document, "surname"));
@@ -451,7 +451,7 @@ function AddContest(document) {
 }
 
 function Generate(document, number){
-    var Url = "../generate";
+    var Url = "../../generate";
     var data = new Map();
     data.set("name", getCookie(document, "name"));
     data.set("surname", getCookie(document, "surname"));
@@ -473,7 +473,7 @@ function DeleteLangFromContest(document, contestId, langId = null) {
         document.getElementById("langs_list").appendChild(opt);
         return;
     }
-    Url = "../delete_contest_lang";
+    Url = "../../delete_contest_lang";
     var data = new Map();
     data.set("contest",	contestId);
     data.set("lang",	langId);
