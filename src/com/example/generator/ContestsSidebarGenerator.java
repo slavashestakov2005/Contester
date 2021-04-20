@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class ContestsSidebarGenerator {
     public static void generate(ArrayList<Contest> contests) throws IOException {
-        String pageName = Root.webDirectory + "\\User\\sidebar.html";
+        String pageName = Root.webDirectory + "\\Test\\sidebar.html";
         StringBuilder text = new StringBuilder();
         text.append(part1);
         for(Contest contest : contests){

@@ -35,7 +35,7 @@ public class AnswerWriter {
                 .append("<center><button onclick=\"move()\">Назад</button></center>\n")
                 .append("<script>\n")
                 .append("\tfunction move(){\n")
-                .append("\t\tdocument.location.replace(\"").append(contestId).append("/contest.jsp\");\n")
+                .append("\t\tdocument.location.replace(\"Test/").append(contestId).append("/contest.jsp\");\n")
                 .append("\t\treturn false;\n")
                 .append("\t}\n")
                 .append("</script>");

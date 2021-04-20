@@ -3,7 +3,6 @@ package com.example.generator;
 import com.example.Root;
 import com.example.database.rows.Contest;
 import com.example.database.rows.Task;
-import com.example.database.rows.Test;
 import com.example.database.tables.ContestsTable;
 import com.example.database.tables.ContestsTasksTable;
 import com.example.database.tables.TestsTable;
@@ -32,12 +31,12 @@ public class Generator {
     }
 
     public static void deleteOldFiles(int contestId) throws IOException {
-        Path directory = Paths.get(Root.webDirectory + "\\User\\" + contestId);
+        Path directory = Paths.get(Root.webDirectory + "\\Test\\" + contestId);
         if (Files.exists(directory)) Files.walkFileTree(directory, new DeleteVisitor());
     }
 
     public static void createNewDirectories(int contestId, ArrayList<Task> tasks) throws IOException {
-        Files.createDirectories(Paths.get(Root.webDirectory + "\\User\\" + contestId));
+        Files.createDirectories(Paths.get(Root.webDirectory + "\\Test\\" + contestId));
     }
 
     public static String toHTML(String text, int tabs){

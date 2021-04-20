@@ -61,10 +61,11 @@ public class SendingsTable {
         return status == Status.OK;
     }
 
-    public static ArrayList<Sending> selectAllForUser(String user) {
+    public static ArrayList<Sending> selectAllForUser(String user, int task) {
         ArrayList<Sending> result = new ArrayList<>();
         try {
-            ResultSet resultSet = DataBaseHelper.executeQuery("SELECT * FROM " + table + " WHERE " + columns.getName("USER") + " = '" + DataBaseHelper.toSQL(user) + "'");
+            ResultSet resultSet = DataBaseHelper.executeQuery("SELECT * FROM " + table + " WHERE " + columns.getName("USER") + " = '" + DataBaseHelper.toSQL(user) + "' AND " +
+                    columns.getName("TASK") + " = " + task);
             if (resultSet != null) {
                 while (resultSet.next()) {
                     result.add(Sending.parseSQL(resultSet));

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class TasksSidebarGenerator {
     public static void generate(Contest contest, ArrayList<Task> tasks) throws IOException {
-        String pageName = Root.webDirectory + "\\User\\" + contest.getId() + "\\sidebar.html";
+        String pageName = Root.webDirectory + "\\Test\\" + contest.getId() + "\\sidebar.html";
         StringBuilder text = new StringBuilder();
         text.append(part1);
         for(Task task : tasks){

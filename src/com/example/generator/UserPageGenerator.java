@@ -1,16 +1,14 @@
 package com.example.generator;
 
 import com.example.Root;
-import com.example.database.rows.Contest;
-import com.example.database.rows.Task;
 
 import java.io.*;
 
 public class UserPageGenerator {
     public static void generate() throws IOException {
-        String pageName = Root.webDirectory + "\\User\\start.html";
+        String pageName = Root.webDirectory + "\\Test\\start.html";
         StringBuilder text = new StringBuilder();
-        text.append(part1).append("User").append(part2).append("User").append(part3).append("User").append(part4);
+        text.append(part1).append("Тестовые контесты").append(part2).append("Тестовые контесты").append(part3).append("Тестовые контесты").append(part4);
         Writer out = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(pageName), "UTF-8"));
         out.write(text.toString());
@@ -52,7 +50,7 @@ public class UserPageGenerator {
             "\t\t\t<div id=\"content\">\n" +
             "\t\t\t\t<center><h2>";
     private static String part4 = "</h2></center>\n" +
-            "\t\t\t\t<p>Описание о Васе.</p>\n" +
+            "\t\t\t\t<p>Это набор тренировачных контестов, направленный на знакомство с тестирующей системой.</p>\n" +
             "\t\t\t\t<div id=\"down2\"></div>\n" +
             "\t\t\t</div>\n" +
             "\t\t</div>\n" +

@@ -320,7 +320,7 @@ function DeleteContest(document, number){
             var answer = this.responseText;
             if (answer === "Ok") {
                 alert("Изменения сохранены");
-                document.location.replace("../main.jsp");
+                document.location.replace("../start.html");
             } else {
                 alert("Ошибка доступа");
             }
@@ -441,10 +441,10 @@ function AddContest(document) {
             var answer = this.responseText;
             if (answer === "Ok") {
                 alert("Изменения сохранены");
-                document.location.replace("main.jsp");
+                document.location.replace("main.html");
             } else {
                 alert("Ошибка доступа");
-                document.location.replace("main.jsp");
+                document.location.replace("main.html");
             }
         }
     };

@@ -44,7 +44,7 @@
                 <p>В частности можно делать ссылки:</p>
                 <p><a href="https://ru.wikipedia.org/wiki/%D0%9E%D0%B1%D1%80%D0%B0%D1%82%D0%BD%D0%B0%D1%8F_%D0%BF%D0%BE%D0%BB%D1%8C%D1%81%D0%BA%D0%B0%D1%8F_%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D1%8C">Сделайте калькуляятор по этой инструкции.</a></p>
                 <p>Или картинки.</p>
-                <p><img src="../../Images/edit.png"</p>
+                <p><img src="../../Images/edit.png"></p>
                 <p>Также html код можно выводить в исходном виде:</p>
                 <p><script>document.write(ToCorrectText("<i> Не курсивный текст </i>"));</script></p>
                 <p><i>Курсивный текст</i></p>

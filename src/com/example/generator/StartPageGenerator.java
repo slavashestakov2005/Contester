@@ -8,7 +8,7 @@ import java.io.*;
 
 public class StartPageGenerator {
     public static void generate(Contest contest) throws IOException {
-        String pageName = Root.webDirectory + "\\User\\" + contest.getId() + ".html";
+        String pageName = Root.webDirectory + "\\Test\\" + contest.getId() + ".html";
         StringBuilder text = new StringBuilder();
         text.append(part1).append(contest.getName())
                 .append(part2).append(contest.getName())
@@ -54,7 +54,7 @@ public class StartPageGenerator {
             "\t\t\t\t\t<a href=\"../index.html\">Выйти</a>\n" +
             "\t\t\t\t</p>\n" +
             "\t\t\t</div>\n" +
-            "\t\t\t<div id=\"nav3\"><center><h1><a href=\"start.html\">User</a></h1></center></div>\n" +
+            "\t\t\t<div id=\"nav3\"><center><h1><a href=\"start.html\">Тестовые контесты</a></h1></center></div>\n" +
             "\t\t</div>\n" +
             "\t\t<div id=\"page\">\n" +
             "\t\t\t<iframe src=\"sidebar.html\" width=\"150px\" height=\"100%\" scrolling=\"no\" frameborder=\"no\" style=\"position: absolute; \">Список контестов</iframe>\n" +

@@ -8,7 +8,7 @@ import java.io.*;
 
 public class MainPageGenerator {
     public static void generate(Contest contest) throws IOException {
-        String pageName = Root.webDirectory + "\\User\\" + contest.getId() + "\\contest.jsp";
+        String pageName = Root.webDirectory + "\\Test\\" + contest.getId() + "\\contest.jsp";
         StringBuilder text = new StringBuilder();
         text.append(part1).append(contest.getId())
                 .append(part2).append(contest.getId())

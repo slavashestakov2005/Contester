@@ -31,7 +31,7 @@ function printNameSurname(document){
     if (!checkName(name) || !checkName(surname)){
         alert("Имя и фамилия могут содержать только буквы, цифры и _ + - * /");
         alert(name + " - " + surname);
-        document.location.replace("index.jsp");
+        document.location.replace("index.html");
     }
     document.write(name);
     document.write("<br \>\n");
@@ -123,7 +123,7 @@ function Check(document, number) {
     if (request.readyState === 4 && request.status === 200) {
         var answer = request.responseText;
         if (answer === "Fail"){
-            document.location.replace("../" + number + ".jsp");
+            document.location.replace("../" + number + ".html");
             alert("Неверный пароль или контест не идёт.");
         }
     }

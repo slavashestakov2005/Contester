@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class TaskPageGenerator {
     public static void generate(Contest contest, Task task, ArrayList<Test> tests) throws IOException {
-        String pageName = Root.webDirectory + "\\User\\" + contest.getId() + "\\" + task.getId() + ".jsp";
+        String pageName = Root.webDirectory + "\\Test\\" + contest.getId() + "\\" + task.getId() + ".jsp";
         StringBuilder text = new StringBuilder();
         int timeLimit = task.getTimeLimit();
         text.append(part1).append(task.getId())
@@ -109,7 +109,7 @@ public class TaskPageGenerator {
     private static String part13 = "\t\t\t\t</table>\n";
     private static String part14 = "\t\t\t\t<div id=\"code\">\n" +
             "\t\t\t\t\t<p>Решение:</p>\n" +
-            "\t\t\t\t\t<% out.print(\"<form action=\\\"../run?contest=";
+            "\t\t\t\t\t<% out.print(\"<form action=\\\"../../run?contest=";
     private static String part15 = "&task=";
     private static String part16 = "&name=\"); %>${cookie['name'].getValue()}<% out.print(\"&surname=\"); %>${cookie['surname'].getValue()}<% out.print(\"\\\" method=\\\"post\\\">\"); %>\n" +
             "\t\t\t\t\t\t<textarea id=\"code_text\" name=\"code\" placeholder=\"Введите код\" oninput=\"textInput(document)\"></textarea>\n" +

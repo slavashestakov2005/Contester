@@ -41,7 +41,7 @@ public class AddContest extends HttpServlet {
             ContestsSidebarGenerator.generate(contests);
             StartPageGenerator.generate(contest);
             /***/ContesterPageGenerator.generate();
-            Files.createDirectories(Paths.get(Root.webDirectory +  "\\" + id));
+            Files.createDirectories(Paths.get(Root.webDirectory +  "\\Test\\" + id));
             MainPageGenerator.generate(contest);
             TasksSidebarGenerator.generate(contest, new ArrayList<>());
         }

@@ -23,7 +23,7 @@ public class ViewCode extends HttpServlet {
         /** work with they **/
         response.setContentType("text/html;charset=utf-8");
         PrintWriter pw = response.getWriter();
-        ArrayList<Sending> sendings = SendingsTable.selectAllForUser(surname + " " + name);
+        ArrayList<Sending> sendings = SendingsTable.selectAllForUser(surname + " " + name, task);
         pw.print("<h2><center>Посылки:</center></h2>\n" +
                 "<table border=\"1\" width=\"95%\">\n" +
                 "\t<tr>\n" +
@@ -46,5 +46,7 @@ public class ViewCode extends HttpServlet {
                     "\t\t<td>" + sending.getCode().replace("\n", "<br>\n") + "</td>\n" +
                     "\t</tr>\n");
         }
+        pw.print("</table>\n" +
+                "<div id=\"down2\" />");
     }
 }

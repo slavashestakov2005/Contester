@@ -50,7 +50,7 @@ public class RunQuery {
                         "<center><button onclick=\"move()\">Назад</button></center>\n" +
                         "<script>\n" +
                         "\tfunction move(){\n" +
-                        "\t\tdocument.location.replace(\"" + contestId + "/contest.jsp\");\n" +
+                        "\t\tdocument.location.replace(\"Test/" + contestId + "/contest.jsp\");\n" +
                         "\t\treturn false;\n" +
                         "\t}\n" +
                         "</script>");
@@ -147,7 +147,10 @@ public class RunQuery {
             if (!res) {
                 result.update(Status.TLE, testCount);
                 process.destroy();
-            } else if (process.exitValue() != 0) result.update(Status.RE, testCount);
+            } else if (process.exitValue() != 0){
+                System.out.println("Exit : " + process.exitValue());
+                result.update(Status.RE, testCount);
+            }
         }
         return result.status == Status.OK;
     }
